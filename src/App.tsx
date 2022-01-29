@@ -1,26 +1,27 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import {Navigate, NavLink, Route, Routes} from "react-router-dom";
+import {MainPage} from "./ui/MainPage/MainPage";
+import {Login} from "./ui/Login/Login";
+import {Registration} from "./ui/Registration/Registration";
+import {Error404} from "./ui/Eror404/Error404";
+import {PasswordRecovery} from "./ui/Password/PasswordRecovery";
+import {SetNewPassword} from "./ui/Password/SetNewPassword";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App = () => {
+    return (
+        <div className="App">
+            <Routes>
+                <Route path={'/'} element={<MainPage/>}/>
+                <Route path={'/login'} element={<Login/>}/>
+                <Route path={'/registration'} element={<Registration/>}/>
+                <Route path={'404'} element={<Error404/>}/>
+                <Route path='*' element={<Navigate to={'/404'}/>}/>
+                <Route path={'password_recovery'} element={<PasswordRecovery/>}/>
+                <Route path={'set_new_password'} element={<SetNewPassword/>}/>
+            </Routes>
+        </div>
+    );
 }
 
 export default App;
