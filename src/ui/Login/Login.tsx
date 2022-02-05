@@ -15,6 +15,20 @@ export const Login = () => {
     const onSubmit = () => {
         console.log(values)
     }
+
+    const onChangeEmail = (value: string) => {
+        setValues({
+            ...values,
+            email: value
+        })
+    }
+
+    const onChangePassword = (value: string) => {
+        setValues({
+            ...values,
+            password: value
+        })
+    }
     return (
         <div>
             <div>
@@ -26,10 +40,10 @@ export const Login = () => {
             </div>
 
             <div>
-                <SuperInputText value={values.email}/>
+                <SuperInputText value={values.email} onChangeText={onChangeEmail}/>
             </div>
             <div>
-                <SuperInputText value={values.password}/>
+                <SuperInputText value={values.password} onChangeText={onChangePassword}/>
             </div>
 
             <div>
