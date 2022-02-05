@@ -9,37 +9,29 @@ const instance = axios.create({
 
 export const ForgotPasswordAPI = {
 
-    forgotPassword (email: string) {
+    forgotPassword(email: string) {
         return instance.post<ResponseForgotPassword>('/auth/forgot',
             {
                 email: email,
                 //ПОТОМ ПОМЕНЯТЬ ССЫЛКУ на gitpage.io
                 message: `
-<div style="background-color: lime; padding: 15px">password recovery link: <a href='http://localhost:3000/set_new_password/$token$'>link</a></div>
+<div style="background-color: lime; padding: 15px">Для создания нового пароля перейдите по ссылке: <a href='http://localhost:3000/set_new_password/$token$'>link</a></div>
 `,
             })
     },
-    setNewPassword (newPassword: string, resetPasswordToken: string) {
+
+    setNewPassword(newPassword: string, resetPasswordToken: string) {
         return instance.post<ResponseForgotPassword>('/auth/set-new-password',
             {
                 password: newPassword,
                 resetPasswordToken: resetPasswordToken
             })
     },
-
-    checkPing() {
-        return instance.get<ResponseCheckPing>('/ping')
-    }
 }
 
 type ResponseForgotPassword = {
     info: string
-    error: string
-}
-
-type ResponseCheckPing = {
-    backTime: number
-    frontTime: string
-    info: string
-    ping: number
+    success: boolean
+    answer: boolean
+    html: boolean
 }

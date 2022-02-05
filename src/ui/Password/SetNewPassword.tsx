@@ -2,18 +2,23 @@ import SuperInputText from "../../SuperComponents/SuperInputText/SuperInputText"
 import SuperButton from "../../SuperComponents/SuperButton/SuperButton";
 import {ChangeEvent, useState} from "react";
 import {ForgotPasswordAPI} from "../../dal/API";
+import {Navigate, useParams} from "react-router-dom";
 
 
 export const SetNewPassword = () => {
     const [newPasswordField, setNewPasswordField] = useState('')
     const changeNewPasswordField = (e: ChangeEvent<HTMLInputElement>) => setNewPasswordField(e.currentTarget.value)
 
-    const currentlyURL = ''
+    const {token} = useParams<'token'>()
 
     const createNewPasswordHandler = () => {
-        ForgotPasswordAPI.setNewPassword(newPasswordField, currentlyURL)
-            .then(res => {
-                alert(res.data.info)
+        ForgotPasswordAPI.setNewPassword(newPasswordField, token || '')
+            .then((res) => {
+                return <Navigate to={'/'}/>
+            })
+            .catch(err => {
+                alert('Пароль должен содержать не менее 8 символов')
+                setNewPasswordField('')
             })
     }
 
@@ -21,7 +26,7 @@ export const SetNewPassword = () => {
 
         <div>
             <h4>Введите новый пароль и постарайтесь его не забыть)</h4>
-            <SuperInputText value={newPasswordField} onChange={changeNewPasswordField} />
+            <SuperInputText value={newPasswordField} onChange={changeNewPasswordField}/>
             <SuperButton onClick={createNewPasswordHandler}>Создать новый пароль</SuperButton>
         </div>
     )
