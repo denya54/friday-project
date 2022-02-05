@@ -2,6 +2,8 @@ import SuperInputText from "../../SuperComponents/SuperInputText/SuperInputText"
 import {Link} from "react-router-dom";
 import SuperButton from "../../SuperComponents/SuperButton/SuperButton";
 import {useState} from "react";
+import {useDispatch} from "react-redux";
+import {loginTC} from "../../bll/loginReducer";
 
 export const Login = () => {
 
@@ -11,9 +13,10 @@ export const Login = () => {
     }
 
     const [values, setValues] = useState({...initialState})
+    const dispatch = useDispatch()
 
     const onSubmit = () => {
-        console.log(values)
+        dispatch(loginTC(values))
     }
 
     const onChangeEmail = (value: string) => {
