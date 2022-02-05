@@ -1,10 +1,12 @@
 import {ThunkAction} from "redux-thunk";
 import {AppRootStateType} from "./store";
 import {RegisterAPI} from "./register-api";
+import {AxiosError} from "axios";
 
 export const initialState = {
     error: null as null | string,
     success: false,
+    isLoading: false
 };
 type RegisterStateType = typeof initialState
 
@@ -17,6 +19,10 @@ export const registerReducer = (state: RegisterStateType = initialState, action:
         case "register/SET_SUCCESS":
             return {
                 ...state, success: action.success
+            }
+        case "register/SET_IS_LOADING":
+            return {
+                ...state, isLoading: action.isLoading
             }
         default:
             return state
@@ -31,8 +37,13 @@ export const setSuccessAC = (success: boolean) => ({
     type: "register/SET_SUCCESS", success
 } as const)
 
+export const setISLoadingAC = (isLoading: boolean) => ({
+    type: "register/SET_IS_LOADING", isLoading
+} as const)
+
 type ActionsType = ReturnType<typeof setSuccessAC>
     | ReturnType<typeof setErrorAC>
+    | ReturnType<typeof setISLoadingAC>
 
 // thunk
 export const signUpTC = (email: string, password: string, password2: string): ThunkType => (
@@ -40,6 +51,7 @@ export const signUpTC = (email: string, password: string, password2: string): Th
     if (password !== password2) {
         dispatch(setErrorAC('Passwords don\'t match'))
     } else {
+        dispatch(setISLoadingAC(true))
         RegisterAPI.signUp(email, password)
             .then((data) => {
                 if (data.error) {
@@ -48,8 +60,12 @@ export const signUpTC = (email: string, password: string, password2: string): Th
                     dispatch(setSuccessAC(true))
                 }
             })
-            .catch((error) => {
-                dispatch(setErrorAC(error.response.data.error))
+            .catch((error: AxiosError) => {
+                const err = error.response ? error.response.data.error: error.message
+                dispatch(setErrorAC(err))
+            })
+            .finally(()=> {
+                dispatch(setISLoadingAC(false))
             })
     }
 }

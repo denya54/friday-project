@@ -8,7 +8,6 @@ import {AppRootStateType} from "../../bll/store";
 import {Navigate} from "react-router-dom";
 
 export const Registration = () => {
-    console.log ('registration is render')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [password2, setPassword2] = useState('')
@@ -20,6 +19,7 @@ export const Registration = () => {
 
     const success = useSelector<AppRootStateType, boolean >(state=> state.register.success)
     const error = useSelector<AppRootStateType, null|string>(state => state.register.error)
+    const isLoading = useSelector<AppRootStateType, boolean>(state=> state.register.isLoading)
 
     if (success) {
         return <Navigate to={'/login'} />
@@ -28,6 +28,7 @@ export const Registration = () => {
         <div>
             <h2>It-incubator</h2>
             <p>Sign Up</p>
+            {isLoading? <span> Loading...</span>: null}
             <form className={s.form} action="">
                 <div>
                     <SuperInputText type="email"
@@ -51,7 +52,7 @@ export const Registration = () => {
                     />
                 </div>
                 <div>
-                    <SuperButton type='button' onClick={RegisterCallback}>Register</SuperButton>
+                    <SuperButton type='button' onClick={RegisterCallback} disabled={isLoading}>Register</SuperButton>
                 </div>
             </form>
            {error? <span className={s.error}>{error}</span>: null}
