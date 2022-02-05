@@ -17,8 +17,8 @@ const App = () => {
                 <Route path={'/registration'} element={<Registration/>}/>
                 <Route path={'404'} element={<Error404/>}/>
                 <Route path='*' element={<Navigate to={'/404'}/>}/>
-                <Route path={'password_recovery'} element={<PasswordRecovery/>}/>
-                <Route path={'set_new_password'} element={<SetNewPassword/>}/>
+                <Route path={'/password_recovery'} element={<PasswordRecovery/>}/>
+                <Route path={'/set_new_password'} element={<SetNewPassword/>}/>
             </Routes>
         </div>
     );
