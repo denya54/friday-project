@@ -31,23 +31,28 @@ export const setSuccessAC = (success: boolean) => ({
     type: "register/SET_SUCCESS", success
 } as const)
 
-
 type ActionsType = ReturnType<typeof setSuccessAC>
     | ReturnType<typeof setErrorAC>
 
 // thunk
-export const signUpTC = (email: string, password: string): ThunkType => (
+export const signUpTC = (email: string, password: string, password2: string): ThunkType => (
     dispatch) => {
-    const data = RegisterAPI.signUp(email, password)
-        .then(() => {
-            dispatch(setSuccessAC(true));
-            console.log("Register is success", data);
-        })
-        .catch((error) => {
-            dispatch(setErrorAC(error))
-        })
+    if (password !== password2) {
+        dispatch(setErrorAC('Passwords don\'t match'))
+    } else {
+        RegisterAPI.signUp(email, password)
+            .then((data) => {
+                if (data.error) {
+                    dispatch(setErrorAC(data.error))
+                } else {
+                    dispatch(setSuccessAC(true))
+                }
+            })
+            .catch((error) => {
+                dispatch(setErrorAC(error.response.data.error))
+            })
+    }
 }
-
 export type ThunkType = ThunkAction<void, AppRootStateType, unknown, ActionsType>
 
 

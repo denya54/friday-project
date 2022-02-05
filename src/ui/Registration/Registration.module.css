@@ -4,3 +4,7 @@
     height: 400px;
     justify-content: space-around;
 }
+
+.error {
+    color: red
+}
