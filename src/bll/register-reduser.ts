@@ -1,7 +1,6 @@
 import {ThunkAction} from "redux-thunk";
 import {AppRootStateType} from "./store";
 import {RegisterAPI} from "./register-api";
-import {AxiosError} from "axios";
 
 export const initialState = {
     error: null as null | string,
@@ -46,29 +45,21 @@ type ActionsType = ReturnType<typeof setSuccessAC>
     | ReturnType<typeof setISLoadingAC>
 
 // thunk
-export const signUpTC = (email: string, password: string, password2: string): ThunkType => (
+export const signUpTC = (email: string, password: string, password2: string): ThunkType => async (
     dispatch) => {
     if (password !== password2) {
         dispatch(setErrorAC('Passwords don\'t match'))
     } else {
-        dispatch(setISLoadingAC(true))
-        RegisterAPI.signUp(email, password)
-            .then((data) => {
-                if (data.error) {
-                    dispatch(setErrorAC(data.error))
-                } else {
-                    dispatch(setSuccessAC(true))
-                }
-            })
-            .catch((error: AxiosError) => {
-                const err = error.response ? error.response.data.error: error.message
-                dispatch(setErrorAC(err))
-            })
-            .finally(()=> {
-                dispatch(setISLoadingAC(false))
-            })
+        try {
+            dispatch(setISLoadingAC(true))
+            await RegisterAPI.signUp(email, password)
+            dispatch(setSuccessAC(true))
+        } catch (error: any) {
+            const err = error.response ? error.response.data.error : error.message
+            dispatch(setErrorAC(err))
+        } finally {
+            dispatch(setISLoadingAC(false))
+        }
     }
 }
 export type ThunkType = ThunkAction<void, AppRootStateType, unknown, ActionsType>
-
-
