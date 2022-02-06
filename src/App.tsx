@@ -8,6 +8,7 @@ import {Error404} from "./ui/Eror404/Error404";
 import {PasswordRecovery} from "./ui/Password/PasswordRecovery";
 import {SetNewPassword} from "./ui/Password/SetNewPassword";
 import {TransitionalPage} from "./ui/Password/TransitionalPage";
+import {SuccessRecoveryPassword} from "./ui/Password/SuccessRecoveryPassword";
 
 const App = () => {
     return (
@@ -21,6 +22,7 @@ const App = () => {
                 <Route path={'/password_recovery'} element={<PasswordRecovery/>}/>
                 <Route path={'/set_new_password/:token'} element={<SetNewPassword/>}/>
                 <Route path={'/transitional_page_for_recovery_pass'} element={<TransitionalPage/>}/>
+                <Route path={'/password_recovery_success'} element={<SuccessRecoveryPassword/>}/>
             </Routes>
         </div>
     );
