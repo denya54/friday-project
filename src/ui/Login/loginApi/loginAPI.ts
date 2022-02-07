@@ -6,7 +6,7 @@ let instance = axios.create({
 
 export const loginAPI = {
     login(data: LoginParamsType) {
-        return instance.post<LoginParamsType, AxiosResponse<ResponseType<{data: ResponseDataType}>>>('auth/login', data)
+        return instance.post<LoginParamsType, AxiosResponse<ResponseDataType>>('auth/login', data)
     }
 }
 
@@ -30,8 +30,4 @@ export type ResponseDataType = {
     rememberMe: boolean;
 
     error?: string;
-}
-
-export type ResponseType<T = {}> = {
-    data: T
 }
