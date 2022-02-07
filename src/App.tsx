@@ -11,6 +11,7 @@ import {SetNewPassword} from "./ui/Password/SetNewPassword";
 const App = () => {
     return (
         <div className="App">
+            <div className="container">
             <Routes>
                 <Route path={'/'} element={<MainPage/>}/>
                 <Route path={'/login'} element={<Login/>}/>
@@ -20,6 +21,7 @@ const App = () => {
                 <Route path={'/password_recovery'} element={<PasswordRecovery/>}/>
                 <Route path={'/set_new_password'} element={<SetNewPassword/>}/>
             </Routes>
+            </div>
         </div>
     );
 }

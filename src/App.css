@@ -1,7 +1,10 @@
 .App {
   text-align: center;
+  
 }
-
+.container{
+  background: linear-gradient(to top left, powderblue, pink);
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
