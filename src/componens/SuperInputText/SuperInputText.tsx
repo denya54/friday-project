@@ -44,6 +44,8 @@ const SuperInputText: React.FC<SuperInputTextPropsType> = (
 
     return (
         <>
+        <div className={s.container}>
+        <h5 className={s.title}>{restProps.title}</h5>
             <input
                 type={type}
                 placeholder={error ? 'error' : 'write text...'}
@@ -53,8 +55,11 @@ const SuperInputText: React.FC<SuperInputTextPropsType> = (
 
                 {...restProps} // отдаём инпуту остальные пропсы если они есть (value например там внутри)
             />
+            <hr className={s.line}/>
+            </div>
             {error && <span className={finalSpanClassName}>{error}</span>}
         </>
+        
     )
 }
 
