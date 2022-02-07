@@ -1,14 +1,15 @@
 import SuperInputText from "../../SuperComponents/SuperInputText/SuperInputText";
 import {Link, Navigate} from "react-router-dom";
 import SuperButton from "../../SuperComponents/SuperButton/SuperButton";
-import {useState} from "react";
+import {ChangeEvent, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {loginTC} from "../../bll/authReducer";
 import {AppRootStateType} from "../../bll/store";
 
 const initialState = {
     email: '',
-    password: ''
+    password: '',
+    rememberMe: false,
 }
 
 export const Login = () => {
@@ -20,10 +21,10 @@ export const Login = () => {
         dispatch(loginTC(values))
     }
 
-    const onChangeValue = (value: string, field: string) => {
+    const onChangeValue = (e: ChangeEvent<HTMLInputElement>, field: string) => {
         setValues({
             ...values,
-            [field]: value
+            [field]: field === 'rememberMe' ? e.currentTarget.checked : e.currentTarget.value
         })
     }
 
@@ -42,11 +43,18 @@ export const Login = () => {
             </div>
 
             <div>
-                <SuperInputText autoFocus value={values.email} onChangeText={(e) => onChangeValue(e, 'email')}/>
+                <SuperInputText type="password" value={values.email}
+                                onChange={e => onChangeValue(e, 'email')}/>
             </div>
             <div>
                 <SuperInputText type="password" value={values.password}
-                                onChangeText={(e) => onChangeValue(e, 'password')}/>
+                                onChange={e => onChangeValue(e, 'password')}/>
+            </div>
+
+            <div>
+                Remember me
+                <input type="checkbox" checked={values.rememberMe}
+                       onChange={e => onChangeValue(e, 'rememberMe')}/>
             </div>
 
             <div>
@@ -64,7 +72,6 @@ export const Login = () => {
                     </Link>
                 </div>
             </div>
-
         </div>
     )
 }
