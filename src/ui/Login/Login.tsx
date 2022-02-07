@@ -1,37 +1,36 @@
 import SuperInputText from "../../SuperComponents/SuperInputText/SuperInputText";
-import {Link} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
 import SuperButton from "../../SuperComponents/SuperButton/SuperButton";
 import {useState} from "react";
-import {useDispatch} from "react-redux";
-import {loginTC} from "../../bll/loginReducer";
+import {useDispatch, useSelector} from "react-redux";
+import {loginTC} from "../../bll/authReducer";
+import {AppRootStateType} from "../../bll/store";
+
+const initialState = {
+    email: '',
+    password: ''
+}
 
 export const Login = () => {
-
-    const initialState = {
-        email: '',
-        password: ''
-    }
-
     const [values, setValues] = useState({...initialState})
+    const isLogged = useSelector<AppRootStateType, boolean>(state => state.login.isLoggedIn)
     const dispatch = useDispatch()
 
     const onSubmit = () => {
         dispatch(loginTC(values))
     }
 
-    const onChangeEmail = (value: string) => {
+    const onChangeValue = (value: string, field: string) => {
         setValues({
             ...values,
-            email: value
+            [field]: value
         })
     }
 
-    const onChangePassword = (value: string) => {
-        setValues({
-            ...values,
-            password: value
-        })
+    if (isLogged) {
+        return <Navigate to="/profile"/>
     }
+
     return (
         <div>
             <div>
@@ -43,18 +42,19 @@ export const Login = () => {
             </div>
 
             <div>
-                <SuperInputText value={values.email} onChangeText={onChangeEmail}/>
+                <SuperInputText autoFocus value={values.email} onChangeText={(e) => onChangeValue(e, 'email')}/>
             </div>
             <div>
-                <SuperInputText value={values.password} onChangeText={onChangePassword}/>
-            </div>
-
-            <div>
-                <Link to='/'>Forgot password</Link>
+                <SuperInputText type="password" value={values.password}
+                                onChangeText={(e) => onChangeValue(e, 'password')}/>
             </div>
 
             <div>
-                <SuperButton onClick={onSubmit} >Login</SuperButton>
+                <Link to='/password_recovery'>Forgot password</Link>
+            </div>
+
+            <div>
+                <SuperButton onClick={onSubmit}>Login</SuperButton>
                 <div>
                 <span>
                     Don't have an account?
