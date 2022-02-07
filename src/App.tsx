@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import {Navigate, Route, Routes} from "react-router-dom";
 import {MainPage} from "./ui/MainPage/MainPage";
@@ -8,8 +8,25 @@ import {Error404} from "./ui/Eror404/Error404";
 import {PasswordRecovery} from "./ui/Password/PasswordRecovery";
 import {SetNewPassword} from "./ui/Password/SetNewPassword";
 import {Profile} from "./ui/Profile/Profile";
+import {initializeTC} from "./bll/appReducer";
+import {useDispatch, useSelector} from "react-redux";
+import {AppRootStateType} from "./bll/store";
+import loader from './assets/loader.svg'
 
 const App = () => {
+    const dispatch = useDispatch()
+    const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
+
+    useEffect(() => {
+        dispatch(initializeTC())
+    }, [])
+
+    if (!isInitialized) {
+        return <div style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
+            <img src={loader} alt="loader"/>
+        </div>
+    }
+
     return (
         <div className="App">
             <Routes>
@@ -23,7 +40,7 @@ const App = () => {
                 <Route path={'profile'} element={<Profile/>}/>
             </Routes>
         </div>
-    );
+    )
 }
 
 export default App;
