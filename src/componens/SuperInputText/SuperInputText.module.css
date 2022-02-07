@@ -23,9 +23,20 @@
     text-align: left;
     margin: 0;
 }
+[placeholder]{
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    color: #2D2E46;
+    opacity: 0.5;
+    display: none;
+}
 .line{
     background: #24254A;
     opacity: 0.2;
+    margin: 0;
 }
 
 .errorInput {
