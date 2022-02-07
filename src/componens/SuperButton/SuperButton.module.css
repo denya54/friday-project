@@ -1,7 +1,7 @@
 .default {
     position: relative;
     /* Сбрасываем дефолтные стили */
-    border: 1px solid black;
+    border: none;
     outline: none;
     display: inline-block;
     text-align: center;
@@ -9,23 +9,22 @@
     cursor: pointer;
     font-size: 16px;
     /* Тут можно поэкспериментировать */
-    padding: 12px 16px;
-    border-radius: 100px;
-    color: black;
+    background: #21268F;
+    box-shadow: 0px 4px 18px rgba(33, 38, 143, 0.35), inset 0px 1px 0px rgba(255, 255, 255, 0.3);
+    border-radius: 30px;
+    width: 266px;
+    min-height: 36px;
+    text-align: center;
+    letter-spacing: 0.01em;
+    line-height: 19px;
+    color: #ECECF9;
+    text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
 }
 
-.default:hover {
+.default:hover,
+.cansel:hover {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-    background-color: blue;
-    color: white;
-}
-
-.default:active {
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-    color: blue;
-    background-color: white;
-
+    opacity: 0.5;
 }
 
 .default:disabled {
@@ -35,9 +34,9 @@
 
 }
 
-.red {
+.cansel {
     /* Сбрасываем дефолтные стили */
-    border: 1px solid red;
+    border: none;
     outline: none;
     display: inline-block;
     text-align: center;
@@ -45,22 +44,13 @@
     cursor: pointer;
     font-size: 16px;
     /* Тут можно поэкспериментировать */
-    padding: 12px 16px;
-    border-radius: 100px;
-    color: white;
-    background-color: red;
-}
-
-.red:hover {
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-    background-color: white;
-    color: red;
-}
-
-.red:active {
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-    background-color: black;
+    width: 124px;
+    min-height: 36px;
+    background: #D7D8EF;
+    line-height: 19px;
+    color: #21268F;
+    opacity: 0.8;
+    text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
 }
 
 .red:disabled {
