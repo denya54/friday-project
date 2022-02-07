@@ -6,6 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {signUpTC} from "../../bll/register-reduser";
 import {AppRootStateType} from "../../bll/store";
 import {Navigate} from "react-router-dom";
+import {validateEmail, validatePassword} from "../../utils/validators/validator";
 
 export const Registration = () => {
     const [email, setEmail] = useState('')
@@ -13,13 +14,19 @@ export const Registration = () => {
     const [password2, setPassword2] = useState('')
 
     const dispatch = useDispatch();
+
     const RegisterCallback = (
-        () => dispatch(signUpTC(email, password, password2))
+        () => {dispatch(signUpTC(email, password, password2))}
     )
 
     const success = useSelector<AppRootStateType, boolean >(state=> state.register.success)
     const error = useSelector<AppRootStateType, null|string>(state => state.register.error)
     const isLoading = useSelector<AppRootStateType, boolean>(state=> state.register.isLoading)
+
+    const errorEmail = validateEmail(email) ? "" : "Введите корректный email"
+    const errorPassword = validatePassword(password) ? "" : "Пароль должен содержать не менее 8 символов"
+
+    const disabled = isLoading || !!errorEmail || !!errorPassword
 
     if (success) {
         return <Navigate to={'/login'} />
@@ -35,6 +42,7 @@ export const Registration = () => {
                                     placeholder={"Email"}
                                     value={email}
                                     onChangeText={setEmail}
+                                    error={errorEmail}
                     />
                 </div>
                 <div>
@@ -42,6 +50,7 @@ export const Registration = () => {
                                     placeholder={"password"}
                                     value={password}
                                     onChangeText={setPassword}
+                                    error={errorPassword}
                     />
                 </div>
                 <div>
@@ -52,7 +61,10 @@ export const Registration = () => {
                     />
                 </div>
                 <div>
-                    <SuperButton type='button' onClick={RegisterCallback} disabled={isLoading}>Register</SuperButton>
+                    <SuperButton type='button'
+                                 onClick={RegisterCallback}
+                                 disabled={disabled}>
+                        Register</SuperButton>
                 </div>
             </form>
            {error? <span className={s.error}>{error}</span>: null}
