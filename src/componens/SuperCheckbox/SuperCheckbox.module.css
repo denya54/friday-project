@@ -7,20 +7,22 @@
 
 .checkbox {
 appearance: none;
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
     margin-right: 10px;
     background: white;
     cursor: pointer;
-    border: 1px solid black ;
+    border: none;
+    background-image:url('./../../assets/images/Shape.png');
+    background-repeat: no-repeat;
 }
 
 .checkbox:checked {
     appearance: none;
-    background-image: url("checkbox-2.png");
+    opacity: 0.3;
 }
 
 
-.spanClassName {
+/* .spanClassName {
 
-}
+} */
