@@ -1,12 +1,13 @@
 import React from 'react';
 import './App.css';
-import {Navigate, NavLink, Route, Routes} from "react-router-dom";
+import {Navigate, Route, Routes} from "react-router-dom";
 import {MainPage} from "./ui/MainPage/MainPage";
 import {Login} from "./ui/Login/Login";
 import {Registration} from "./ui/Registration/Registration";
 import {Error404} from "./ui/Eror404/Error404";
 import {PasswordRecovery} from "./ui/Password/PasswordRecovery";
 import {SetNewPassword} from "./ui/Password/SetNewPassword";
+import {Profile} from "./ui/Profile/Profile";
 
 const App = () => {
     return (
@@ -19,6 +20,7 @@ const App = () => {
                 <Route path='*' element={<Navigate to={'/404'}/>}/>
                 <Route path={'password_recovery'} element={<PasswordRecovery/>}/>
                 <Route path={'set_new_password'} element={<SetNewPassword/>}/>
+                <Route path={'profile'} element={<Profile/>}/>
             </Routes>
         </div>
     );
