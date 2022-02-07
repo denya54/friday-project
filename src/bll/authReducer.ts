@@ -6,10 +6,10 @@ const initialState = {
     isLoggedIn: false
 }
 
-type initialStateType = typeof initialState
-type LoginActionTypes = ReturnType<typeof loginAC> | ReturnType<typeof isLoggedInAC>
+type loginInitialStateType = typeof initialState
+type LoginActionTypes = ReturnType<typeof loginAC> | ReturnType<typeof setIsLoggedInAC>
 
-export const loginReducer = (state: initialStateType = initialState ,action: LoginActionTypes): initialStateType => {
+export const authReducer = (state: loginInitialStateType = initialState , action: LoginActionTypes): loginInitialStateType => {
     switch(action.type) {
         case "LOGIN":
             return {...state, data: action.data}
@@ -21,13 +21,15 @@ export const loginReducer = (state: initialStateType = initialState ,action: Log
 }
 
 export const loginAC = (data: ResponseDataType) => {return {type: "LOGIN", data} as const}
-export const isLoggedInAC = (isLoggedIn: boolean) => {return {type: "SET-IS-LOGGED-IN", isLoggedIn} as const}
+export const setIsLoggedInAC = (isLoggedIn: boolean) => {return {type: "SET-IS-LOGGED-IN", isLoggedIn} as const}
 
 export const loginTC = (data: LoginParamsType) => (dispatch: Dispatch) => {
     loginAPI.login(data)
         .then(res => {
-            dispatch(loginAC(res.data.data.data))
-            dispatch(isLoggedInAC(true))
+            if(res.data) {
+                dispatch(loginAC(res.data))
+                dispatch(setIsLoggedInAC(true))
+            }
         })
         .catch(e => {
             const error = e.response ? alert(e.response.data.error) : (e.message + ', more details in the console')
