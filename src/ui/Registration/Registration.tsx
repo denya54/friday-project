@@ -1,7 +1,7 @@
 import s from "./Registration.module.css"
 import SuperInputText from "../../SuperComponents/SuperInputText/SuperInputText";
 import SuperButton from "../../SuperComponents/SuperButton/SuperButton";
-import React, {useState} from "react";
+import React, {ChangeEvent, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {signUpTC} from "../../bll/register-reduser";
 import {AppRootStateType} from "../../bll/store";
@@ -13,35 +13,59 @@ export const Registration = () => {
     const [password, setPassword] = useState('')
     const [password2, setPassword2] = useState('')
 
+    const [errorEmail, setErrorEmail] = useState('')
+    const [errorPassword, setErrorPassword] = useState('')
+    const [errorPassword2, setErrorPassword2] = useState('')
+
     const dispatch = useDispatch();
 
     const RegisterCallback = (
-        () => {dispatch(signUpTC(email, password, password2))}
+        () => {
+            dispatch(signUpTC(email, password, password2))
+        }
     )
 
-    const success = useSelector<AppRootStateType, boolean >(state=> state.register.success)
-    const error = useSelector<AppRootStateType, null|string>(state => state.register.error)
-    const isLoading = useSelector<AppRootStateType, boolean>(state=> state.register.isLoading)
+    const success = useSelector<AppRootStateType, boolean>(state => state.register.success)
+    const error = useSelector<AppRootStateType, null | string>(state => state.register.error)
+    const isLoading = useSelector<AppRootStateType, boolean>(state => state.register.isLoading)
 
-    const errorEmail = validateEmail(email) ? "" : "Введите корректный email"
-    const errorPassword = validatePassword(password) ? "" : "Пароль должен содержать не менее 8 символов"
+    const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
+        let email = e.currentTarget.value
+        setEmail(email)
+        let error = validateEmail(email) ? "" : "Введите корректный email"
+        setErrorEmail(error)
+    }
+
+    const onChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
+        let password = e.currentTarget.value
+        setPassword(password)
+        let error = validatePassword(password) ? "" : "Пароль должен содержать не менее 8 символов"
+        setErrorPassword(error)
+    }
+
+    const onChangePassword2 = (e: ChangeEvent<HTMLInputElement>) => {
+        let password2 = e.currentTarget.value
+        setPassword2(password2)
+        let error = (password2 === password) ? '' : 'Пароли не совпадают'
+        setErrorPassword2(error)
+    }
 
     const disabled = isLoading || !!errorEmail || !!errorPassword
 
     if (success) {
-        return <Navigate to={'/login'} />
+        return <Navigate to={'/login'}/>
     }
     return (
         <div>
             <h2>It-incubator</h2>
             <p>Sign Up</p>
-            {isLoading? <span> Loading...</span>: null}
+            {isLoading ? <span> Loading...</span> : null}
             <form className={s.form} action="">
                 <div>
                     <SuperInputText type="email"
                                     placeholder={"Email"}
                                     value={email}
-                                    onChangeText={setEmail}
+                                    onChange={onChangeEmail}
                                     error={errorEmail}
                     />
                 </div>
@@ -49,7 +73,7 @@ export const Registration = () => {
                     <SuperInputText type="password"
                                     placeholder={"password"}
                                     value={password}
-                                    onChangeText={setPassword}
+                                    onChange={onChangePassword}
                                     error={errorPassword}
                     />
                 </div>
@@ -57,7 +81,8 @@ export const Registration = () => {
                     <SuperInputText type="password"
                                     placeholder={"Confirm password"}
                                     value={password2}
-                                    onChangeText={setPassword2}
+                                    onChange={onChangePassword2}
+                                    error={errorPassword2}
                     />
                 </div>
                 <div>
@@ -67,7 +92,7 @@ export const Registration = () => {
                         Register</SuperButton>
                 </div>
             </form>
-           {error? <span className={s.error}>{error}</span>: null}
+            {error ? <span className={s.error}>{error}</span> : null}
         </div>
     )
 }
