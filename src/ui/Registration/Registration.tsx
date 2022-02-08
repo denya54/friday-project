@@ -5,7 +5,7 @@ import React, {ChangeEvent, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {signUpTC} from "../../bll/register-reduser";
 import {AppRootStateType} from "../../bll/store";
-import {Navigate} from "react-router-dom";
+import {Navigate, useNavigate} from "react-router-dom";
 import {validateEmail, validatePassword} from "../../utils/validators/validator";
 
 export const Registration = () => {
@@ -18,12 +18,16 @@ export const Registration = () => {
     const [errorPassword2, setErrorPassword2] = useState('')
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const RegisterCallback = (
         () => {
             dispatch(signUpTC(email, password, password2))
         }
     )
+    const CancelCallback = () => {
+        navigate('/login', { replace: true })
+    }
 
     const success = useSelector<AppRootStateType, boolean>(state => state.register.success)
     const error = useSelector<AppRootStateType, null | string>(state => state.register.error)
@@ -85,11 +89,17 @@ export const Registration = () => {
                                     error={errorPassword2}
                     />
                 </div>
-                <div>
-                    <SuperButton type='button'
-                                 onClick={RegisterCallback}
-                                 disabled={disabled}>
-                        Register</SuperButton>
+                <div className={s.btnContainer}>
+                    <div>
+                        <SuperButton onClick={CancelCallback}>
+                            Cancel </SuperButton>
+                    </div>
+                    <div>
+                        <SuperButton type='button'
+                                     onClick={RegisterCallback}
+                                     disabled={disabled}>
+                            Register </SuperButton>
+                    </div>
                 </div>
             </form>
             {error ? <span className={s.error}>{error}</span> : null}
