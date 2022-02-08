@@ -8,7 +8,6 @@ const instance = axios.create({
 
 
 export const ForgotPasswordAPI = {
-
     forgotPassword(email: string) {
         return instance.post<ResponseForgotPassword>('/auth/forgot',
             {
