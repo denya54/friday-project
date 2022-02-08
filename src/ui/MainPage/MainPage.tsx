@@ -1,12 +1,12 @@
 import React from "react";
-import SuperInputText from "../../SuperComponents/SuperInputText/SuperInputText";
-import SuperButton from "../../SuperComponents/SuperButton/SuperButton";
+import InputText from "../../componens/inputText/InputText";
+import MainButton from "../../componens/mainButton/MainButton";
 
 export const MainPage = () => {
     return (
         <div>MainPage
-            <SuperInputText/>
-            <SuperButton>Click ME</SuperButton>
+            <InputText/>
+            <MainButton>Click ME</MainButton>
 
         </div>
     )

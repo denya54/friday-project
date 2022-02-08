@@ -1,10 +1,11 @@
-import SuperInputText from "../../SuperComponents/SuperInputText/SuperInputText";
+
 import {Link, Navigate} from "react-router-dom";
-import SuperButton from "../../SuperComponents/SuperButton/SuperButton";
 import {ChangeEvent, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {loginTC} from "../../bll/authReducer";
 import {AppRootStateType} from "../../bll/store";
+import MainButton from "../../componens/mainButton/MainButton";
+import InputText from "../../componens/inputText/InputText";
 
 const initialState = {
     email: '',
@@ -43,11 +44,11 @@ export const Login = () => {
             </div>
 
             <div>
-                <SuperInputText type="password" value={values.email}
+                <InputText type="password" value={values.email}
                                 onChange={e => onChangeValue(e, 'email')}/>
             </div>
             <div>
-                <SuperInputText type="password" value={values.password}
+                <InputText type="password" value={values.password}
                                 onChange={e => onChangeValue(e, 'password')}/>
             </div>
 
@@ -62,7 +63,7 @@ export const Login = () => {
             </div>
 
             <div>
-                <SuperButton onClick={onSubmit}>Login</SuperButton>
+                <MainButton onClick={onSubmit}>Login</MainButton>
                 <div>
                 <span>
                     Don't have an account?

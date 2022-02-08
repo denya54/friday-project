@@ -1,10 +1,11 @@
-import SuperInputText from "../../SuperComponents/SuperInputText/SuperInputText";
-import SuperButton from "../../SuperComponents/SuperButton/SuperButton";
+
 import {ChangeEvent, useState} from "react";
 import {Navigate, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../bll/store";
 import {createNewPasswordTC, setErrorAC} from "../../bll/recoveryPasswordReducer";
+import InputText from "../../componens/inputText/InputText";
+import MainButton from "../../componens/mainButton/MainButton";
 
 
 export const SetNewPassword = () => {
@@ -47,18 +48,18 @@ export const SetNewPassword = () => {
         <div>
             <h4>Введите новый пароль и постарайтесь его не забыть)</h4>
             {error
-                ? <SuperInputText value={newPasswordField1} onChange={changeNewPasswordField1}
+                ? <InputText value={newPasswordField1} onChange={changeNewPasswordField1}
                                   error={errorMessage} type={'password'}/>
-                : <SuperInputText value={newPasswordField1} onChange={changeNewPasswordField1} type={'password'}/>
+                : <InputText value={newPasswordField1} onChange={changeNewPasswordField1} type={'password'}/>
             }
             <div>
                 <p>Повторите пароль</p>
-                <SuperInputText value={newPasswordField2} onChange={changeNewPasswordField2} type={'password'}/>
+                <InputText value={newPasswordField2} onChange={changeNewPasswordField2} type={'password'}/>
             </div>
             <div>
 
-                <SuperButton onClick={createNewPasswordHandler} disabled={disabledButton}>Создать новый
-                    пароль</SuperButton>
+                <MainButton onClick={createNewPasswordHandler} disabled={disabledButton}>Создать новый
+                    пароль</MainButton>
             </div>
 
         </div>

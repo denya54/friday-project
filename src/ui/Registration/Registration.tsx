@@ -1,12 +1,12 @@
 import s from "./Registration.module.css"
-import SuperInputText from "../../SuperComponents/SuperInputText/SuperInputText";
-import SuperButton from "../../SuperComponents/SuperButton/SuperButton";
 import React, {ChangeEvent, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {signUpTC} from "../../bll/register-reduser";
 import {AppRootStateType} from "../../bll/store";
 import {Navigate, useNavigate} from "react-router-dom";
 import {validateEmail, validatePassword} from "../../utils/validators/validator";
+import InputText from "../../componens/inputText/InputText";
+import MainButton from "../../componens/mainButton/MainButton";
 
 export const Registration = () => {
     const [email, setEmail] = useState('')
@@ -66,7 +66,7 @@ export const Registration = () => {
             {isLoading ? <span> Loading...</span> : null}
             <form className={s.form} action="">
                 <div>
-                    <SuperInputText type="email"
+                    <InputText type="email"
                                     placeholder={"Email"}
                                     value={email}
                                     onChange={onChangeEmail}
@@ -74,7 +74,7 @@ export const Registration = () => {
                     />
                 </div>
                 <div>
-                    <SuperInputText type="password"
+                    <InputText type="password"
                                     placeholder={"password"}
                                     value={password}
                                     onChange={onChangePassword}
@@ -82,7 +82,7 @@ export const Registration = () => {
                     />
                 </div>
                 <div>
-                    <SuperInputText type="password"
+                    <InputText type="password"
                                     placeholder={"Confirm password"}
                                     value={password2}
                                     onChange={onChangePassword2}
@@ -91,14 +91,14 @@ export const Registration = () => {
                 </div>
                 <div className={s.btnContainer}>
                     <div>
-                        <SuperButton onClick={CancelCallback}>
-                            Cancel </SuperButton>
+                        <MainButton onClick={CancelCallback}>
+                            Cancel </MainButton>
                     </div>
                     <div>
-                        <SuperButton type='button'
+                        <MainButton type='button'
                                      onClick={RegisterCallback}
                                      disabled={disabled}>
-                            Register </SuperButton>
+                            Register </MainButton>
                     </div>
                 </div>
             </form>

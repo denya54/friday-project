@@ -1,10 +1,11 @@
-import SuperInputText from "../../SuperComponents/SuperInputText/SuperInputText";
-import SuperButton from "../../SuperComponents/SuperButton/SuperButton";
+
 import {ChangeEvent, useState} from "react";
 import {Navigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../bll/store";
 import { passwordRecoveryTC, setErrorAC} from "../../bll/recoveryPasswordReducer";
+import InputText from "../../componens/inputText/InputText";
+import MainButton from "../../componens/mainButton/MainButton";
 
 
 export const PasswordRecovery = () => {
@@ -39,11 +40,11 @@ export const PasswordRecovery = () => {
             <h3>Забыли пароль?</h3>
             <h4>Укажите email</h4>
             {error
-                ? <SuperInputText value={emailAddressField} onChange={changeEmailAddressField} error={errorMessage}/>
-                : <SuperInputText value={emailAddressField} onChange={changeEmailAddressField}/>
+                ? <InputText value={emailAddressField} onChange={changeEmailAddressField} error={errorMessage}/>
+                : <InputText value={emailAddressField} onChange={changeEmailAddressField}/>
             }
             <p>Пожалуйста укажите email, который вы использовали для входа на сайт</p>
-            <SuperButton onClick={sendEmailToServer} disabled={disabledButton}>Далее</SuperButton>
+            <MainButton onClick={sendEmailToServer} disabled={disabledButton}>Далее</MainButton>
             <div><a href={'/login'}>Я вспомнил свой логин и пароль</a></div>
 
         </div>

@@ -1,6 +1,6 @@
 import React, {ChangeEvent, DetailedHTMLProps, InputHTMLAttributes, KeyboardEvent} from 'react'
-import SuperCheckbox from '../SuperCheckbox/SuperCheckbox'
 import s from './InputPassword.module.css'
+import PasswordCheckbox from "../passwordCheckbox/PasswordCheckbox";
 
 // тип пропсов обычного инпута
 type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
@@ -57,7 +57,7 @@ const InputPassword: React.FC<InputPasswordPropsType> = (
 
                     {...restProps} // отдаём инпуту остальные пропсы если они есть (value например там внутри)
                 />
-                <SuperCheckbox/>
+                <PasswordCheckbox/>
             </div>
             
         </div>
