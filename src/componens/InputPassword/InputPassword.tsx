@@ -1,19 +1,20 @@
 import React, {ChangeEvent, DetailedHTMLProps, InputHTMLAttributes, KeyboardEvent} from 'react'
-import s from './SuperInputText.module.css'
+import SuperCheckbox from '../SuperCheckbox/SuperCheckbox'
+import s from './InputPassword.module.css'
 
 // тип пропсов обычного инпута
 type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
 
 // здесь мы говорим что у нашего инпута будут такие же пропсы как у обычного инпута
 // (чтоб не писать value: string, onChange: ...; они уже все описаны в DefaultInputPropsType)
-type SuperInputTextPropsType = DefaultInputPropsType & { // и + ещё пропсы которых нет в стандартном инпуте
+type InputPasswordPropsType = DefaultInputPropsType & { // и + ещё пропсы которых нет в стандартном инпуте
     onChangeText?: (value: string) => void
     onEnter?: () => void
     error?: string
     spanClassName?: string
 }
 
-const SuperInputText: React.FC<SuperInputTextPropsType> = (
+const InputPassword: React.FC<InputPasswordPropsType> = (
     {
         type, // достаём и игнорируем чтоб нельзя было задать другой тип инпута
         onChange, onChangeText,
@@ -44,18 +45,27 @@ const SuperInputText: React.FC<SuperInputTextPropsType> = (
 
     return (
         <>
-            <input
-                type={type}
-                placeholder={error ? 'error' : 'write text...'}
-                onChange={onChangeCallback}
-                onKeyPress={onKeyPressCallback}
-                className={finalInputClassName}
+        <div className={s.container}>
+            <h5 className={s.title}>{restProps.title}</h5>
+            <div className={s.wrapper}>
+                <input
+                    type={type}
+                    placeholder={error ? 'error' : 'Password'}
+                    onChange={onChangeCallback}
+                    onKeyPress={onKeyPressCallback}
+                    className={finalInputClassName}
 
-                {...restProps} // отдаём инпуту остальные пропсы если они есть (value например там внутри)
-            />
-            {error && <p className={finalSpanClassName}>{error}</p>}
+                    {...restProps} // отдаём инпуту остальные пропсы если они есть (value например там внутри)
+                />
+                <SuperCheckbox/>
+            </div>
+            
+        </div>
+        <hr className={s.line}/>
+            {error && <span className={finalSpanClassName}>{error}</span>}
         </>
+        
     )
 }
 
-export default SuperInputText
+export default InputPassword

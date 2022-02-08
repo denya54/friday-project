@@ -31,6 +31,7 @@ const App = () => {
 
     return (
         <div className="App">
+            <div className="container">
             <Routes>
                 <Route path={'/'} element={<MainPage/>}/>
                 <Route path={'/login'} element={<Login/>}/>
@@ -43,6 +44,7 @@ const App = () => {
                 <Route path={'/transitional_page_for_recovery_pass'} element={<TransitionalPage/>}/>
                 <Route path={'/password_recovery_success'} element={<SuccessRecoveryPassword/>}/>
             </Routes>
+            </div>
         </div>
     )
 }
