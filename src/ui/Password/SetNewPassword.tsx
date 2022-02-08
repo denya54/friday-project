@@ -1,4 +1,3 @@
-
 import {ChangeEvent, useState} from "react";
 import {Navigate, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
@@ -49,12 +48,12 @@ export const SetNewPassword = () => {
             <h4>Введите новый пароль и постарайтесь его не забыть)</h4>
             {error
                 ? <InputText value={newPasswordField1} onChange={changeNewPasswordField1}
-                                  error={errorMessage} type={'password'}/>
-                : <InputText value={newPasswordField1} onChange={changeNewPasswordField1} type={'password'}/>
+                                  error={errorMessage} type={'password'} placeholder={'Введите новый пароль'}/>
+                : <InputText value={newPasswordField1} onChange={changeNewPasswordField1} type={'password'} placeholder={'Введите новый пароль'}/>
             }
             <div>
                 <p>Повторите пароль</p>
-                <InputText value={newPasswordField2} onChange={changeNewPasswordField2} type={'password'}/>
+                <InputText value={newPasswordField2} onChange={changeNewPasswordField2} placeholder={'Повторите пароль'}/>
             </div>
             <div>
 
