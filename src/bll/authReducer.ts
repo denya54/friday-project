@@ -1,4 +1,4 @@
-import {loginAPI, LoginParamsType, ResponseDataType} from "../ui/Login/loginApi/loginAPI";
+import {loginAPI, LoginParamsType, ResponseDataType} from "../dal/loginApi/loginAPI";
 import {Dispatch} from "redux";
 
 const initialState = {
