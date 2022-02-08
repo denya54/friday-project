@@ -1,0 +1,17 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    height: 400px;
+    max-width: 300px;
+    margin: 0 auto;
+    justify-content: space-around;
+}
+
+.error {
+    color: red
+}
+
+.btnContainer {
+    display: flex;
+    justify-content: space-between;
+}
