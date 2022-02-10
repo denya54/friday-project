@@ -6,6 +6,11 @@ import {loginTC} from "../../bll/authReducer";
 import {AppRootStateType} from "../../bll/store";
 import MainButton from "../../componens/mainButton/MainButton";
 import InputText from "../../componens/inputText/InputText";
+import InputPassword from "../../componens/InputPassword/InputPassword";
+import s from './Login.module.css'
+import LogoTitle from "../../componens/logoTitle/LogoTitle";
+import TitlePage from "../../componens/titlePage/TitlePage";
+
 
 const initialState = {
     email: '',
@@ -34,44 +39,32 @@ export const Login = () => {
     }
 
     return (
-        <div>
-            <div>
-                <h2>It-incubator</h2>
-            </div>
-
-            <div>
-                <h3>Sign in</h3>
-            </div>
-
-            <div>
-                <InputText type="password" value={values.email}
-                                onChange={e => onChangeValue(e, 'email')}/>
-            </div>
-            <div>
-                <InputText type="password" value={values.password}
+        <div className={s.login}>
+            <div className={s.container}>
+                <LogoTitle></LogoTitle>
+                <TitlePage title="Авторизация"></TitlePage>
+                <InputText type="text" value={values.email}
+                                onChange={e => onChangeValue(e, 'email')}/>           
+                <InputPassword type="password" title='Password' value={values.password}
                                 onChange={e => onChangeValue(e, 'password')}/>
-            </div>
+            
 
-            <div>
-                Remember me
-                <input type="checkbox" checked={values.rememberMe}
-                       onChange={e => onChangeValue(e, 'rememberMe')}/>
-            </div>
-
-            <div>
-                <Link to='/password_recovery'>Forgot password</Link>
-            </div>
-
-            <div>
-                <MainButton onClick={onSubmit}>Login</MainButton>
-                <div>
-                <span>
-                    Don't have an account?
-                </span>
-                    <Link to="/">
-                        <h4>Sign in</h4>
-                    </Link>
+            <div className={s.controlPas}>
+                <div className={s.remember}>
+                    <label className={s.rememberLabel}>Запомнить пароль</label>
+                    <input className={s.rememberCheckbox} type="checkbox" checked={values.rememberMe}
+                        onChange={e => onChangeValue(e, 'rememberMe')}/>
                 </div>
+                <div className={s.forgot}>
+                    <Link className={s.link}to='/password_recovery'>Забыл пароль</Link>
+                </div>   
+            </div>
+
+            <div>
+                <MainButton className={s.mainButton} onClick={onSubmit}>Войти</MainButton>
+                <p><span className={s.loginSpan}>Нет аккаунта?</span></p>
+                <Link className={s.singLink} to="/registration">Зарегистрируйся</Link>
+            </div>
             </div>
         </div>
     )

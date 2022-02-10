@@ -1,10 +1,14 @@
-
+import LogoTitle from "../../componens/logoTitle/LogoTitle";
+import s from "./TransitionalPage.module.css";
+import letter from "./../../assets/images/Group 281.png";
 
 export const TransitionalPage = () => {
     return (
-        <div>
-            <h4>Проверь свою почту!</h4>
-            <p>Мы отправили на твой email инструкцию с дальнейшими действиями. Эту страницу можно закрывать!</p>
+        <div className={s.transitionalPage}>
+            <LogoTitle></LogoTitle>
+            <img className={s.img} src={letter}></img>
+            <h4 className={s.title}>Проверь свою почту!</h4>
+            <p className={s.text}>Мы отправили на твой email инструкцию с дальнейшими действиями. Эту страницу можно закрывать!</p>
         </div>
     )
 }

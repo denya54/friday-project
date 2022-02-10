@@ -7,6 +7,10 @@ import {Navigate, useNavigate} from "react-router-dom";
 import {validateEmail, validatePassword} from "../../utils/validators/validator";
 import InputText from "../../componens/inputText/InputText";
 import MainButton from "../../componens/mainButton/MainButton";
+import LogoTitle from "../../componens/logoTitle/LogoTitle";
+import InputPassword from "../../componens/InputPassword/InputPassword";
+import CanselButton from "../../componens/canselButton/CanselButton";
+import TitlePage from "../../componens/titlePage/TitlePage";
 
 export const Registration = () => {
     const [email, setEmail] = useState('')
@@ -60,46 +64,40 @@ export const Registration = () => {
         return <Navigate to={'/login'}/>
     }
     return (
-        <div>
-            <h2>It-incubator</h2>
-            <p>Sign Up</p>
+        <div className={s.registration}>
+            <LogoTitle></LogoTitle>
+            {/* <p>Sign Up</p> */}
+            <TitlePage title='Регистрация'></TitlePage>
             {isLoading ? <span> Loading...</span> : null}
             <form className={s.form} action="">
-                <div>
                     <InputText type="email"
-                                    placeholder={"Email"}
+                                    // placeholder={"Email"}
                                     value={email}
                                     onChange={onChangeEmail}
                                     error={errorEmail}
                     />
-                </div>
-                <div>
-                    <InputText type="password"
-                                    placeholder={"password"}
+                    <InputPassword type="password"
+                                    title='Password'
+                                    // placeholder={"password"}
                                     value={password}
                                     onChange={onChangePassword}
                                     error={errorPassword}
                     />
-                </div>
-                <div>
-                    <InputText type="password"
-                                    placeholder={"Confirm password"}
+                    <InputPassword type="password"
+                                    title="Повторите password"
+                                    // placeholder={"Confirm password"}
                                     value={password2}
                                     onChange={onChangePassword2}
                                     error={errorPassword2}
                     />
-                </div>
                 <div className={s.btnContainer}>
-                    <div>
-                        <MainButton onClick={CancelCallback}>
-                            Cancel </MainButton>
-                    </div>
-                    <div>
-                        <MainButton type='button'
-                                     onClick={RegisterCallback}
-                                     disabled={disabled}>
-                            Register </MainButton>
-                    </div>
+                        <CanselButton 
+                            onClick={CancelCallback}>Отмена</CanselButton>
+                        <MainButton 
+                            type='button'
+                            onClick={RegisterCallback} 
+                            disabled={disabled}
+                            style={{width:'186px'}}>Зарегистрироваться </MainButton>
                 </div>
             </form>
             {error ? <span className={s.error}>{error}</span> : null}
