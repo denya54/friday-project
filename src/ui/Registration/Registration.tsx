@@ -9,7 +9,7 @@ import MainButton from "../../componens/mainButton/MainButton";
 import {signUpTC} from "../../bll/registerReduser";
 import LogoTitle from "../../componens/logoTitle/LogoTitle";
 import InputPassword from "../../componens/InputPassword/InputPassword";
-import CancelButton from "../../componens/canselButton/CancelButton";
+import CancelButton from "../../componens/canсelButton/CancelButton";
 import TitlePage from "../../componens/titlePage/TitlePage";
 
 export const Registration = () => {
