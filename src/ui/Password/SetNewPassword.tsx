@@ -4,7 +4,6 @@ import {Navigate, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../bll/store";
 import {createNewPasswordTC, setErrorAC} from "../../bll/recoveryPasswordReducer";
-
 import MainButton from "../../componens/mainButton/MainButton";
 import LogoTitle from "../../componens/logoTitle/LogoTitle";
 import InputPassword from "../../componens/InputPassword/InputPassword";
@@ -47,7 +46,7 @@ export const SetNewPassword = () => {
 
     return (
         <div className={s.setNewPassword}>
-            <LogoTitle></LogoTitle>
+            <LogoTitle/>
             <h4 className={s.title}>Создание нового пароля</h4>
             {error
                 ? <InputPassword title="Password" value={newPasswordField1} onChange={changeNewPasswordField1}
