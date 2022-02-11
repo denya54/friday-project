@@ -1,12 +1,12 @@
 import s from "./Registration.module.css"
 import React, {ChangeEvent, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {signUpTC} from "../../bll/register-reduser";
 import {AppRootStateType} from "../../bll/store";
 import {Navigate, useNavigate} from "react-router-dom";
 import {validateEmail, validatePassword} from "../../utils/validators/validator";
 import InputText from "../../componens/inputText/InputText";
 import MainButton from "../../componens/mainButton/MainButton";
+import {signUpTC} from "../../bll/registerReduser";
 
 export const Registration = () => {
     const [email, setEmail] = useState('')
@@ -91,7 +91,9 @@ export const Registration = () => {
                 </div>
                 <div className={s.btnContainer}>
                     <div>
-                        <MainButton onClick={CancelCallback}>
+                        <MainButton
+                            cansel
+                            onClick={CancelCallback}>
                             Cancel </MainButton>
                     </div>
                     <div>
