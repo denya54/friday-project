@@ -43,22 +43,29 @@ const InputText: React.FC<InputTextPropsType> = (
     const finalInputClassName = `${error ? s.errorInput : s.inputText} ${className}` // need to fix with (?:) and s.superInput
 
     return (
-        <>
-        <div className={s.container}>
-            <label className={s.title}>{restProps.title}</label>
-            <input
-                type={type}
-                placeholder={error ? 'error' : 'Email'}
-                onChange={onChangeCallback}
-                onKeyPress={onKeyPressCallback}
-                className={finalInputClassName}
+        <div className={s.inputText}>
+            <div className={s.container}>
+                <div className={s.input}>
+                    <label className={s.title}>
+                        <input
+                            required
+                            type={type}
+                            placeholder="&nbsp;"                          
+                            // {error ? 'error' : 'Email'}
+                            onChange={onChangeCallback}
+                            onKeyPress={onKeyPressCallback}
+                            className={finalInputClassName}
 
-                {...restProps} // отдаём инпуту остальные пропсы если они есть (value например там внутри)
-            />
+                            {...restProps} // отдаём инпуту остальные пропсы если они есть (value например там внутри)
+                        />
+                    <span className={s.span}>Email</span>
+                    </label>
+                    
+                </div>
+                <hr className={s.line}/> 
             </div>
-            <hr className={s.line}/>
             {error && <span className={finalSpanClassName}>{error}</span>}
-        </>
+        </div>
         
     )
 }

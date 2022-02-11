@@ -5,7 +5,9 @@ import {loginTC} from "../../bll/authReducer";
 import {AppRootStateType} from "../../bll/store";
 import MainButton from "../../componens/mainButton/MainButton";
 import InputText from "../../componens/inputText/InputText";
-import PasswordCheckbox from "../../componens/passwordCheckbox/PasswordCheckbox";
+import InputPassword from "../../componens/InputPassword/InputPassword";
+import LogoTitle from "../../componens/logoTitle/LogoTitle";
+import TitlePage from "../../componens/titlePage/TitlePage";
 import s from './Login.module.css'
 import {validateEmail, validatePassword} from "../../utils/validators/validator";
 
@@ -50,7 +52,7 @@ export const Login = () => {
 
         setValues({
             ...values,
-            [field]: value
+            [field]: field === 'rememberMe' ? e.currentTarget.checked : e.currentTarget.value
         })
 
         if (field === 'email') {
@@ -76,53 +78,32 @@ export const Login = () => {
 
     return (
         <div className={s.login}>
-            <div>
-                <h2>It-incubator</h2>
-            </div>
+            <div className={s.container}>
+                <LogoTitle></LogoTitle>
+                <TitlePage title="Авторизация"></TitlePage>
+                <InputText type="text" value={values.email}
+                                onChange={e => onChangeValue(e, 'email')}/>
+                <InputPassword type="password" title='Password' value={values.password}
+                                onChange={e => onChangeValue(e, 'password')}/>
 
-            <div>
-                <h3>Sign in</h3>
-            </div>
 
-            <div>
-                <InputText value={values.email}
-                           placeholder="Email"
-                           onKeyPress={onKeyPress}
-                           onChange={e => onChangeValue(e, 'email')}
-                           error={error.email}/>
-            </div>
-            <div>
-                <InputText type={inputType}
-                           value={values.password}
-                           placeholder="Password"
-                           onKeyPress={onKeyPress}
-                           onChange={e => onChangeValue(e, 'password')}
-                           error={error.password}/>
-                <PasswordCheckbox onChange={handleHidePassword}/>
-            </div>
-
-            <div>
-                Remember me
-                <InputText type="checkbox" checked={values.rememberMe}
-                           onChange={e => onChangeValue(e, 'rememberMe')}/>
-            </div>
-
-            <div>
-                <Link to='/password_recovery'>Forgot password</Link>
-            </div>
-
-            <div>
-                <MainButton onClick={onSubmit}>Login</MainButton>
-                <div>
-                <span>
-                    Don't have an account?
-                </span>
-                    <Link to="/registration">
-                        <h4>Sign in</h4>
-                    </Link>
+            <div className={s.controlPas}>
+                <div className={s.remember}>
+                    <label className={s.rememberLabel}>Запомнить пароль</label>
+                    <input className={s.rememberCheckbox} type="checkbox" checked={values.rememberMe}
+                        onChange={e => onChangeValue(e, 'rememberMe')}/>
+                </div>
+                <div className={s.forgot}>
+                    <Link className={s.link}to='/password_recovery'>Забыл пароль</Link>
                 </div>
             </div>
-            {authError && <span className={s.err}>&#128165;{authError}&#128165;</span>}
+
+            <div>
+                <MainButton className={s.mainButton} onClick={onSubmit}>Войти</MainButton>
+                <p><span className={s.loginSpan}>Нет аккаунта?</span></p>
+                <Link className={s.singLink} to="/registration">Зарегистрируйся</Link>
+            </div>
+            </div>
         </div>
     )
 }

@@ -1,4 +1,4 @@
-
+import s from './PasswordRecovery.module.css';
 import {ChangeEvent, useState} from "react";
 import {Navigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
@@ -6,6 +6,8 @@ import {AppRootStateType} from "../../bll/store";
 import { passwordRecoveryTC, setErrorAC} from "../../bll/recoveryPasswordReducer";
 import InputText from "../../componens/inputText/InputText";
 import MainButton from "../../componens/mainButton/MainButton";
+import LogoTitle from "../../componens/logoTitle/LogoTitle";
+import TitlePage from '../../componens/titlePage/TitlePage';
 
 
 export const PasswordRecovery = () => {
@@ -34,16 +36,18 @@ export const PasswordRecovery = () => {
     }
 
     return (
-        <div>
-            <h3>Забыли пароль?</h3>
-            <h4>Укажите email</h4>
+        <div className={s.passwordRecovery}>
+            <LogoTitle></LogoTitle>
+            {/* <TitlePage>Забыли пароль?</TitlePage> */}
+            <h3 className={s.title}>Забыли пароль?</h3>
+            {/* <p className={s.text}>Укажите email</p> */}
             {error
                 ? <InputText value={emailAddressField} onChange={changeEmailAddressField} error={errorMessage}/>
                 : <InputText value={emailAddressField} onChange={changeEmailAddressField}/>
             }
-            <p>Пожалуйста укажите email, который вы использовали для входа на сайт</p>
-            <MainButton onClick={sendEmailToServer} disabled={disabledButton}>Далее</MainButton>
-            <div><a href={'/login'}>Я вспомнил свой логин и пароль</a></div>
+            <p className={s.text}>Пожалуйста укажите email, который вы использовали для входа на сайт</p>
+            <MainButton className={s.button} onClick={sendEmailToServer} disabled={disabledButton}>Далее</MainButton>
+            <div className={s.wrapLink}><a className={s.link} href={'/login'}>Я вспомнил свой логин и пароль</a></div>
 
         </div>
     )
