@@ -1,13 +1,12 @@
 import s from './PasswordRecovery.module.css';
 import {ChangeEvent, useState} from "react";
-import {Navigate} from "react-router-dom";
+import {Navigate, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../bll/store";
 import { passwordRecoveryTC, setErrorAC} from "../../bll/recoveryPasswordReducer";
 import InputText from "../../componens/inputText/InputText";
 import MainButton from "../../componens/mainButton/MainButton";
 import LogoTitle from "../../componens/logoTitle/LogoTitle";
-import TitlePage from '../../componens/titlePage/TitlePage';
 
 
 export const PasswordRecovery = () => {
@@ -31,6 +30,11 @@ export const PasswordRecovery = () => {
         setEmailAddressField('')
     }
 
+    const navigate = useNavigate();
+    const redirectToLogin = () => {
+        navigate('/login', { replace: true })
+    }
+
     if (isSuccess) {
         return <Navigate to={`/transitional_page_for_recovery_pass`}/>;
     }
@@ -47,7 +51,7 @@ export const PasswordRecovery = () => {
             }
             <p className={s.text}>Пожалуйста укажите email, который вы использовали для входа на сайт</p>
             <MainButton className={s.button} onClick={sendEmailToServer} disabled={disabledButton}>Далее</MainButton>
-            <div className={s.wrapLink}><a className={s.link} href={'/login'}>Я вспомнил свой логин и пароль</a></div>
+            <div className={s.wrapLink}><a className={s.link} onClick={redirectToLogin}>Я вспомнил свой логин и пароль</a></div>
 
         </div>
     )
