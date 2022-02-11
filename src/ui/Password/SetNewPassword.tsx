@@ -61,7 +61,6 @@ export const SetNewPassword = () => {
                 <MainButton onClick={createNewPasswordHandler} disabled={disabledButton}>Создать новый
                     пароль</MainButton>
             </div>
-
         </div>
     )
 }
