@@ -1,9 +1,10 @@
-import {loginAPI, LoginParamsType, ResponseDataType} from "../ui/Login/loginApi/loginAPI";
+import {loginAPI, LoginParamsType, ResponseDataType} from "../dal/loginApi/loginAPI";
 import {Dispatch} from "redux";
 
 const initialState = {
     data: {},
-    isLoggedIn: false
+    isLoggedIn: false,
+    authError: ''
 }
 
 type loginInitialStateType = typeof initialState
@@ -11,6 +12,7 @@ type LoginActionTypes =
     | ReturnType<typeof loginAC>
     | ReturnType<typeof setIsLoggedInAC>
     | ReturnType<typeof logoutAC>
+    | ReturnType<typeof setErrorAC>
 
 export const authReducer = (state: loginInitialStateType = initialState, action: LoginActionTypes): loginInitialStateType => {
     switch (action.type) {
@@ -20,6 +22,8 @@ export const authReducer = (state: loginInitialStateType = initialState, action:
             return {...state, isLoggedIn: action.isLoggedIn}
         case "LOGOUT":
             return {...state, data: {}}
+        case "SET-ERROR":
+            return {...state, authError: action.error}
         default:
             return state
     }
@@ -34,6 +38,9 @@ export const logoutAC = () => {
 export const setIsLoggedInAC = (isLoggedIn: boolean) => {
     return {type: "SET-IS-LOGGED-IN", isLoggedIn} as const
 }
+export const setErrorAC = (error: string) => {
+    return {type: "SET-ERROR", error} as const
+}
 
 export const loginTC = (data: LoginParamsType) => (dispatch: Dispatch) => {
     loginAPI.login(data)
@@ -45,9 +52,15 @@ export const loginTC = (data: LoginParamsType) => (dispatch: Dispatch) => {
         })
         .catch(e => {
             if (e.response) {
-                alert(e.response.data.error)
+                dispatch(setErrorAC(e.response.data.error))
+                setTimeout(() => {
+                    dispatch(setErrorAC(''))
+                }, 3000)
             } else {
-                alert(e.message + ', more details in the console')
+                dispatch(setErrorAC(e.message))
+                setTimeout(() => {
+                    dispatch(setErrorAC(''))
+                }, 3000)
             }
         })
 }
@@ -62,9 +75,9 @@ export const logoutTC = () => (dispatch: Dispatch) => {
         })
         .catch(e => {
             if (e.response) {
-                alert(e.response.data.error)
+                dispatch(setErrorAC(e.response.data.error))
             } else {
-                alert(e.message + ', more details in the console')
+                dispatch(setErrorAC(e.message))
             }
         })
 }

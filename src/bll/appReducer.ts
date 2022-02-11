@@ -1,5 +1,5 @@
 import {Dispatch} from "redux";
-import {loginAPI} from "../ui/Login/loginApi/loginAPI";
+import {loginAPI} from "../dal/loginApi/loginAPI";
 import {setIsLoggedInAC} from "./authReducer";
 
 const initialState = {
