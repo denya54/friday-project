@@ -9,7 +9,7 @@ type CanselButtonPropsType = DefaultButtonPropsType & {
     disabled?: boolean
 }
 
-const CanselButton: React.FC<CanselButtonPropsType> = (
+const CancelButton: React.FC<CanselButtonPropsType> = (
     {
         red, className,
         ...restProps// все остальные пропсы попадут в объект restProps, там же будет children
@@ -25,4 +25,4 @@ const CanselButton: React.FC<CanselButtonPropsType> = (
     )
 }
 
-export default CanselButton
+export default CancelButton

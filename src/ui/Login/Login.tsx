@@ -79,8 +79,8 @@ export const Login = () => {
     return (
         <div className={s.login}>
             <div className={s.container}>
-                <LogoTitle></LogoTitle>
-                <TitlePage title="Авторизация"></TitlePage>
+                <LogoTitle/>
+                <TitlePage title="Авторизация"/>
                 <InputText type="text" value={values.email}
                                 onChange={e => onChangeValue(e, 'email')}/>
                 <InputPassword type="password" title='Password' value={values.password}
@@ -94,7 +94,7 @@ export const Login = () => {
                         onChange={e => onChangeValue(e, 'rememberMe')}/>
                 </div>
                 <div className={s.forgot}>
-                    <Link className={s.link}to='/password_recovery'>Забыл пароль</Link>
+                    <Link className={s.link} to='/password_recovery'>Забыл пароль</Link>
                 </div>
             </div>
 

@@ -9,7 +9,7 @@ import MainButton from "../../componens/mainButton/MainButton";
 import {signUpTC} from "../../bll/registerReduser";
 import LogoTitle from "../../componens/logoTitle/LogoTitle";
 import InputPassword from "../../componens/InputPassword/InputPassword";
-import CanselButton from "../../componens/canselButton/CanselButton";
+import CancelButton from "../../componens/canselButton/CancelButton";
 import TitlePage from "../../componens/titlePage/TitlePage";
 
 export const Registration = () => {
@@ -65,9 +65,9 @@ export const Registration = () => {
     }
     return (
         <div className={s.registration}>
-            <LogoTitle></LogoTitle>
+            <LogoTitle/>
             {/* <p>Sign Up</p> */}
-            <TitlePage title='Регистрация'></TitlePage>
+            <TitlePage title='Регистрация'/>
             {isLoading ? <span> Loading...</span> : null}
             <form className={s.form} action="">
                     <InputText type="email"
@@ -91,8 +91,8 @@ export const Registration = () => {
                                     error={errorPassword2}
                     />
                 <div className={s.btnContainer}>
-                        <CanselButton
-                            onClick={CancelCallback}>Отмена</CanselButton>
+                        <CancelButton
+                            onClick={CancelCallback}>Отмена</CancelButton>
                         <MainButton
                             type='button'
                             onClick={RegisterCallback}

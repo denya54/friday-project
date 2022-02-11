@@ -41,7 +41,7 @@ export const PasswordRecovery = () => {
 
     return (
         <div className={s.passwordRecovery}>
-            <LogoTitle></LogoTitle>
+            <LogoTitle/>
             {/* <TitlePage>Забыли пароль?</TitlePage> */}
             <h3 className={s.title}>Забыли пароль?</h3>
             {/* <p className={s.text}>Укажите email</p> */}
