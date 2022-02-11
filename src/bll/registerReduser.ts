@@ -1,6 +1,6 @@
 import {ThunkAction} from "redux-thunk";
 import {AppRootStateType} from "./store";
-import {RegisterAPI} from "./register-api";
+import {RegisterAPI} from "../dal/register-api";
 
 export const initialState = {
     error: null as null | string,
