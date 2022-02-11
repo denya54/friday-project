@@ -24,8 +24,6 @@ export const PasswordRecovery = () => {
         dispatch(setErrorAC(false))
     }
 
-
-
     const sendEmailToServer = () => {
         dispatch(passwordRecoveryTC(emailAddressField))
         setEmailAddressField('')

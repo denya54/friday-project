@@ -32,7 +32,6 @@ export const SetNewPassword = () => {
     const {token} = useParams<'token'>()
 
     const createNewPasswordHandler = () => {
-
         dispatch(createNewPasswordTC(newPasswordField1, newPasswordField2, token || ''))
         setNewPasswordField1('')
         setNewPasswordField2('')
@@ -48,12 +47,14 @@ export const SetNewPassword = () => {
             <h4>Введите новый пароль и постарайтесь его не забыть)</h4>
             {error
                 ? <InputText value={newPasswordField1} onChange={changeNewPasswordField1}
-                                  error={errorMessage} type={'password'} placeholder={'Введите новый пароль'}/>
-                : <InputText value={newPasswordField1} onChange={changeNewPasswordField1} type={'password'} placeholder={'Введите новый пароль'}/>
+                             error={errorMessage} type={'password'} placeholder={'Введите новый пароль'}/>
+                : <InputText value={newPasswordField1} onChange={changeNewPasswordField1} type={'password'}
+                             placeholder={'Введите новый пароль'}/>
             }
             <div>
                 <p>Повторите пароль</p>
-                <InputText value={newPasswordField2} onChange={changeNewPasswordField2} placeholder={'Повторите пароль'}/>
+                <InputText value={newPasswordField2} onChange={changeNewPasswordField2}
+                           placeholder={'Повторите пароль'} type={'password'}/>
             </div>
             <div>
 
