@@ -51,7 +51,7 @@ const InputText: React.FC<InputTextPropsType> = (
                             required
                             type={type}
                             placeholder="&nbsp;"                          
-                // {error ? 'error' : 'Email'}
+                            // {error ? 'error' : 'Email'}
                             onChange={onChangeCallback}
                             onKeyPress={onKeyPressCallback}
                             className={finalInputClassName}
@@ -60,10 +60,10 @@ const InputText: React.FC<InputTextPropsType> = (
                         />
                     <span className={s.span}>Email</span>
                     </label>
+                    
                 </div>
-                <hr className={s.line}/>    
+                <hr className={s.line}/> 
             </div>
-            
             {error && <span className={finalSpanClassName}>{error}</span>}
         </div>
         

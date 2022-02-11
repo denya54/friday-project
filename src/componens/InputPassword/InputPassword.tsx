@@ -2,6 +2,9 @@ import React, {ChangeEvent, DetailedHTMLProps, InputHTMLAttributes, KeyboardEven
 import s from './InputPassword.module.css'
 import PasswordCheckbox from "../passwordCheckbox/PasswordCheckbox";
 
+
+
+
 // тип пропсов обычного инпута
 type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
 
@@ -38,33 +41,37 @@ const InputPassword: React.FC<InputPasswordPropsType> = (
         && e.key === 'Enter' // и если нажата кнопка Enter
         && onEnter() // то вызвать его
     }
-
+    
     const finalSpanClassName = `${s.error} ${spanClassName ? spanClassName : ''}`
 
-    const finalInputClassName = `${error ? s.errorInput : s.superInput} ${className}` // need to fix with (?:) and s.superInput
+    const finalInputClassName = `${error ? s.errorInput : s.inputPassword} ${className}` // need to fix with (?:) and s.superInput
 
     return (
-        <>
-        <div className={s.container}>
-            <h5 className={s.title}>{restProps.title}</h5>
-            <div className={s.wrapper}>
-                <input
-                    type={type}
-                    placeholder={error ? 'error' : 'Password'}
-                    onChange={onChangeCallback}
-                    onKeyPress={onKeyPressCallback}
-                    className={finalInputClassName}
-
-                    {...restProps} // отдаём инпуту остальные пропсы если они есть (value например там внутри)
-                />
-                <PasswordCheckbox/>
-            </div>
-            
-        </div>
-        <hr className={s.line}/>
+        <div className={s.inputPassword}>
+            <div className={s.container}>
+                <div className={s.input}>             
+                    <label className={s.title}>
+                    <input
+                        id='password-input'
+                        required
+                        type={type}
+                        placeholder="&nbsp;"
+                        // {error ? 'error' : 'Password'}
+                        onChange={onChangeCallback}
+                        onKeyPress={onKeyPressCallback}
+                        className={finalInputClassName}
+                        {...restProps} // отдаём инпуту остальные пропсы если они есть (value например там внутри)
+                    />
+                    <span className={s.span}>{restProps.title}</span>
+                    </label>
+                    <PasswordCheckbox></PasswordCheckbox>
+                    {/* <a href="" className={s.passwordControl}></a>  */}
+                </div> 
+                <hr className={s.line}/>            
+            </div> 
+                
             {error && <span className={finalSpanClassName}>{error}</span>}
-        </>
-        
+        </div>       
     )
 }
 
