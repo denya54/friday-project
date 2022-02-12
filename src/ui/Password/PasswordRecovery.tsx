@@ -42,9 +42,7 @@ export const PasswordRecovery = () => {
     return (
         <div className={s.passwordRecovery}>
             <LogoTitle/>
-            {/* <TitlePage>Забыли пароль?</TitlePage> */}
             <h3 className={s.title}>Забыли пароль?</h3>
-            {/* <p className={s.text}>Укажите email</p> */}
             {error
                 ? <InputText value={emailAddressField} onChange={changeEmailAddressField} error={errorMessage}/>
                 : <InputText value={emailAddressField} onChange={changeEmailAddressField}/>
