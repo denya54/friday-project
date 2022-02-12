@@ -1,15 +1,36 @@
 import React from "react";
-import InputText from "../../componens/inputText/InputText";
 import LogoTitle from "../../componens/logoTitle/LogoTitle";
+import {useNavigate} from "react-router-dom";
 import MainButton from "../../componens/mainButton/MainButton";
 
 export const MainPage = () => {
+
+    const navigate = useNavigate();
+
+    const redirectToProfile = () => navigate('/profile')
+
+
+
     return (
         <div>
-            <LogoTitle></LogoTitle>
-            MainPage
-            <InputText/>
-            <MainButton>Click ME</MainButton>
+            <LogoTitle/>
+            <h3>Добро пожаловать!</h3>
+            <div>
+                Этот мини-сайт сделали для вас следующие люди:
+                <a href={'https://github.com/KseniyaMelnik'}> Ксения Мельник </a>
+                <a href={'https://github.com/vladward'}>Владислав Малохвей</a>
+            </div>
+
+            <div>
+                За красивое оформление отвечала:
+                <a href={'https://github.com/Evgeniya-junior'}> Евгения Ложкина</a>
+            </div>
+
+            <div>
+                И все это разрабатывалось под сомнительным руководством:
+                <a href={'https://github.com/denya54'}> Хвесеня Денис</a>
+            </div>
+            <MainButton onClick={redirectToProfile}>Стартуем</MainButton>
 
         </div>
     )

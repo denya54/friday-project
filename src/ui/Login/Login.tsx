@@ -86,7 +86,6 @@ export const Login = () => {
                 <InputPassword type="password" title='Password' value={values.password}
                                 onChange={e => onChangeValue(e, 'password')}/>
 
-
             <div className={s.controlPas}>
                 <div className={s.remember}>
                     <label className={s.rememberLabel}>Запомнить пароль</label>
@@ -97,6 +96,7 @@ export const Login = () => {
                     <Link className={s.link} to='/password_recovery'>Забыл пароль</Link>
                 </div>
             </div>
+              <p>{authError}</p>
 
             <div>
                 <MainButton className={s.mainButton} onClick={onSubmit}>Войти</MainButton>

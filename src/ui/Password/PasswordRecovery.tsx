@@ -1,5 +1,5 @@
 import s from './PasswordRecovery.module.css';
-import {ChangeEvent, useState} from "react";
+import {ChangeEvent, KeyboardEvent, useState} from "react";
 import {Navigate, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../bll/store";
@@ -30,6 +30,14 @@ export const PasswordRecovery = () => {
         setEmailAddressField('')
     }
 
+    const sendEmailToServerEnterPress = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.code === "Enter") {
+            dispatch(passwordRecoveryTC(emailAddressField))
+            setEmailAddressField('')
+        }
+    }
+
+
     const navigate = useNavigate();
     const redirectToLogin = () => {
         navigate('/login', { replace: true })
@@ -45,7 +53,7 @@ export const PasswordRecovery = () => {
             <h3 className={s.title}>Забыли пароль?</h3>
             {error
                 ? <InputText value={emailAddressField} onChange={changeEmailAddressField} error={errorMessage}/>
-                : <InputText value={emailAddressField} onChange={changeEmailAddressField}/>
+                : <InputText value={emailAddressField} onChange={changeEmailAddressField} onKeyPress={sendEmailToServerEnterPress}/>
             }
             <p className={s.text}>Пожалуйста укажите email, который вы использовали для входа на сайт</p>
             <MainButton className={s.button} onClick={sendEmailToServer} disabled={disabledButton}>Далее</MainButton>

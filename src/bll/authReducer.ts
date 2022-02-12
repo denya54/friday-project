@@ -1,7 +1,10 @@
-import {loginAPI, LoginParamsType, ResponseDataType} from "../dal/loginApi/loginAPI";
+import {loginAPI, LoginParamsType, ResponseDataType} from "../dal/loginAPI";
 import {Dispatch} from "redux";
+import avaStandart from '../assets/images/avatar.png'
 
 const initialState = {
+    name: '',
+    avatar: '',
     data: {},
     isLoggedIn: false,
     authError: ''
@@ -13,6 +16,7 @@ type LoginActionTypes =
     | ReturnType<typeof setIsLoggedInAC>
     | ReturnType<typeof logoutAC>
     | ReturnType<typeof setErrorAC>
+    | ReturnType<typeof getUserDataAC>
 
 export const authReducer = (state: loginInitialStateType = initialState, action: LoginActionTypes): loginInitialStateType => {
     switch (action.type) {
@@ -24,6 +28,8 @@ export const authReducer = (state: loginInitialStateType = initialState, action:
             return {...state, data: {}}
         case "SET-ERROR":
             return {...state, authError: action.error}
+        case "GET-USER-DATA":
+            return {...state, name: action.userName, avatar: action.avatar}
         default:
             return state
     }
@@ -42,25 +48,34 @@ export const setErrorAC = (error: string) => {
     return {type: "SET-ERROR", error} as const
 }
 
+export const getUserDataAC = (userName: string) => {
+    return {type: "GET-USER-DATA", userName, avatar: avaStandart} as const
+}
+
 export const loginTC = (data: LoginParamsType) => (dispatch: Dispatch) => {
     loginAPI.login(data)
         .then(res => {
             if (res.data) {
                 dispatch(loginAC(res.data))
                 dispatch(setIsLoggedInAC(true))
+
             }
         })
         .catch(e => {
             if (e.response) {
-                dispatch(setErrorAC(e.response.data.error))
+                // dispatch(setErrorAC(e.response.data.error))
+                dispatch(setErrorAC('Вы ввели неверный логин или пароль'))
+
                 setTimeout(() => {
                     dispatch(setErrorAC(''))
-                }, 3000)
+                }, 5000)
             } else {
-                dispatch(setErrorAC(e.message))
+                //dispatch(setErrorAC(e.message))
+                dispatch(setErrorAC('Проблема с интернет-соединением'))
+
                 setTimeout(() => {
                     dispatch(setErrorAC(''))
-                }, 3000)
+                }, 5000)
             }
         })
 }
@@ -79,5 +94,13 @@ export const logoutTC = () => (dispatch: Dispatch) => {
             } else {
                 dispatch(setErrorAC(e.message))
             }
+        })
+}
+
+export const getUserDataTC = () => (dispatch: Dispatch) => {
+    loginAPI.me()
+        .then(res => {
+            let userName = res.data.email
+            dispatch(getUserDataAC(userName))
         })
 }

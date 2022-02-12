@@ -1,5 +1,5 @@
 import {Dispatch} from "redux";
-import {ForgotPasswordAPI} from "../dal/API";
+import {ForgotPasswordAPI} from "../dal/passwordRecoveryAPI";
 
 
 type InitialStateType = {

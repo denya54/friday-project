@@ -11,6 +11,7 @@ import InputPassword from "../../componens/InputPassword/InputPassword";
 
 export const SetNewPassword = () => {
 
+
     const error = useSelector<AppRootStateType, boolean>(state => state.password.error)
     const disabledButton = useSelector<AppRootStateType, boolean>(state => state.password.disabledButton)
     const isSuccess = useSelector<AppRootStateType, boolean>(state => state.password.isSuccess)
@@ -50,10 +51,10 @@ export const SetNewPassword = () => {
             <h4 className={s.title}>Создание нового пароля</h4>
             {error
                 ? <InputPassword title="Password" value={newPasswordField1} onChange={changeNewPasswordField1}
-                                  error={errorMessage} type={'password'}/>
-                : <InputPassword title="Password" value={newPasswordField1} onChange={changeNewPasswordField1} type={'password'}/>
+                                  error={errorMessage} />
+                : <InputPassword title="Password" value={newPasswordField1} onChange={changeNewPasswordField1}/>
             }
-                {/* <p>Повторите пароль</p> */}
+                 {/*<p>Повторите пароль</p>*/}
                 <InputPassword title="Confirm password" value={newPasswordField2} onChange={changeNewPasswordField2} type={'password'}/>
                 <p className={s.text}>Введите новый пароль и постарайтесь его не забыть)</p>
                 <MainButton className={s.button} onClick={createNewPasswordHandler} disabled={disabledButton}>Создать новый

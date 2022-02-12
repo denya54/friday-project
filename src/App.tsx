@@ -14,6 +14,7 @@ import {initializeTC} from "./bll/appReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./bll/store";
 import loader from './assets/loader.svg'
+import {Header} from "./componens/header/Header";
 
 const App = () => {
     const dispatch = useDispatch()
@@ -32,6 +33,7 @@ const App = () => {
     return (
         <div className="App">
             <div className="container">
+                <Header/>
             <Routes>
                 <Route path={'/'} element={<MainPage/>}/>
                 <Route path={'/login'} element={<Login/>}/>

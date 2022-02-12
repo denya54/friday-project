@@ -36,6 +36,7 @@ export const Registration = () => {
     const success = useSelector<AppRootStateType, boolean>(state => state.register.success)
     const error = useSelector<AppRootStateType, null | string>(state => state.register.error)
     const isLoading = useSelector<AppRootStateType, boolean>(state => state.register.isLoading)
+    const isLogged = useSelector<AppRootStateType, boolean>(state => state.login.isLoggedIn)
 
     const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
         let email = e.currentTarget.value
@@ -59,6 +60,10 @@ export const Registration = () => {
     }
 
     const disabled = isLoading || !!errorEmail || !!errorPassword
+
+    if (isLogged) {
+        return <Navigate to="/profile"/>
+    }
 
     if (success) {
         return <Navigate to={'/login'}/>

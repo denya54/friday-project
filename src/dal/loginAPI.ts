@@ -13,7 +13,7 @@ export const loginAPI = {
         return instance.delete<LogoutResponseType>('auth/me')
     },
     me() {
-        return instance.post<AxiosResponse<ResponseDataType>>('auth/me')
+        return instance.post<ResponseDataType>('auth/me')
     }
 }
 
