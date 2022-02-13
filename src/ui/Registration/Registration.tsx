@@ -11,6 +11,7 @@ import LogoTitle from "../../componens/logoTitle/LogoTitle";
 import InputPassword from "../../componens/InputPassword/InputPassword";
 import CancelButton from "../../componens/canсelButton/CancelButton";
 import TitlePage from "../../componens/titlePage/TitlePage";
+import { Search } from "../../features/search/Search";
 
 export const Registration = () => {
     const [email, setEmail] = useState('')

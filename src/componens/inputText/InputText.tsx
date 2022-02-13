@@ -20,7 +20,6 @@ const InputText: React.FC<InputTextPropsType> = (
         onKeyPress, onEnter,
         error,
         className, spanClassName,
-
         ...restProps// все остальные пропсы попадут в объект restProps
     }
 ) => {
