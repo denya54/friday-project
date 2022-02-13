@@ -7,7 +7,7 @@ import MainButton from "../../componens/mainButton/MainButton";
 
 
 export const Search = () => {
-    const searchName = useSelector((store: AppRootStateType) => store.packs.searchPack);
+    const searchName = useSelector((state: AppRootStateType) => state.packs.searchPack);
     const dispatch = useDispatch();
     const search = () => {}; //dispatch(getPacks())
     const setName = (newSearchName: string) => dispatch(setSearchPack(newSearchName));
