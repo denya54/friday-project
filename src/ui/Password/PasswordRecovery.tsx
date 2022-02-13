@@ -30,13 +30,12 @@ export const PasswordRecovery = () => {
         setEmailAddressField('')
     }
 
-    const sendEmailToServerEnterPress = (e: KeyboardEvent<HTMLInputElement>) => {
+    const onKeyPressSendEmailToServer = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.code === "Enter") {
             dispatch(passwordRecoveryTC(emailAddressField))
             setEmailAddressField('')
         }
     }
-
 
     const navigate = useNavigate();
     const redirectToLogin = () => {
@@ -53,7 +52,7 @@ export const PasswordRecovery = () => {
             <h3 className={s.title}>Забыли пароль?</h3>
             {error
                 ? <InputText value={emailAddressField} onChange={changeEmailAddressField} error={errorMessage}/>
-                : <InputText value={emailAddressField} onChange={changeEmailAddressField} onKeyPress={sendEmailToServerEnterPress}/>
+                : <InputText value={emailAddressField} onChange={changeEmailAddressField} onKeyPress={onKeyPressSendEmailToServer}/>
             }
             <p className={s.text}>Пожалуйста укажите email, который вы использовали для входа на сайт</p>
             <MainButton className={s.button} onClick={sendEmailToServer} disabled={disabledButton}>Далее</MainButton>

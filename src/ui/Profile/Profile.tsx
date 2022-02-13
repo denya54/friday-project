@@ -9,9 +9,11 @@ export const Profile = () => {
 
     const userName = useSelector<AppRootStateType, string>(state => state.login.name)
     const userPhoto = useSelector<AppRootStateType, string>(state => state.login.avatar)
+    const isLogged = useSelector<AppRootStateType, boolean>(state => state.login.isLoggedIn)
+    const disabledButton = useSelector<AppRootStateType, boolean>(state => state.login.disabledButton)
+    const authError = useSelector<AppRootStateType, string>(state => state.login.authError)
 
     const dispatch = useDispatch()
-    const isLogged = useSelector<AppRootStateType, boolean>(state => state.login.isLoggedIn)
 
     const onLogout = () => {
         dispatch(logoutTC())
@@ -26,11 +28,12 @@ export const Profile = () => {
     }
     return (
         <div>
-            Profile page
             Этот профиль принадлежит
             <div>{userName}</div>
             <img src={userPhoto}/>
-            <div><CancelButton onClick={onLogout}>log out</CancelButton></div>
+            <p>{authError}</p>
+            <div><CancelButton onClick={onLogout} disabled={disabledButton}>log out</CancelButton></div>
+
 
         </div>
     )

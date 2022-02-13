@@ -1,4 +1,4 @@
-import {loginAPI, LoginParamsType, ResponseDataType} from "../dal/loginAPI";
+import {loginAPI, ResponseDataType} from "../dal/loginAPI";
 import {Dispatch} from "redux";
 import avaStandart from '../assets/images/avatar.png'
 
@@ -7,7 +7,9 @@ const initialState = {
     avatar: '',
     data: {},
     isLoggedIn: false,
-    authError: ''
+    authError: '',
+    isError: false,
+    disabledButton: false
 }
 
 type loginInitialStateType = typeof initialState
@@ -15,8 +17,10 @@ type LoginActionTypes =
     | ReturnType<typeof loginAC>
     | ReturnType<typeof setIsLoggedInAC>
     | ReturnType<typeof logoutAC>
-    | ReturnType<typeof setErrorAC>
+    | ReturnType<typeof setErrorMessageAC>
     | ReturnType<typeof getUserDataAC>
+    | ReturnType<typeof setButtonDisableAC>
+    | ReturnType<typeof setErrorAC>
 
 export const authReducer = (state: loginInitialStateType = initialState, action: LoginActionTypes): loginInitialStateType => {
     switch (action.type) {
@@ -26,10 +30,14 @@ export const authReducer = (state: loginInitialStateType = initialState, action:
             return {...state, isLoggedIn: action.isLoggedIn}
         case "LOGOUT":
             return {...state, data: {}}
-        case "SET-ERROR":
+        case "SET-ERROR-MESSAGE":
             return {...state, authError: action.error}
         case "GET-USER-DATA":
             return {...state, name: action.userName, avatar: action.avatar}
+        case "SET-BUTTON-CONDITION":
+            return {...state, disabledButton: action.isDisabled}
+        case "SET-ERROR":
+            return {...state, isError: action.isError}
         default:
             return state
     }
@@ -44,43 +52,45 @@ export const logoutAC = () => {
 export const setIsLoggedInAC = (isLoggedIn: boolean) => {
     return {type: "SET-IS-LOGGED-IN", isLoggedIn} as const
 }
-export const setErrorAC = (error: string) => {
-    return {type: "SET-ERROR", error} as const
+export const setErrorMessageAC = (error: string) => {
+    return {type: "SET-ERROR-MESSAGE", error} as const
 }
-
 export const getUserDataAC = (userName: string) => {
     return {type: "GET-USER-DATA", userName, avatar: avaStandart} as const
 }
+export const setButtonDisableAC = (isDisabled: boolean) => {
+    return {type: "SET-BUTTON-CONDITION", isDisabled} as const
+}
+export const setErrorAC = (isError: boolean) => {
+    return {type: "SET-ERROR", isError} as const
+}
 
-export const loginTC = (data: LoginParamsType) => (dispatch: Dispatch) => {
-    loginAPI.login(data)
+export const loginTC = (email: string, password: string, rememberMe: boolean) => (dispatch: Dispatch) => {
+    dispatch(setButtonDisableAC(true))
+    loginAPI.login(email, password, rememberMe)
         .then(res => {
             if (res.data) {
                 dispatch(loginAC(res.data))
                 dispatch(setIsLoggedInAC(true))
-
             }
         })
         .catch(e => {
             if (e.response) {
-                // dispatch(setErrorAC(e.response.data.error))
-                dispatch(setErrorAC('Вы ввели неверный логин или пароль'))
-
-                setTimeout(() => {
-                    dispatch(setErrorAC(''))
-                }, 5000)
+                dispatch(setErrorAC(true))
+                dispatch(setErrorMessageAC('Вы ввели неверный логин или пароль'))
             } else {
                 //dispatch(setErrorAC(e.message))
-                dispatch(setErrorAC('Проблема с интернет-соединением'))
-
-                setTimeout(() => {
-                    dispatch(setErrorAC(''))
-                }, 5000)
+                dispatch(setErrorAC(true))
+                dispatch(setErrorMessageAC('Проблема с интернет-соединением'))
             }
+        })
+        .finally( () => {
+            dispatch(setButtonDisableAC(false))
         })
 }
 
 export const logoutTC = () => (dispatch: Dispatch) => {
+    dispatch(setButtonDisableAC(true))
     loginAPI.logout()
         .then(res => {
             if (res.data) {
@@ -90,10 +100,15 @@ export const logoutTC = () => (dispatch: Dispatch) => {
         })
         .catch(e => {
             if (e.response) {
-                dispatch(setErrorAC(e.response.data.error))
+                dispatch(setErrorAC(true))
+                dispatch(setErrorMessageAC('Проблема при работе с сервером'))
             } else {
-                dispatch(setErrorAC(e.message))
+                dispatch(setErrorAC(true))
+                dispatch(setErrorMessageAC('Проблема с интернет-соединением'))
             }
+        })
+        .finally( () => {
+            dispatch(setButtonDisableAC(false))
         })
 }
 
@@ -102,5 +117,14 @@ export const getUserDataTC = () => (dispatch: Dispatch) => {
         .then(res => {
             let userName = res.data.email
             dispatch(getUserDataAC(userName))
+        })
+        .catch(e => {
+            if (e.response) {
+                dispatch(setErrorAC(true))
+                dispatch(setErrorMessageAC('Проблема при работе с сервером'))
+            } else {
+                dispatch(setErrorAC(true))
+                dispatch(setErrorMessageAC('Проблема с интернет-соединением'))
+            }
         })
 }

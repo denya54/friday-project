@@ -30,7 +30,7 @@ export const Registration = () => {
         }
     )
     const CancelCallback = () => {
-        navigate('/login', { replace: true })
+        navigate('/login', {replace: true})
     }
 
     const success = useSelector<AppRootStateType, boolean>(state => state.register.success)
@@ -71,38 +71,32 @@ export const Registration = () => {
     return (
         <div className={s.registration}>
             <LogoTitle/>
-            {/* <p>Sign Up</p> */}
             <TitlePage title='Регистрация'/>
             {isLoading ? <span> Loading...</span> : null}
             <form className={s.form} action="">
-                    <InputText type="email"
-                                    // placeholder={"Email"}
-                                    value={email}
-                                    onChange={onChangeEmail}
-                                    error={errorEmail}
-                    />
-                    <InputPassword type="password"
-                                    title='Password'
-                                    // placeholder={"password"}
-                                    value={password}
-                                    onChange={onChangePassword}
-                                    error={errorPassword}
-                    />
-                    <InputPassword type="password"
-                                    title="Повторите password"
-                                    // placeholder={"Confirm password"}
-                                    value={password2}
-                                    onChange={onChangePassword2}
-                                    error={errorPassword2}
-                    />
+                <InputText type="email"
+                           value={email}
+                           onChange={onChangeEmail}
+                           error={errorEmail}
+                />
+                <InputPassword title='Password'
+                               value={password}
+                               onChange={onChangePassword}
+                               error={errorPassword}
+                />
+                <InputPassword title="Повторите password"
+                               value={password2}
+                               onChange={onChangePassword2}
+                               error={errorPassword2}
+                />
                 <div className={s.btnContainer}>
-                        <CancelButton
-                            onClick={CancelCallback}>Отмена</CancelButton>
-                        <MainButton
-                            type='button'
-                            onClick={RegisterCallback}
-                            disabled={disabled}
-                            style={{width:'186px'}}>Зарегистрироваться </MainButton>
+                    <CancelButton
+                        onClick={CancelCallback}>Отмена</CancelButton>
+                    <MainButton
+                        type='button'
+                        onClick={RegisterCallback}
+                        disabled={disabled}
+                        style={{width: '186px'}}>Зарегистрироваться </MainButton>
                 </div>
             </form>
             {error ? <span className={s.error}>{error}</span> : null}

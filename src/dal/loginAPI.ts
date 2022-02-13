@@ -6,8 +6,12 @@ let instance = axios.create({
 })
 
 export const loginAPI = {
-    login(data: LoginParamsType) {
-        return instance.post<LoginParamsType, AxiosResponse<ResponseDataType>>('auth/login', data)
+    login(email: string, password: string, rememberMe: boolean) {
+        return instance.post<LoginParamsType, AxiosResponse<ResponseDataType>>('auth/login', {
+            email,
+            password,
+            rememberMe
+        })
     },
     logout() {
         return instance.delete<LogoutResponseType>('auth/me')
