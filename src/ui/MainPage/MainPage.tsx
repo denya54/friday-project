@@ -4,6 +4,7 @@ import LogoTitle from "../../componens/logoTitle/LogoTitle";
 import MainButton from "../../componens/mainButton/MainButton";
 import { Paginator } from "../../features/paginator/Paginator";
 import { Search } from "../../features/search/Search";
+import { SortButton } from "../../features/sort/SortButton";
 
 export const MainPage = () => {
     return (
@@ -12,8 +13,6 @@ export const MainPage = () => {
             MainPage
             <InputText/>
             <MainButton>Click ME</MainButton>
-            <Search />
-            <Paginator />
         </div>
     )
 }
