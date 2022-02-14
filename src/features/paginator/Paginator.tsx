@@ -31,9 +31,9 @@ export const Paginator = ()=> {
         dispatch(setPageCount(Number(pageCount)))
         dispatch(getPacks())
     }
-    return <div>
+    return <div className={s.paginator}>
         {portionNumber > 1 &&
-        <button onClick={()=> {setPortionNumber(portionNumber-1)}}>{`<`}</button> }
+        <span className={s.paginatorBtn} onClick={()=> {setPortionNumber(portionNumber-1)}}>{`<`}</span> }
         {pages
             .filter(p => p >= leftPortionNumber && p<=rightPortionNumber)
             .map(p => <span className={page === p ? s.active: s.pageNumber}
@@ -43,22 +43,14 @@ export const Paginator = ()=> {
                             }}
             >{p}</span> )}
         { portionCount > portionNumber &&
-        <button onClick={()=> {setPortionNumber(portionNumber + 1)}}>{`>`}</button> }
+        <span className={s.paginatorBtn} onClick={()=> {setPortionNumber(portionNumber + 1)}}>{`>`}</span> }
 
-{/*        {pages.map(p => <span
-            className = {page === p ? s.active: ""}
-            key={p}
-            onClick={() => {
-                onPageChanged(p)
-            }}
-        >{p}</span>)}*/}
-        
-        <p>Показывать
+        <span className={s.selectPageSize}>Показывать
             <select onChange={(e)=> onSelectChanged(e.currentTarget.value)}>
-                <option value="4">4</option>
-                <option value="10">10</option>
-                <option value="20">20</option>
-                <option value="100">100</option>
-            </select> колод на странице</p>
+                <option value="4" selected={pageCount===4}>4</option>
+                <option value="10" selected={pageCount===10}>10</option>
+                <option value="20" selected={pageCount===20}>20</option>
+                <option value="100" selected={pageCount===100}>100</option>
+            </select> колод на странице</span>
     </div>
 }

@@ -6,7 +6,7 @@ import {AppRootStateType} from "./store";
 const initialState = {
     searchPack: "",
     cardPacksTotalCount: 0,
-    pageCount: 10,
+    pageCount: 0,
     page: 1,
     sortByUpdated: 0,
     cardPacks: [] as Array<packType>
