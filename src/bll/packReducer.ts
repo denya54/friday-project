@@ -2,11 +2,6 @@ import {packsAPI} from "../dal/packsAPI";
 import {ThunkAction} from "redux-thunk";
 import {AppRootStateType} from "./store";
 
-const initialCardPacks: packType[] = [
-    {_id: "1" , _user_id: "1", cardsCount: 12, created: "01/01/2021", name: "555", updated: "555"},
-    {_id: "2" , _user_id: "2", cardsCount: 5, created: "01/01/2021", name: "444", updated: "444"},
-    {_id: "3" , _user_id: "3", cardsCount: 10, created: "01/02/2021", name: "333", updated: "333"}
-]
 
 const initialState = {
     searchPack: "",

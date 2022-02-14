@@ -14,6 +14,7 @@ import {initializeTC} from "./bll/appReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./bll/store";
 import loader from './assets/loader.svg'
+import { Test } from './ui/Test/Test';
 
 const App = () => {
     const dispatch = useDispatch()
@@ -43,6 +44,7 @@ const App = () => {
                 <Route path={'/set_new_password/:token'} element={<SetNewPassword/>}/>
                 <Route path={'/transitional_page_for_recovery_pass'} element={<TransitionalPage/>}/>
                 <Route path={'/password_recovery_success'} element={<SuccessRecoveryPassword/>}/>
+                <Route path={'/test'} element={<Test />} />
             </Routes>
             </div>
         </div>
