@@ -1,12 +1,37 @@
 import {instance} from "../dal/API";
 
 export const packsAPI = {
-    getPacks(page?: number, pageCount?: number, searchPack?: string, sortByUpdated?: number) {
-        return instance.get(`/cards/pack`
-            + (page? `?page=${page}` : '?page=1')
-            + (pageCount? `&pageCount=${pageCount}` : '')
-            + (searchPack? `&packName=${searchPack}`: '')
-            + (sortByUpdated? `&sortPacks=${sortByUpdated}updated`: '')
-        );
+    getPacks(payload?: PacksGetParams) {
+        return instance.get<PacksResponseType>('/cards/pack', {params: payload})
     },
 };
+
+// Types
+export type PacksGetParams = {
+    packName?: string
+    min?: number
+    max?: number
+    sortPacks?: string
+    page?: number
+    pageCount?: number
+    user_id?: string | null
+}
+
+export type PacksResponseType = {
+    cardPacks: CardPacksType[]
+    cardPacksTotalCount: number
+    maxCardsCount: number
+    minCardsCount: number
+    page: number
+    pageCount: number
+}
+
+export type CardPacksType = {
+    _id: string
+    user_id: string
+    cardsCount: number
+    created: string
+    name: string
+    private: boolean
+    updated: string
+}

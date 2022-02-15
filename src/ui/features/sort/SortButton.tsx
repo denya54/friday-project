@@ -1,14 +1,14 @@
 import React from "react";
 import {useDispatch, useSelector } from "react-redux";
 import s from "./SortButton.module.css"
-import { AppRootStateType } from "../../bll/store";
-import {getPacks, setSort } from "../../bll/packReducer";
+import { AppRootStateType } from "../../../bll/store";
+import {getPacks, setSort } from "../../../bll/packReducer";
 
 export const SortButton = () => {
-    const sortByUpdated = useSelector<AppRootStateType, number>(state=> state.packs.sortByUpdated)
+    const sortByUpdated = useSelector<AppRootStateType, string>(state=> state.packs.sortPacks)
     const dispatch = useDispatch()
     const sortPacks = () => {
-     sortByUpdated === 0 ? dispatch(setSort(1)) : dispatch(setSort(0))
+     sortByUpdated === "0" ? dispatch(setSort("1")) : dispatch(setSort("0"))
         dispatch(getPacks())
     }
 

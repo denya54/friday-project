@@ -3,8 +3,8 @@ import {authReducer} from "./authReducer";
 import {appReducer} from "./appReducer";
 import {RecoveryPasswordReducer} from "./recoveryPasswordReducer";
 import {registerReducer} from "./registerReduser";
-import thunk from "redux-thunk";
-import { packReducer } from "./packReducer";
+import thunk, { ThunkAction } from "redux-thunk";
+import {PackActionType, packReducer } from "./packReducer";
 
 
 const rootReducer = combineReducers({
@@ -18,6 +18,11 @@ const rootReducer = combineReducers({
 export const store = createStore(rootReducer, applyMiddleware(thunk));
 
 export type AppRootStateType = ReturnType<typeof rootReducer>
+
+export type AppRootActionsType =
+    PackActionType
+
+export type AppThunkType<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, AppRootActionsType>
 
 // @ts-ignore
 window.store = store;

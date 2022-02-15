@@ -1,54 +1,43 @@
-import {packsAPI} from "../dal/packsAPI";
+import {CardPacksType, packsAPI, PacksResponseType} from "../dal/packsAPI";
 import {ThunkAction} from "redux-thunk";
-import {AppRootStateType} from "./store";
+import {AppRootStateType, AppThunkType} from "./store";
 
-
-const initialState = {
-    searchPack: "",
+export const initialState = {
+    cardPacks: [] as Array<CardPacksType>,
     cardPacksTotalCount: 0,
-    pageCount: 0,
+    minCardsCount: 0,
+    maxCardsCount: 0,
     page: 1,
-    sortByUpdated: 0,
-    cardPacks: [] as Array<packType>
-}
-export type packType = {
-    _id: string,
-    _user_id: string,
-    name: string,
-    cardsCount: number,
-    created: string,
-    updated: string
+    pageCount: 10,
+    cardsValuesFromRange: [0, 1000],
+    sortPacks: '',
+    searchField: '',
+    myId: null as string | null
 }
 
-export type ActionTypes = ReturnType<typeof setSearchPack> | ReturnType<typeof setPage> | ReturnType<typeof setSort> | ReturnType<typeof setPacks>
-    | ReturnType<typeof setCardsCount> | ReturnType<typeof setPageCount>
+export type PackActionType = ReturnType<typeof setSearchField> | ReturnType<typeof setPage> | ReturnType<typeof setSort> | ReturnType<typeof setPacks>
+    | ReturnType<typeof setCardsCount> | ReturnType<typeof setPageCount> | ReturnType<typeof setPacksMyId>
 
 export type PackReducerStateType = typeof initialState
 
-export const packReducer = (state: PackReducerStateType = initialState, action: ActionTypes): PackReducerStateType => {
+export const packReducer = (state: PackReducerStateType = initialState, action: PackActionType): PackReducerStateType => {
     switch (action.type) {
-        case "SET-PACKS":
-            return {...state, cardPacks: action.cardPacks}
-        case "SET-SEARCH-PACK":
-            return {...state, searchPack: action.searchPack}
-        case "SET-CARDS-COUNT":
-            return {...state, cardPacksTotalCount: action.cardsCount}
-        case "SET-PAGE-COUNT":
-            return {...state, pageCount: action.pageCount}
-        case "SET-PAGE":
-            return {...state, page: action.page}
-        case "SET-SORT":
-            return {...state, sortByUpdated: action.num}
+        case "packs/SET-PACKS":
+            return {...state, ...action.payload}
+        case "packs/SET-PAGE":
+            return {...state, ...action.payload}
+        case "packs/SET-SEARCH-PACK":
+            return {...state, ...action.payload}
         default:
             return state
     }
 }
 
-export const setPacks = (cardPacks: packType[]) => {
-    return {type: 'SET-PACKS', cardPacks} as const
+export const setPacks = (payload: PacksResponseType) => {
+    return {type: 'packs/SET-PACKS', payload} as const
 }
-export const setSearchPack = (searchPack: string) => {
-    return {type: 'SET-SEARCH-PACK', searchPack} as const
+export const setSearchField = (searchField: string) => {
+    return {type: 'packs/SET-SEARCH-PACK', payload: {searchField}} as const
 }
 export const setCardsCount = (cardsCount: number) => {
     return {type: 'SET-CARDS-COUNT', cardsCount} as const
@@ -57,24 +46,33 @@ export const setPageCount = (pageCount: number) => {
     return {type: 'SET-PAGE-COUNT', pageCount} as const
 }
 export const setPage = (page: number) => {
-    return {type: 'SET-PAGE', page} as const
+    return {type: 'packs/SET-PAGE', payload: {page}} as const
 }
-export const setSort = (num: number) => {
-    return {type: 'SET-SORT', num} as const
+export const setSort = (sortPacks: string) => {
+    return {type: 'SET-SORT', sortPacks} as const
 }
+export const setPacksMyId = (myId: string | null) => ({
+    type: 'packs/SET_MY_ID',
+    payload: {myId}
+}) as const
 
-export const getPacks = (): ThunkType =>
-
-    async (dispatch, getState: any) => {
-        const {page, pageCount, searchPack, sortByUpdated} = getState().packs
+export const getPacks = (): AppThunkType =>
+    async (dispatch, getState) => {
+        const packs = getState().packs
         try {
-            const data = await packsAPI.getPacks(page, pageCount, searchPack, sortByUpdated)
-            dispatch(setPacks(data.data.cardPacks))
-            dispatch(setPageCount(data.data.pageCount))
-            dispatch(setCardsCount(data.data.cardPacksTotalCount))
+            const res = await packsAPI.getPacks({
+                page: packs.page,
+                pageCount: packs.pageCount,
+                min: packs.cardsValuesFromRange[0],
+                max: packs.cardsValuesFromRange[1],
+                user_id: packs.myId,
+                sortPacks: packs.sortPacks,
+                packName: packs.searchField
+            })
+            // @ts-ignore
+            dispatch(setPacks(res.data))
         } catch (error: any) {
             const err = error.response ? error.response.data.error : error.message
         }
     }
 
-type ThunkType = ThunkAction<void, AppRootStateType, unknown, ActionTypes>
