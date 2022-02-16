@@ -9,8 +9,6 @@ export const MainPage = () => {
 
     const redirectToProfile = () => navigate('/profile')
 
-
-
     return (
         <div>
             <LogoTitle/>
@@ -18,6 +16,7 @@ export const MainPage = () => {
             <div>
                 Этот мини-сайт сделали для вас следующие люди:
                 <a href={'https://github.com/KseniyaMelnik'}> Ксения Мельник </a>
+                <a href={'https://github.com/denya54'}> Хвесеня Денис</a>
                 <a href={'https://github.com/vladward'}>Владислав Малохвей</a>
             </div>
 
@@ -27,8 +26,8 @@ export const MainPage = () => {
             </div>
 
             <div>
-                И все это разрабатывалось под сомнительным руководством:
-                <a href={'https://github.com/denya54'}> Хвесеня Денис</a>
+                И все это разрабатывалось под руководством:
+                <a href={'https://github.com/IgnatZakalinsky'}> Игнат Закалинский</a>
             </div>
             <MainButton onClick={redirectToProfile}>Стартуем</MainButton>
 
