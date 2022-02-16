@@ -16,6 +16,8 @@ import {AppRootStateType} from "./bll/store";
 import loader from './assets/loader.svg'
 import { Test } from './ui/Test/Test';
 import {Header} from "./componens/header/Header";
+import {Packs} from "./ui/Packs/Packs";
+import {Cards} from "./ui/Cards/Cards";
 
 const App = () => {
     const dispatch = useDispatch()
@@ -47,6 +49,8 @@ const App = () => {
                 <Route path={'/transitional_page_for_recovery_pass'} element={<TransitionalPage/>}/>
                 <Route path={'/password_recovery_success'} element={<SuccessRecoveryPassword/>}/>
                 <Route path={'/test'} element={<Test />} />
+                <Route path={'/packs'} element={<Packs />} />
+                <Route path={'/cards'} element={<Cards />} />
             </Routes>
             </div>
         </div>

@@ -5,6 +5,8 @@ export const Header = () => {
         <div>
             <NavLink to={'/'}>Главная </NavLink>
             <NavLink to={'/profile'}>Профиль </NavLink>
+            <NavLink to={'/packs'}>Колоды </NavLink>
+            <NavLink to={'/cards'}>Карты </NavLink>
             <NavLink to={'/login'}>Логинизация </NavLink>
             <NavLink to={'/registration'}>Регистрация </NavLink>
             <NavLink to={'/password_recovery'}>ВосстановлениеПароля </NavLink>
