@@ -40,7 +40,7 @@ export const Test = React.memo(() => {
         <div>
             Profile page
             <button onClick={onLogout}>log out</button>
-            <Search fetchData={getPacks}/>
+            <Search getSearchData={getPacks}/>
             <PackList/>
             <Paginator totalCount={cardPacksTotalCount}
                        pageCount={pageCount}
