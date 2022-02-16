@@ -14,7 +14,10 @@ export const ForgotPasswordAPI = {
                 email: email,
                 //ПОТОМ ПОМЕНЯТЬ ССЫЛКУ на gitpage.io
                 message: `
-<div style="background-color: lime; padding: 15px">Для создания нового пароля перейдите по ссылке: <a href='https://denya54.github.io/friday-project/#/set_new_password/$token$'>link</a></div>
+<div style="background-color: lime; padding: 15px">Для создания нового пароля перейдите по ссылке: 
+<!--<a href='https://denya54.github.io/friday-project/#/set_new_password/$token$'>-->
+<a href='http://localhost:3000/set_new_password/$token$'>
+link</a></div>
 `,
             })
     },

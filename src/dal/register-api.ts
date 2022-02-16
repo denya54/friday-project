@@ -1,4 +1,4 @@
-import {instance} from "./API";
+import {instance} from "./passwordRecoveryAPI";
 
 type RegisterResponseType = {
     addedUser: {}

@@ -3,10 +3,12 @@ import {AppRootStateType, AppThunkType} from "./store";
 import {RegisterAPI} from "../dal/register-api";
 
 export const initialState = {
-    error: null as null | string,
-    success: false,
-    isLoading: false
-};
+        error: null as null | string,
+        success: false,
+        isLoading: false,
+        isLogged: false
+    }
+;
 type RegisterStateType = typeof initialState
 
 export const registerReducer = (state: RegisterStateType = initialState, action: PegistrationActionsType): RegisterStateType => {
@@ -43,6 +45,7 @@ export const setISLoadingAC = (isLoading: boolean) => ({
 export type PegistrationActionsType = ReturnType<typeof setSuccessAC>
     | ReturnType<typeof setErrorAC>
     | ReturnType<typeof setISLoadingAC>
+
 
 // thunk
 export const signUpTC = (email: string, password: string, password2: string): AppThunkType =>
