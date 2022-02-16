@@ -2,7 +2,7 @@ import React, {useCallback, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Navigate} from 'react-router-dom';
 import {logoutTC} from '../../bll/authReducer';
-import {getPacks, PackReducerStateType, setPage, setPageCount, setSortPacks} from '../../bll/packReducer';
+import {getPacks, PackReducerStateType, setPacksFromRange, setPage, setPageCount, setSortPacks} from '../../bll/packReducer';
 import {AppRootStateType} from '../../bll/store';
 import {Paginator} from '../features/paginator/Paginator';
 import {Search} from '../features/search/Search';
@@ -10,6 +10,8 @@ import {SortButton} from '../features/sort/SortButton';
 import s from "./Test.module.css"
 import {CardPacksType} from "../../dal/packsAPI";
 import { SelectPageSize } from '../features/selectPageSize/SelectPageSize';
+import { PacksRange } from '../features/packsRange/PacksRange';
+import { debounce } from 'lodash';
 
 
 export const Test = React.memo(() => {
@@ -34,10 +36,16 @@ export const Test = React.memo(() => {
     const onSortPacks = useCallback((value: string) => {
         dispatch(setSortPacks(value))
     }, [dispatch])
+   const debouncedRangeData = debounce(values => {
+        dispatch(setPacksFromRange(values))
+    }, 400)
+    const onRangeChanged = useCallback((values) => {
+        debouncedRangeData(values)
+    }, [dispatch])
 
     useEffect(() => {
         dispatch(getPacks())
-    }, [dispatch, page, pageCount, sortPacks])
+    }, [dispatch, page, pageCount, sortPacks, maxCardsCount, maxCardsCount, cardsValuesFromRange])
 
     if (!isLogged) {
         return <Navigate to="/login"/>
@@ -47,6 +55,11 @@ export const Test = React.memo(() => {
         <div>
             Profile page
             <button onClick={onLogout}>log out</button>
+            <PacksRange cardsValuesFromRange={cardsValuesFromRange}
+                        minCardsCount={minCardsCount}
+                        maxCardsCount={maxCardsCount}
+                        handleRangeChange={onRangeChanged}
+            />
             <Search getSearchData={getPacks}/>
             <PackList onSortPacks={onSortPacks}/>
             <Paginator totalCount={cardPacksTotalCount}
