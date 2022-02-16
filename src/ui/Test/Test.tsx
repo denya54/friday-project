@@ -2,7 +2,7 @@ import React, {useCallback, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Navigate} from 'react-router-dom';
 import {logoutTC} from '../../bll/authReducer';
-import {getPacks, PackReducerStateType, setPacksMyId, setPage} from '../../bll/packReducer';
+import {getPacks, PackReducerStateType, setPacksMyId, setPage, setPageCount} from '../../bll/packReducer';
 import {AppRootStateType} from '../../bll/store';
 import {Paginator} from '../features/paginator/Paginator';
 import {Search} from '../features/search/Search';
@@ -27,10 +27,13 @@ export const Test = React.memo(() => {
     const onPageChanged = useCallback((page: number) => {
         dispatch(setPage(page))
     }, [dispatch])
+    const setPageSize = useCallback((pageCount: number) => {
+        dispatch(setPageCount(pageCount))
+    }, [dispatch])
 
     useEffect(() => {
         dispatch(getPacks())
-    }, [dispatch, page])
+    }, [dispatch, page, pageCount])
 
     if (!isLogged) {
         return <Navigate to="/login"/>
@@ -46,6 +49,9 @@ export const Test = React.memo(() => {
                        pageCount={pageCount}
                        onPageChanged={onPageChanged}
                        currentPage={page}
+                       changePageSize={setPageSize}
+                       selectedPageSize={pageCount}
+                       pageSizes={[5, 10, 15,20]}
             />
         </div>
     )

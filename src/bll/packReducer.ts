@@ -15,18 +15,24 @@ export const initialState = {
     myId: null as string | null
 }
 
-export type PackActionType = ReturnType<typeof setSearchField> | ReturnType<typeof setPage> | ReturnType<typeof setSort> | ReturnType<typeof setPacks>
-    | ReturnType<typeof setCardsCount> | ReturnType<typeof setPageCount> | ReturnType<typeof setPacksMyId>
+export type PackActionType =
+    ReturnType<typeof setSearchField>
+    | ReturnType<typeof setPage>
+    | ReturnType<typeof setSort>
+    | ReturnType<typeof setPacks>
+    | ReturnType<typeof setCardsCount>
+    | ReturnType<typeof setPageCount>
+    | ReturnType<typeof setPacksMyId>
 
 export type PackReducerStateType = typeof initialState
 
 export const packReducer = (state: PackReducerStateType = initialState, action: PackActionType): PackReducerStateType => {
     switch (action.type) {
         case "packs/SET-PACKS":
-            return {...state, ...action.payload}
         case "packs/SET-PAGE":
-            return {...state, ...action.payload}
         case "packs/SET-SEARCH-PACK":
+        case "packs/SET-PAGE-COUNT":
+        case "packs/SET-SORT":
             return {...state, ...action.payload}
         default:
             return state
@@ -34,27 +40,28 @@ export const packReducer = (state: PackReducerStateType = initialState, action: 
 }
 
 export const setPacks = (payload: PacksResponseType) => {
-    return {type: 'packs/SET-PACKS', payload} as const
+    return {type: "packs/SET-PACKS", payload} as const
 }
 export const setSearchField = (searchField: string) => {
-    return {type: 'packs/SET-SEARCH-PACK', payload: {searchField}} as const
+    return {type: "packs/SET-SEARCH-PACK", payload: {searchField}} as const
 }
 export const setCardsCount = (cardsCount: number) => {
-    return {type: 'SET-CARDS-COUNT', cardsCount} as const
+    return {type: "packs/SET-CARDS-COUNT", payload: {cardsCount}} as const
 }
 export const setPageCount = (pageCount: number) => {
-    return {type: 'SET-PAGE-COUNT', pageCount} as const
+    return {type: "packs/SET-PAGE-COUNT", payload: {pageCount}} as const
 }
 export const setPage = (page: number) => {
-    return {type: 'packs/SET-PAGE', payload: {page}} as const
+    return {type: "packs/SET-PAGE", payload: {page}} as const
 }
 export const setSort = (sortPacks: string) => {
-    return {type: 'SET-SORT', sortPacks} as const
+    return {type: 'packs/SET-SORT', payload: {sortPacks}} as const
 }
 export const setPacksMyId = (myId: string | null) => ({
     type: 'packs/SET_MY_ID',
     payload: {myId}
 }) as const
+
 
 export const getPacks = (): AppThunkType =>
     async (dispatch, getState) => {
@@ -69,7 +76,6 @@ export const getPacks = (): AppThunkType =>
                 sortPacks: packs.sortPacks,
                 packName: packs.searchField
             })
-            // @ts-ignore
             dispatch(setPacks(res.data))
         } catch (error: any) {
             const err = error.response ? error.response.data.error : error.message

@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {ChangeEvent, useState} from "react"
 import {getPacks, setPage, setPageCount} from "../../../bll/packReducer";
 import {AppRootStateType} from "../../../bll/store";
 import s from "./Paginator.module.css"
@@ -8,9 +8,16 @@ type PaginatorPropsType = {
     pageCount: number
     onPageChanged: (page: number) => void
     currentPage: number
+    selectedPageSize: number
+    changePageSize: (option: number) => void
+    pageSizes: number[]
 }
 
-export const Paginator = ({totalCount, pageCount, onPageChanged, currentPage}: PaginatorPropsType) => {
+export const Paginator = ({
+                              totalCount, pageCount, onPageChanged,
+                              currentPage, pageSizes, selectedPageSize,
+                              changePageSize
+                          }: PaginatorPropsType) => {
 
     let pagesCount = Math.ceil(totalCount / pageCount);
     let pages = []
@@ -23,10 +30,15 @@ export const Paginator = ({totalCount, pageCount, onPageChanged, currentPage}: P
     const leftPortionNumber = (portionNumber - 1) * portionSize + 1
     const rightPortionNumber = portionNumber * portionSize
 
-    // const onSelectChanged = (pageCount: string) => {
-    //     dispatch(setPageCount(Number(pageCount)))
-    //     dispatch(getPacks())
-    // }
+    const onSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
+        const option = +e.currentTarget.value
+        changePageSize(option)
+    }
+    const mappedOptions = pageSizes.map((o, i) => (
+        <option key={i} value={o}>
+            {o}
+        </option>
+    ))
     return <div className={s.paginator}>
         {portionNumber > 1 &&
         <span className={s.paginatorBtn} onClick={() => {
@@ -43,14 +55,14 @@ export const Paginator = ({totalCount, pageCount, onPageChanged, currentPage}: P
         {portionCount > portionNumber &&
         <span className={s.paginatorBtn} onClick={() => {
             setPortionNumber(portionNumber + 1)
-        }}>{`>`}</span>}
+        }}>{`>`}
+        </span>}
 
-        {/*      <span className={s.selectPageSize}>Показывать
-            <select onChange={(e)=> onSelectChanged(e.currentTarget.value)}>
-                <option value="4" selected={pageCount===4}>4</option>
-                <option value="10" selected={pageCount===10}>10</option>
-                <option value="20" selected={pageCount===20}>20</option>
-                <option value="100" selected={pageCount===100}>100</option>
-            </select> колод на странице</span>*/}
+        <span className={s.selectPageSize}>Показывать
+            <select onChange={onSelectChange} value={selectedPageSize}>
+                {mappedOptions}
+            </select> колод на странице
+        </span>
+
     </div>
 }
