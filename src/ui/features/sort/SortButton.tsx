@@ -14,11 +14,10 @@ export const SortButton = ({value, sortItems} : SortButtonPropsType) => {
     const [sort, setSort] = useState<boolean>(false)
 
     const onSortClick = () => {
+        setSort(!sort)
         sort
             ? sortItems(`1${value}`)
             : sortItems(`0${value}`)
-
-        setSort(!sort)
     }
 
 
