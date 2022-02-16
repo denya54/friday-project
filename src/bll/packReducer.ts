@@ -23,6 +23,7 @@ export type PackActionType =
     | ReturnType<typeof setCardsCount>
     | ReturnType<typeof setPageCount>
     | ReturnType<typeof setPacksFromRange>
+    | ReturnType<typeof setMyPacks>
 
 export type PackReducerStateType = typeof initialState
 
@@ -34,6 +35,7 @@ export const packReducer = (state: PackReducerStateType = initialState, action: 
         case "packs/SET-PAGE-COUNT":
         case "packs/SET-SORT":
         case "packs/SET-PACKS-FROM-RANGE":
+        case "packs/SET-MY-PACKS":
             return {...state, ...action.payload}
         default:
             return state
@@ -60,6 +62,9 @@ export const setSortPacks = (sortPacks: string) => {
 }
 export const setPacksFromRange = (cardsValuesFromRange: number[]) => {
     return {type: "packs/SET-PACKS-FROM-RANGE", payload: {cardsValuesFromRange}}
+}
+export const setMyPacks = (myId: string) => {
+    return {type: "packs/SET-MY-PACKS", payload: {myId}}
 }
 
 

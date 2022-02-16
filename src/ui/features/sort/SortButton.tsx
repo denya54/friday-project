@@ -16,8 +16,8 @@ export const SortButton = ({value, sortItems} : SortButtonPropsType) => {
     const onSortClick = () => {
         setSort(!sort)
         sort
-            ? sortItems(`1${value}`)
-            : sortItems(`0${value}`)
+            ? sortItems(`0${value}`)
+            : sortItems(`1${value}`)
     }
 
 
