@@ -2,7 +2,7 @@ import React, {useCallback, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Navigate} from 'react-router-dom';
 import {logoutTC} from '../../bll/authReducer';
-import {getPacks, PackReducerStateType, setPacksMyId, setPage, setPageCount, setSortPacks} from '../../bll/packReducer';
+import {getPacks, PackReducerStateType, setPage, setPageCount, setSortPacks} from '../../bll/packReducer';
 import {AppRootStateType} from '../../bll/store';
 import {Paginator} from '../features/paginator/Paginator';
 import {Search} from '../features/search/Search';
@@ -47,14 +47,14 @@ export const Test = React.memo(() => {
             Profile page
             <button onClick={onLogout}>log out</button>
             <Search getSearchData={getPacks}/>
-            <PackList onSortPacks={onSortPacks} />
+            <PackList onSortPacks={onSortPacks}/>
             <Paginator totalCount={cardPacksTotalCount}
                        pageCount={pageCount}
                        onPageChanged={onPageChanged}
                        currentPage={page}
                        changePageSize={setPageSize}
                        selectedPageSize={pageCount}
-                       pageSizes={[5, 10, 15,20]}
+                       pageSizes={[5, 10, 15, 20]}
             />
         </div>
     )
@@ -86,10 +86,10 @@ const TableRow = (props: any) => {
 
     return (
         <div className={s.table__row}>
-            <TableCell  item={props.pack.name}/>
-            <TableCell  item={props.pack.cardsCount}/>
-            <TableCell  item={props.pack.updated}/>
-            <TableCell  item={props.pack.created}/>
+            <TableCell item={props.pack.name}/>
+            <TableCell item={props.pack.cardsCount}/>
+            <TableCell item={props.pack.updated}/>
+            <TableCell item={props.pack.created}/>
         </div>
     )
 };
@@ -103,7 +103,7 @@ const TableCell = (props: any) => {
                 value={props.item}
                 type="text"/>
             {props.onSortPacks ? <SortButton value={"updated"}
-                                      sortItems={props.onSortPacks}/> : ''}
+                                             sortItems={props.onSortPacks}/> : ''}
         </div>
     )
 }

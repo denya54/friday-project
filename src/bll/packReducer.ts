@@ -22,7 +22,6 @@ export type PackActionType =
     | ReturnType<typeof setPacks>
     | ReturnType<typeof setCardsCount>
     | ReturnType<typeof setPageCount>
-    | ReturnType<typeof setPacksMyId>
 
 export type PackReducerStateType = typeof initialState
 
@@ -57,10 +56,7 @@ export const setPage = (page: number) => {
 export const setSortPacks = (sortPacks: string) => {
     return {type: 'packs/SET-SORT', payload: {sortPacks}} as const
 }
-export const setPacksMyId = (myId: string | null) => ({
-    type: 'packs/SET_MY_ID',
-    payload: {myId}
-}) as const
+
 
 
 export const getPacks = (): AppThunkType =>
