@@ -1,9 +1,5 @@
-import axios, {AxiosResponse} from "axios";
-
-let instance = axios.create({
-    baseURL: 'https://neko-back.herokuapp.com/2.0/',
-    withCredentials: true
-})
+import {AxiosResponse} from "axios";
+import {instance} from "./instance";
 
 export const loginAPI = {
     login(email: string, password: string, rememberMe: boolean) {
