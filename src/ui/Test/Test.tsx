@@ -2,7 +2,7 @@ import React, {useCallback, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Navigate} from 'react-router-dom';
 import {logoutTC} from '../../bll/authReducer';
-import {getPacks, PackReducerStateType, setPacksMyId, setPage, setPageCount} from '../../bll/packReducer';
+import {getPacks, PackReducerStateType, setPacksMyId, setPage, setPageCount, setSortPacks} from '../../bll/packReducer';
 import {AppRootStateType} from '../../bll/store';
 import {Paginator} from '../features/paginator/Paginator';
 import {Search} from '../features/search/Search';
@@ -30,10 +30,13 @@ export const Test = React.memo(() => {
     const setPageSize = useCallback((pageCount: number) => {
         dispatch(setPageCount(pageCount))
     }, [dispatch])
+    const onSortPacks = useCallback((value: string) => {
+        dispatch(setSortPacks(value))
+    }, [dispatch])
 
     useEffect(() => {
         dispatch(getPacks())
-    }, [dispatch, page, pageCount])
+    }, [dispatch, page, pageCount, sortPacks])
 
     if (!isLogged) {
         return <Navigate to="/login"/>
@@ -44,7 +47,7 @@ export const Test = React.memo(() => {
             Profile page
             <button onClick={onLogout}>log out</button>
             <Search getSearchData={getPacks}/>
-            <PackList/>
+            <PackList onSortPacks={onSortPacks} />
             <Paginator totalCount={cardPacksTotalCount}
                        pageCount={pageCount}
                        onPageChanged={onPageChanged}
@@ -57,7 +60,7 @@ export const Test = React.memo(() => {
     )
 })
 
-export const PackList = () => {
+export const PackList = (props: any) => {
 
     const packs = useSelector<AppRootStateType, Array<CardPacksType>>(state => state.packs.cardPacks)
     return (
@@ -68,7 +71,7 @@ export const PackList = () => {
                 <div className={s.table__row}>
                     <TableCell item={'Name'}/>
                     <TableCell item={'Cards'}/>
-                    <TableCell item={'Last Updated'} sort/>
+                    <TableCell item={'Last Updated'} onSortPacks={props.onSortPacks}/>
                     <TableCell item={'Created By'}/>
 
                 </div>
@@ -83,10 +86,10 @@ const TableRow = (props: any) => {
 
     return (
         <div className={s.table__row}>
-            <TableCell item={props.pack.name}/>
-            <TableCell item={props.pack.cardsCount}/>
-            <TableCell item={props.pack.updated}/>
-            <TableCell item={props.pack.created}/>
+            <TableCell  item={props.pack.name}/>
+            <TableCell  item={props.pack.cardsCount}/>
+            <TableCell  item={props.pack.updated}/>
+            <TableCell  item={props.pack.created}/>
         </div>
     )
 };
@@ -99,7 +102,8 @@ const TableCell = (props: any) => {
             <input
                 value={props.item}
                 type="text"/>
-            {props.sort ? <SortButton/> : ''}
+            {props.onSortPacks ? <SortButton value={"updated"}
+                                      sortItems={props.onSortPacks}/> : ''}
         </div>
     )
 }

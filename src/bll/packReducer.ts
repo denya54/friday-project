@@ -18,7 +18,7 @@ export const initialState = {
 export type PackActionType =
     ReturnType<typeof setSearchField>
     | ReturnType<typeof setPage>
-    | ReturnType<typeof setSort>
+    | ReturnType<typeof setSortPacks>
     | ReturnType<typeof setPacks>
     | ReturnType<typeof setCardsCount>
     | ReturnType<typeof setPageCount>
@@ -54,7 +54,7 @@ export const setPageCount = (pageCount: number) => {
 export const setPage = (page: number) => {
     return {type: "packs/SET-PAGE", payload: {page}} as const
 }
-export const setSort = (sortPacks: string) => {
+export const setSortPacks = (sortPacks: string) => {
     return {type: 'packs/SET-SORT', payload: {sortPacks}} as const
 }
 export const setPacksMyId = (myId: string | null) => ({
