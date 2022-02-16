@@ -1,4 +1,5 @@
-import {instance} from "../dal/API";
+import {instance} from "./passwordRecoveryAPI";
+
 
 export const packsAPI = {
     getPacks(payload?: PacksGetParams) {
