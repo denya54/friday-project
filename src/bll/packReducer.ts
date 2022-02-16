@@ -74,7 +74,7 @@ export const getPacks = (): AppThunkType =>
             })
             dispatch(setPacks(res.data))
         } catch (error: any) {
-            const err = error.response ? error.response.data.error : error.message
+            console.log(error)
         }
     }
 

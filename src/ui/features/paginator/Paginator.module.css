@@ -10,11 +10,7 @@
 }
 
 .paginatorBtn,
-.pageNumber,
-.selectPageSize {
+.pageNumber {
     padding: 5px 10px;
 }
 
-select {
-    margin: 5px
-}

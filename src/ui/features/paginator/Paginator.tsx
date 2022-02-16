@@ -8,16 +8,9 @@ type PaginatorPropsType = {
     pageCount: number
     onPageChanged: (page: number) => void
     currentPage: number
-    selectedPageSize: number
-    changePageSize: (option: number) => void
-    pageSizes: number[]
 }
 
-export const Paginator = ({
-                              totalCount, pageCount, onPageChanged,
-                              currentPage, pageSizes, selectedPageSize,
-                              changePageSize
-                          }: PaginatorPropsType) => {
+export const Paginator = ({totalCount, pageCount, onPageChanged, currentPage}: PaginatorPropsType) => {
 
     let pagesCount = Math.ceil(totalCount / pageCount);
     let pages = []
@@ -30,15 +23,7 @@ export const Paginator = ({
     const leftPortionNumber = (portionNumber - 1) * portionSize + 1
     const rightPortionNumber = portionNumber * portionSize
 
-    const onSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
-        const option = +e.currentTarget.value
-        changePageSize(option)
-    }
-    const mappedOptions = pageSizes.map((o, i) => (
-        <option key={i} value={o}>
-            {o}
-        </option>
-    ))
+
     return <div className={s.paginator}>
         {portionNumber > 1 &&
         <span className={s.paginatorBtn} onClick={() => {
@@ -57,12 +42,6 @@ export const Paginator = ({
             setPortionNumber(portionNumber + 1)
         }}>{`>`}
         </span>}
-
-        <span className={s.selectPageSize}>Показывать
-            <select onChange={onSelectChange} value={selectedPageSize}>
-                {mappedOptions}
-            </select> колод на странице
-        </span>
 
     </div>
 }

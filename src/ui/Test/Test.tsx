@@ -9,6 +9,7 @@ import {Search} from '../features/search/Search';
 import {SortButton} from '../features/sort/SortButton';
 import s from "./Test.module.css"
 import {CardPacksType} from "../../dal/packsAPI";
+import { SelectPageSize } from '../features/selectPageSize/SelectPageSize';
 
 
 export const Test = React.memo(() => {
@@ -52,9 +53,10 @@ export const Test = React.memo(() => {
                        pageCount={pageCount}
                        onPageChanged={onPageChanged}
                        currentPage={page}
-                       changePageSize={setPageSize}
-                       selectedPageSize={pageCount}
-                       pageSizes={[5, 10, 15, 20]}
+            />
+            <SelectPageSize  selectedPageSize={pageCount}
+                             pageSizes={[5, 10, 15, 20]}
+                             changePageSize={setPageSize}
             />
         </div>
     )
