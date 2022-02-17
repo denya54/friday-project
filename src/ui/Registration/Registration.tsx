@@ -66,9 +66,8 @@ export const Registration = () => {
     return (
         <div className={s.registration}>
             <LogoTitle></LogoTitle>
-            {/* <p>Sign Up</p> */}
             <TitlePage title='Регистрация'></TitlePage>
-            {isLoading ? <span> Loading...</span> : null}
+                    {isLoading ? <span> Loading...</span> : null}
             <form className={s.form} action="">
                     <InputText type="email"
                                     // placeholder={"Email"}
@@ -90,7 +89,7 @@ export const Registration = () => {
                                     onChange={onChangePassword2}
                                     error={errorPassword2}
                     />
-                <div className={s.btnContainer}>
+                    <div className={s.btnContainer}>
                         <CanselButton 
                             onClick={CancelCallback}>Отмена</CanselButton>
                         <MainButton 
@@ -98,7 +97,7 @@ export const Registration = () => {
                             onClick={RegisterCallback} 
                             disabled={disabled}
                             style={{width:'186px'}}>Зарегистрироваться </MainButton>
-                </div>
+                    </div>
             </form>
             {error ? <span className={s.error}>{error}</span> : null}
         </div>
