@@ -4,7 +4,9 @@ import {Navigate} from "react-router-dom";
 import React, {useEffect} from "react";
 import {getUserDataTC} from "../../bll/authReducer";
 import {getPacks} from "../../bll/packReducer";
-import {CardPacksType} from "../../dal/packsAPI";
+import {CardPacksType, packsAPI} from "../../dal/packsAPI";
+import {Table} from "./Table";
+import MainButton from "../../componens/mainButton/MainButton";
 
 export const Packs = () => {
 
@@ -23,6 +25,12 @@ export const Packs = () => {
         dispatch(getPacks())
     }, [])
 
+    const createNewPack = () => {
+        packsAPI.createPack('my first PACK')
+        dispatch(getPacks())
+    }
+
+
     if (!isLogged) {
         return <Navigate to="/login"/>
     }
@@ -30,9 +38,69 @@ export const Packs = () => {
     return (
         <div>
             <h3>Вы вошли как {userName}</h3>
+            Колоды
+            <div>
+                <MainButton onClick={createNewPack}>Создать колоду</MainButton>
+            </div>
 
-            {packs.map(p => <div>{p.name}</div>)}
-            Packs
+            <Table
+                // packs={packs}
+            />
         </div>
     )
 }
+
+// type TablePropsType = {
+//     packs?: Array<CardPacksType>
+// }
+//
+// const Table = (props: TablePropsType) => {
+//     return (
+//         props.packs
+//             ?
+//             <div>
+//                 <TableCell item={'Name'}/>
+//                 <TableCell item={'Cards'}/>
+//                 <TableCell item={'Last Updated'}/>
+//                 <TableCell item={'Created By'}/>
+//         <div>
+//             {props.packs.map((pack, idx) => <TableRow key={idx} pack={pack} />)}
+//         </div>
+//             </div>
+//             : <div>Нет паков</div>
+//     )
+// }
+//
+// type TableRowPropsType = {
+//     pack: CardPacksType
+// }
+//
+// const TableRow = (props: TableRowPropsType) => {
+//
+//     return (
+//         <div className="table__row">
+//             <TableCell item={props.pack.name} />
+//             <TableCell item={props.pack.cardsCount} />
+//             <TableCell item={props.pack.updated} />
+//             <TableCell item={props.pack.created} />
+//         </div>
+//     )
+// };
+//
+// type TableCellPropsType = {
+//     item: string | number
+// }
+//
+// const TableCell = (props: TableCellPropsType) => {
+//
+//     // const [state, setState] = useState(item);
+//
+//     return (
+//         <div>
+//             <input
+//                 value={props.item}
+//                 // onChange={({ target }) => setState(target.value)}
+//                 type="text" />
+//         </div>
+//     )
+// }

@@ -16,7 +16,7 @@ export const MainPage = () => {
             <div>
                 Этот мини-сайт сделали для вас следующие люди:
                 <a href={'https://github.com/KseniyaMelnik'}> Ксения Мельник </a>
-                <a href={'https://github.com/denya54'}> Хвесеня Денис</a>
+                <a href={'https://github.com/denya54'}> Хвесеня Денис </a>
                 <a href={'https://github.com/vladward'}>Владислав Малохвей</a>
             </div>
 

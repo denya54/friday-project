@@ -5,6 +5,9 @@ export const packsAPI = {
     getPacks(payload?: PacksGetParams) {
         return instance.get<PacksResponseType>('/cards/pack', {params: payload})
     },
+    createPack (namePack: string) {
+        return instance.post('/cards/pack', {cardsPack: {name: namePack}})
+    }
 };
 
 // Types
@@ -36,3 +39,8 @@ export type CardPacksType = {
     private: boolean
     updated: string
 }
+
+// type CreatePackType = {
+//     name: string
+//     private?: boolean
+// }

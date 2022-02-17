@@ -1,6 +1,5 @@
 import {CardPacksType, packsAPI, PacksResponseType} from "../dal/packsAPI";
-import {ThunkAction} from "redux-thunk";
-import {AppRootStateType, AppThunkType} from "./store";
+import {AppThunkType} from "./store";
 
 export const initialState = {
     cardPacks: [] as Array<CardPacksType>,
@@ -24,6 +23,7 @@ export type PackActionType =
     | ReturnType<typeof setPageCount>
     | ReturnType<typeof setPacksFromRange>
     | ReturnType<typeof setMyPacks>
+    | ReturnType<typeof createPackAC>
 
 export type PackReducerStateType = typeof initialState
 
@@ -36,7 +36,9 @@ export const packReducer = (state: PackReducerStateType = initialState, action: 
         case "packs/SET-SORT":
         case "packs/SET-PACKS-FROM-RANGE":
         case "packs/SET-MY-PACKS":
+        case "packs/CREATE-PACK":
             return {...state, ...action.payload}
+
         default:
             return state
     }
@@ -67,6 +69,9 @@ export const setMyPacks = (myId: string) => {
     return {type: "packs/SET-MY-PACKS", payload: {myId}}
 }
 
+export const createPackAC = (namePack: string) => {
+    return {type: "packs/CREATE-PACK", payload: {namePack}} as const
+}
 
 
 export const getPacks = (): AppThunkType =>

@@ -76,7 +76,6 @@ export const Login = () => {
                         <Link className={s.link} to='/password_recovery'>Забыли пароль</Link>
                     </div>
                 </div>
-                <p>{authError}</p>
 
                 <div>
                     <MainButton className={s.mainButton} onClick={onSubmit} disabled={disabledButton}>Войти</MainButton>
