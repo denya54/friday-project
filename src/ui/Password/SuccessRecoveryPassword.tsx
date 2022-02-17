@@ -6,8 +6,8 @@ import letter from "./../../assets/images/Group 281.png";
 export const SuccessRecoveryPassword = () => {
     return (
         <div className={s.successRecovery}>
-            <LogoTitle></LogoTitle>
-            <img className={s.img} src={letter}></img>
+            <LogoTitle/>
+            <img className={s.img} src={letter}/>
             <h4 className={s.title}>Вы успешно создали новый пароль</h4>
             <a className={s.link} href={'/login'}>Перейти на страницу логинизации</a>
         </div>

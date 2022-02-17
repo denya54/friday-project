@@ -1,13 +1,12 @@
 import s from './PasswordRecovery.module.css';
-import {ChangeEvent, useState} from "react";
-import {Navigate} from "react-router-dom";
+import {ChangeEvent, KeyboardEvent, useState} from "react";
+import {Navigate, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../bll/store";
 import { passwordRecoveryTC, setErrorAC} from "../../bll/recoveryPasswordReducer";
 import InputText from "../../componens/inputText/InputText";
 import MainButton from "../../componens/mainButton/MainButton";
 import LogoTitle from "../../componens/logoTitle/LogoTitle";
-import TitlePage from '../../componens/titlePage/TitlePage';
 
 
 export const PasswordRecovery = () => {
@@ -26,11 +25,21 @@ export const PasswordRecovery = () => {
         dispatch(setErrorAC(false))
     }
 
-
-
     const sendEmailToServer = () => {
         dispatch(passwordRecoveryTC(emailAddressField))
         setEmailAddressField('')
+    }
+
+    const onKeyPressSendEmailToServer = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.code === "Enter") {
+            dispatch(passwordRecoveryTC(emailAddressField))
+            setEmailAddressField('')
+        }
+    }
+
+    const navigate = useNavigate();
+    const redirectToLogin = () => {
+        navigate('/login', { replace: true })
     }
 
     if (isSuccess) {
@@ -39,17 +48,15 @@ export const PasswordRecovery = () => {
 
     return (
         <div className={s.passwordRecovery}>
-            <LogoTitle></LogoTitle>
-            {/* <TitlePage>Забыли пароль?</TitlePage> */}
+            <LogoTitle/>
             <h3 className={s.title}>Забыли пароль?</h3>
-            {/* <p className={s.text}>Укажите email</p> */}
             {error
                 ? <InputText value={emailAddressField} onChange={changeEmailAddressField} error={errorMessage}/>
-                : <InputText value={emailAddressField} onChange={changeEmailAddressField}/>
+                : <InputText value={emailAddressField} onChange={changeEmailAddressField} onKeyPress={onKeyPressSendEmailToServer}/>
             }
             <p className={s.text}>Пожалуйста укажите email, который вы использовали для входа на сайт</p>
             <MainButton className={s.button} onClick={sendEmailToServer} disabled={disabledButton}>Далее</MainButton>
-            <div className={s.wrapLink}><a className={s.link} href={'/login'}>Я вспомнил свой логин и пароль</a></div>
+            <div className={s.wrapLink}><a className={s.link} onClick={redirectToLogin}>Я вспомнил свой логин и пароль</a></div>
 
         </div>
     )

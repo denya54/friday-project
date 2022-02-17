@@ -1,15 +1,15 @@
 import React, {ButtonHTMLAttributes, DetailedHTMLProps} from 'react'
-import s from './CanselButton.module.css'
+import s from './CanсelButton.module.css'
 
 // тип пропсов обычной кнопки, children в котором храниться название кнопки там уже описан
 type DefaultButtonPropsType = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>
 
-type CanselButtonPropsType = DefaultButtonPropsType & {
+type CanсelButtonPropsType = DefaultButtonPropsType & {
     red?: boolean
     disabled?: boolean
 }
 
-const CanselButton: React.FC<CanselButtonPropsType> = (
+const CancelButton: React.FC<CanсelButtonPropsType> = (
     {
         red, className,
         ...restProps// все остальные пропсы попадут в объект restProps, там же будет children
@@ -25,4 +25,4 @@ const CanselButton: React.FC<CanselButtonPropsType> = (
     )
 }
 
-export default CanselButton
+export default CancelButton

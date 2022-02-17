@@ -1,41 +1,38 @@
 import React from "react";
-import s from "./MainPage.module.css";
-import InputText from "../../componens/inputText/InputText";
 import LogoTitle from "../../componens/logoTitle/LogoTitle";
+import {useNavigate} from "react-router-dom";
 import MainButton from "../../componens/mainButton/MainButton";
 import cards from "./../../assets/images/cards.png";
 import union from "./../../assets/images/Union.png";
 
-export const MainPage: React.FC = ({children}) => {
+export const MainPage = () => {
+
+    const navigate = useNavigate();
+
+    const redirectToProfile = () => navigate('/profile')
+
     return (
-        <div className={s.main}>
-            <div className={s.header}>
-                <div className={s.logo}>
-                    <LogoTitle></LogoTitle>
-                </div> 
-                <div className={s.navTabs}>
-                    <button className={s.tabsBtn}><img src={cards} className={s.imgBtn}></img>Packs list</button>
-                    <button className={s.tabsBtn}><img src={union} className={s.imgBtn}></img>Profile</button>
-                </div>
-            </div> 
-            <div className={s.inner}>
-                <aside className={s.aside}>
-                    <h3 className={s.subTitle}>Show packs cards</h3>
-                    <div className={s.asideBtn}>
-                        <button className={s.btnMy}>My</button>
-                        <button className={s.btnAll}>All</button>
-                    </div>
-                    <h3 className={s.subTitle}>Number of cards</h3>
-                    
-                </aside>
-                <div className={s.contentOne} id="contentOne">
-                            MainPage
-                </div>
-                <div className={s.contentTwo} id="contentTwo">
-                            Packs list Petr’s 
-                </div>
-            </div>                                  
-            {children}
+        <div>
+            <LogoTitle/>
+            <h3>Добро пожаловать!</h3>
+            <div>
+                Этот мини-сайт сделали для вас следующие люди:
+                <a href={'https://github.com/KseniyaMelnik'}> Ксения Мельник </a>
+                <a href={'https://github.com/denya54'}> Хвесеня Денис</a>
+                <a href={'https://github.com/vladward'}>Владислав Малохвей</a>
+            </div>
+
+            <div>
+                За красивое оформление отвечала:
+                <a href={'https://github.com/Evgeniya-junior'}> Евгения Ложкина</a>
+            </div>
+
+            <div>
+                И все это разрабатывалось под руководством:
+                <a href={'https://github.com/IgnatZakalinsky'}> Игнат Закалинский</a>
+            </div>
+            <MainButton onClick={redirectToProfile}>Стартуем</MainButton>
+
         </div>
     )
 }
