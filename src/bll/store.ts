@@ -5,6 +5,7 @@ import {RecoveryPasswordReducer} from "./recoveryPasswordReducer";
 import {PegistrationActionsType, registerReducer} from "./registerReduser";
 import thunk, { ThunkAction } from "redux-thunk";
 import {PackActionType, packReducer } from "./packReducer";
+import {cardReducer} from "./cardReducer";
 
 
 const rootReducer = combineReducers({
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
     app: appReducer,
     password: RecoveryPasswordReducer,
     register: registerReducer,
-    packs: packReducer
+    packs: packReducer,
+    cards: cardReducer
 })
 
 export const store = createStore(rootReducer, applyMiddleware(thunk));
