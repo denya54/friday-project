@@ -5,6 +5,8 @@ import s from "./TableForPacks.module.css";
 import {SortButton} from "../features/sort/SortButton";
 import React from "react";
 import {deletePackTC, getPacks, updatePackTC} from "../../bll/packReducer";
+import {changePackIDAC} from "../../bll/cardReducer";
+import {useNavigate} from "react-router-dom";
 
 
 export const TableForPacks = (props: {onSortPacks?: (value: string) => void}) => {
@@ -32,10 +34,10 @@ const TableRow = (props: {pack: CardPacksType}) => {
 
     return (
         <div className={s.table__row}>
-            <TableCell item={props.pack.name}/>
-            <TableCell item={props.pack.cardsCount}/>
-            <TableCell item={props.pack.updated}/>
-            <TableCell item={props.pack.user_name}/>
+            <TableCell item={props.pack.name} packID={props.pack._id}/>
+            <TableCell item={props.pack.cardsCount} packID={props.pack._id}/>
+            <TableCell item={props.pack.updated} packID={props.pack._id}/>
+            <TableCell item={props.pack.user_name} packID={props.pack._id}/>
             <TableCell1 packID={props.pack._id}/>
         </div>
     )
@@ -43,14 +45,23 @@ const TableRow = (props: {pack: CardPacksType}) => {
 
 // table-cell
 
-const TableCell = (props: { item: string | number, onSortPacks?: (value: string) => void }) => {
+const TableCell = (props: { item: string | number, packID?: any, onSortPacks?: (value: string) => void }) => {
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+    let seeCards = (packID: string) => {
+        dispatch(changePackIDAC(packID))
+        navigate( '/cards')
+
+    }
     return (
        <div className={s.table__cell}>
-                <input
-                    value={props.item}
-                    type="text"/>
-                {props.onSortPacks ? <SortButton value={"updated"}
-                                                 sortItems={props.onSortPacks}/> : ''}
+           <span onClick={()=> seeCards(props.packID)}>{props.item}</span>
+                {/*<input*/}
+                {/*    value={props.item}*/}
+                {/*    type="text"/>*/}
+                {/*{props.onSortPacks ? <SortButton value={"updated"}*/}
+                {/*                                 sortItems={props.onSortPacks}/> : ''}*/}
             </div>
     )
 }
@@ -61,14 +72,10 @@ const TableCell1 = (props: { packID: string}) => {
 
     const updatePack = (packID: string) => {
         dispatch(updatePackTC(packID))
-        // packsAPI.updatePack('My third Pack', packID)
-        // dispatch(getPacks())
     }
 
     const deletePack = (packID: string)  => {
         dispatch(deletePackTC(packID))
-        // packsAPI.deletePack(packID)
-        // dispatch(getPacks())
     }
 
 

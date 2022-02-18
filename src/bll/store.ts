@@ -5,7 +5,7 @@ import {RecoveryPasswordReducer} from "./recoveryPasswordReducer";
 import {PegistrationActionsType, registerReducer} from "./registerReduser";
 import thunk, { ThunkAction } from "redux-thunk";
 import {PackActionType, packReducer } from "./packReducer";
-import {cardReducer} from "./cardReducer";
+import {CardActionType, cardReducer} from "./cardReducer";
 
 
 const rootReducer = combineReducers({
@@ -22,7 +22,7 @@ export const store = createStore(rootReducer, applyMiddleware(thunk));
 export type AppRootStateType = ReturnType<typeof rootReducer>
 
 export type AppRootActionsType =
-    PackActionType | PegistrationActionsType
+    PackActionType | PegistrationActionsType | CardActionType
 
 export type AppThunkType<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, AppRootActionsType>
 
