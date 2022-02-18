@@ -2,11 +2,20 @@ import {instance} from "./instance";
 
 
 export const cardsAPI = {
-    getCards(packID: string) {
-        return instance.get<CardsResponseType>(`/cards/card?cardsPack_id=${packID}`)
+    // getCards(packID: string) {
+    //     return instance.get<CardsResponseType>(`/cards/card?cardsPack_id=${packID}`)
+    // },
+    getCards(payload: CardsGetParams) {
+        return instance.get<CardsResponseType>(`/cards/card`, {params: payload})
     },
     createCard (packID: string) {
         return instance.post('/cards/card', {card: {cardsPack_id: packID, question: 'почём в Одессе рубероид?'}})
+    },
+    deleteCard (cardID: string) {
+        return instance.delete(`/cards/card?id=${cardID}`)
+    },
+    updateCard (newQuestion: string, cardID: string) {
+        return instance.put('/cards/card', {card: {question: newQuestion, _id: cardID}})
     }
 };
 

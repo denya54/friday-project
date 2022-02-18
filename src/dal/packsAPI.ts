@@ -7,6 +7,12 @@ export const packsAPI = {
     },
     createPack (namePack: string) {
         return instance.post('/cards/pack', {cardsPack: {name: namePack}})
+    },
+    deletePack (packID: string) {
+        return instance.delete(`/cards/pack?id=${packID}`)
+    },
+    updatePack (newNamePack: string, packID: string) {
+        return instance.put('/cards/pack', {cardsPack: {name: newNamePack, _id: packID}})
     }
 };
 

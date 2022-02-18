@@ -5,6 +5,8 @@ import {AppRootStateType} from "../../bll/store";
 import {getUserDataTC} from "../../bll/authReducer";
 import MainButton from "../../componens/mainButton/MainButton";
 import {cardsAPI} from "../../dal/cardsAPI";
+import {TableForCards} from "./TableForCards";
+import {getCards} from "../../bll/cardReducer";
 
 export const Cards = () => {
 
@@ -18,14 +20,25 @@ export const Cards = () => {
     }, [])
 
 
+    useEffect(() => {
+        dispatch(getCards())
+    }, [])
+
 
     const createNewCard = () => {
         cardsAPI.createCard('620ea6cfb185f020a81a9f61')
+        dispatch(getCards())
     }
 
-    const giveCards = () => {
-        cardsAPI.getCards('620ea6cfb185f020a81a9f61')
+    const updateCard = () => {
+        cardsAPI.updateCard ( 'Как дела','620f8db4d24e5520608fcae1')
+        dispatch(getCards())
     }
+    const deleteCard = () => {
+        cardsAPI.deleteCard ( '620f8db4d24e5520608fcae1')
+        dispatch(getCards())
+    }
+
 
     if (!isLogged) {
         return <Navigate to="/login"/>
@@ -38,8 +51,11 @@ export const Cards = () => {
             Карты
             <div>
                 <MainButton onClick={createNewCard}>Создать карту</MainButton>
-                <MainButton onClick={giveCards}>Запрос</MainButton>
+                <MainButton onClick={updateCard}>Изменить карту</MainButton>
+                <MainButton onClick={deleteCard}>Удалить карту</MainButton>
+
             </div>
+            <TableForCards/>
 
         </div>
 

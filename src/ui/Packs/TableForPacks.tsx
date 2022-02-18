@@ -1,15 +1,12 @@
-import {useSelector} from "react-redux";
+import { useSelector} from "react-redux";
 import {AppRootStateType} from "../../bll/store";
 import {CardPacksType} from "../../dal/packsAPI";
-import s from "../Test/Test.module.css";
+import s from "./TableForPacks.module.css";
 import {SortButton} from "../features/sort/SortButton";
 import React from "react";
 
-// type TablePropsType = {
-//     packs?: Array<CardPacksType>
-// }
 
-export const Table = (props: {onSortPacks?: (value: string) => void}) => {
+export const TableForPacks = (props: {onSortPacks?: (value: string) => void}) => {
 
     const packs = useSelector<AppRootStateType, Array<CardPacksType>>(state => state.packs.cardPacks)
     return (
@@ -20,8 +17,7 @@ export const Table = (props: {onSortPacks?: (value: string) => void}) => {
                     <TableCell item={'Name'}/>
                     <TableCell item={'Cards'}/>
                     <TableCell item={'Last Updated'} onSortPacks={props.onSortPacks}/>
-                    <TableCell item={'Created By'}/>
-
+                    <TableCell item={'Created'}/>
                 </div>
                 {packs.map((pack, idx) => <TableRow key={idx} pack={pack}/>)}
             </div>
@@ -44,14 +40,15 @@ const TableRow = (props: {pack: CardPacksType}) => {
 
 // table-cell
 
-const TableCell = (props: { item: string | number, onSortPacks?: (value: string) => void }) => {
+const TableCell = (props: { item?: string | number, onSortPacks?: (value: string) => void, packID?: string }) => {
     return (
-        <div className={s.table__cell}>
-            <input
-                value={props.item}
-                type="text"/>
-            {props.onSortPacks ? <SortButton value={"updated"}
-                                             sortItems={props.onSortPacks}/> : ''}
-        </div>
+       <div className={s.table__cell}>
+                <input
+                    value={props.item}
+                    type="text"/>
+                {props.onSortPacks ? <SortButton value={"updated"}
+                                                 sortItems={props.onSortPacks}/> : ''}
+            </div>
     )
 }
+
