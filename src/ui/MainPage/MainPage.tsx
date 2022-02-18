@@ -1,18 +1,12 @@
 import React from "react";
-import LogoTitle from "../../componens/logoTitle/LogoTitle";
 import {useNavigate} from "react-router-dom";
 import MainButton from "../../componens/mainButton/MainButton";
-import cards from "./../../assets/images/cards.png";
-import union from "./../../assets/images/Union.png";
 import s from "./MainPage.module.css";
-import InputSearch from "../../componens/inputSearch/InputSearch";
-import mainImg from "./../../assets/images/sky.png";
 import img1 from "./../../assets/images/denis.jpg";
-import img2 from "./../../assets/images/kseniya.jfif";
+import img2 from "./../../assets/images/raketa.png";
 import img3 from "./../../assets/images/vlad.jpg";
 import img4 from "./../../assets/images/img4.jpg";
 import img5 from "./../../assets/images/ignat.jpg";
-import raketa from "./../../assets/images/raketa.png";
 export const MainPage = () => {
 
     const navigate = useNavigate();
