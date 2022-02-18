@@ -2,7 +2,6 @@ import {Navigate} from "react-router-dom";
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../bll/store";
-import {getUserDataTC} from "../../bll/authReducer";
 import MainButton from "../../componens/mainButton/MainButton";
 import {cardsAPI} from "../../dal/cardsAPI";
 import {TableForCards} from "./TableForCards";
@@ -11,18 +10,9 @@ import {getCards} from "../../bll/cardReducer";
 export const Cards = () => {
 
     const isLogged = useSelector<AppRootStateType, boolean>(state => state.login.isLoggedIn)
-    const userName = useSelector<AppRootStateType, string>(state => state.login.name)
 
     const dispatch = useDispatch()
-// удалить запрос
-    useEffect(() => {
-        dispatch(getUserDataTC())
-    }, [])
 
-
-    useEffect(() => {
-        dispatch(getCards())
-    }, [])
 
 
     const createNewCard = () => {
@@ -31,14 +21,17 @@ export const Cards = () => {
     }
 
     const updateCard = () => {
-        cardsAPI.updateCard ( 'Как дела','620f8db4d24e5520608fcae1')
+        cardsAPI.updateCard('Как дела', '620f8db4d24e5520608fcae1')
         dispatch(getCards())
     }
     const deleteCard = () => {
-        cardsAPI.deleteCard ( '620f8db4d24e5520608fcae1')
+        cardsAPI.deleteCard('620f8db4d24e5520608fcae1')
         dispatch(getCards())
     }
 
+    useEffect(() => {
+        dispatch(getCards())
+    }, [dispatch])
 
     if (!isLogged) {
         return <Navigate to="/login"/>
@@ -47,8 +40,7 @@ export const Cards = () => {
 
     return (
         <div>
-            <h3>Вы вошли как {userName}</h3>
-            Карты
+            Карты фывфывф
             <div>
                 <MainButton onClick={createNewCard}>Создать карту</MainButton>
                 <MainButton onClick={updateCard}>Изменить карту</MainButton>

@@ -2,7 +2,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../bll/store";
 import {Navigate} from "react-router-dom";
 import React, {useEffect} from "react";
-import {getUserDataTC} from "../../bll/authReducer";
 import {getPacks} from "../../bll/packReducer";
 import {CardPacksType, packsAPI} from "../../dal/packsAPI";
 import {TableForPacks} from "./TableForPacks";
@@ -17,13 +16,10 @@ export const Packs = () => {
 
     const dispatch = useDispatch()
 
-    useEffect(() => {
-        dispatch(getUserDataTC())
-    }, [])
 
     useEffect(() => {
         dispatch(getPacks())
-    }, [])
+    }, [dispatch])
 
     const createNewPack = () => {
         packsAPI.createPack('my first PACK')
