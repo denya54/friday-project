@@ -4,7 +4,15 @@ import {useNavigate} from "react-router-dom";
 import MainButton from "../../componens/mainButton/MainButton";
 import cards from "./../../assets/images/cards.png";
 import union from "./../../assets/images/Union.png";
-
+import s from "./MainPage.module.css";
+import InputSearch from "../../componens/inputSearch/InputSearch";
+import mainImg from "./../../assets/images/sky.png";
+import img1 from "./../../assets/images/denis.jpg";
+import img2 from "./../../assets/images/kseniya.jfif";
+import img3 from "./../../assets/images/vlad.jpg";
+import img4 from "./../../assets/images/img4.jpg";
+import img5 from "./../../assets/images/ignat.jpg";
+import raketa from "./../../assets/images/raketa.png";
 export const MainPage = () => {
 
     const navigate = useNavigate();
@@ -12,27 +20,34 @@ export const MainPage = () => {
     const redirectToProfile = () => navigate('/profile')
 
     return (
-        <div>
-            <LogoTitle/>
-            <h3>Добро пожаловать!</h3>
-            <div>
-                Этот мини-сайт сделали для вас следующие люди:
-                <a href={'https://github.com/KseniyaMelnik'}> Ксения Мельник </a>
-                <a href={'https://github.com/denya54'}> Хвесеня Денис</a>
-                <a href={'https://github.com/vladward'}>Владислав Малохвей</a>
-            </div>
+        <div className={s.mainPage}>
+            <h1 className={s.title}>Добро пожаловать!</h1>  
+            <div className={s.content}>
+                <h2 className={s.subTitle}>Этот мини-сайт сделали для вас следующие люди:</h2>
+                <ul className={s.list}>
+                    <li className={s.items}><img className={s.img} src={img1}></img><a  className={s.link} href={'https://github.com/denya54'}> Хвесеня Денис</a></li>
+                    <li className={s.items}><img className={s.img} src={img2}></img><a  className={s.link} href={'https://github.com/KseniyaMelnik'}> Ксения Мельник </a></li>
+                    <li className={s.items}><img className={s.img} src={img3}></img><a  className={s.link} href={'https://github.com/vladward'}>Владислав Малохвей</a></li>
+                </ul>
+                
+                <h2 className={s.subTitle2}> За красивое оформление отвечала:</h2>
+                <div className={s.wrapper}>
+                    <img className={s.img} src={img4}></img>
+                    {/* <div className={s.linkInner}> */}
+                        <a className={s.link} href={'https://github.com/Evgeniya-junior'}> Евгения Ложкина</a>
+                    {/* </div> */}
+                </div>
+                <h2 className={s.subTitle3}>И все это разрабатывалось под руководством:</h2>
+                <div className={s.wrapper}>
+                    <img className={s.img} src={img5}></img>
+                    {/* <div className={s.linkInner}> */}
+                        <a className={s.link} href={'https://github.com/IgnatZakalinsky'}> Игнат Закалинский</a>
+                    {/* </div> */}
+                </div>
 
-            <div>
-                За красивое оформление отвечала:
-                <a href={'https://github.com/Evgeniya-junior'}> Евгения Ложкина</a>
             </div>
-
-            <div>
-                И все это разрабатывалось под руководством:
-                <a href={'https://github.com/IgnatZakalinsky'}> Игнат Закалинский</a>
-            </div>
-            <MainButton onClick={redirectToProfile}>Стартуем</MainButton>
-
+                <MainButton className={s.button} onClick={redirectToProfile}>Полетели</MainButton>
+            {/* <img className={s.raketa} src={raketa}></img> */}
         </div>
     )
 }
