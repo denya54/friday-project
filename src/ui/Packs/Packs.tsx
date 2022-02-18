@@ -1,17 +1,17 @@
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../bll/store";
 import {Navigate} from "react-router-dom";
-import React, {useEffect} from "react";
-import {createPackTC, getPacks} from "../../bll/packReducer";
-import {CardPacksType, packsAPI} from "../../dal/packsAPI";
+import React, {ChangeEvent, useEffect, useState} from "react";
+import { createPackTC, getPacks, setMyPacks} from "../../bll/packReducer";
 import {TableForPacks} from "./TableForPacks";
 import MainButton from "../../componens/mainButton/MainButton";
+import s from "../Login/Login.module.css";
 
 export const Packs = () => {
 
-    const isLogged = useSelector<AppRootStateType, boolean>(state => state.login.isLoggedIn)
+    const [onlyMy, setOnlyMy] = useState(false)
 
-    const packs = useSelector<AppRootStateType, Array<CardPacksType>>(state => state.packs.cardPacks)
+    const isLogged = useSelector<AppRootStateType, boolean>(state => state.login.isLoggedIn)
 
     const dispatch = useDispatch()
 
@@ -24,6 +24,19 @@ export const Packs = () => {
         dispatch(createPackTC())
     }
 
+    const changeMyPacksSee = (e: ChangeEvent<HTMLInputElement>) => {
+
+        if(e.currentTarget.checked === true) {
+            setOnlyMy(e.currentTarget.checked)
+            dispatch(setMyPacks('61fea4102c68440004f52267'))
+            dispatch(getPacks())
+        } else {
+            setOnlyMy(e.currentTarget.checked)
+            dispatch(setMyPacks(''))
+            dispatch(getPacks())
+        }
+    }
+
     if (!isLogged) {
         return <Navigate to="/login"/>
     }
@@ -31,6 +44,12 @@ export const Packs = () => {
     return (
         <div>
             Колоды
+            <div>
+                Только мои Колоды
+                <input className={s.rememberCheckbox} type="checkbox" checked={onlyMy} onChange={changeMyPacksSee}
+                />
+            </div>
+
             <div>
                 <MainButton onClick={createNewPack}>Создать колоду</MainButton>
             </div>

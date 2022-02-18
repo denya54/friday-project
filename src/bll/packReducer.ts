@@ -11,7 +11,7 @@ export const initialState = {
     cardsValuesFromRange: [0, 1000],
     sortPacks: '',
     searchField: '',
-    myId: null as string | null
+    myId: null as string | null,
 }
 
 export type PackActionType =
@@ -23,7 +23,6 @@ export type PackActionType =
     | ReturnType<typeof setPageCount>
     | ReturnType<typeof setPacksFromRange>
     | ReturnType<typeof setMyPacks>
-    | ReturnType<typeof createPackAC>
 
 export type PackReducerStateType = typeof initialState
 
@@ -38,7 +37,6 @@ export const packReducer = (state: PackReducerStateType = initialState, action: 
         case "packs/SET-MY-PACKS":
         case "packs/CREATE-PACK":
             return {...state, ...action.payload}
-
         default:
             return state
     }
@@ -72,7 +70,6 @@ export const setMyPacks = (myId: string) => {
 export const createPackAC = (namePack: string) => {
     return {type: "packs/CREATE-PACK", payload: {namePack}} as const
 }
-
 
 export const getPacks = (): AppThunkType =>
     async (dispatch, getState) => {
