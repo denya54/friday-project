@@ -44,6 +44,8 @@ export type CardPacksType = {
     name: string
     private: boolean
     updated: string
+
+    user_name: string
 }
 
 // type CreatePackType = {

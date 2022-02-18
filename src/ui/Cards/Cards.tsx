@@ -13,8 +13,6 @@ export const Cards = () => {
 
     const dispatch = useDispatch()
 
-
-
     const createNewCard = () => {
         cardsAPI.createCard('620ea6cfb185f020a81a9f61')
         dispatch(getCards())
@@ -40,12 +38,11 @@ export const Cards = () => {
 
     return (
         <div>
-            Карты фывфывф
+            Карты
             <div>
                 <MainButton onClick={createNewCard}>Создать карту</MainButton>
                 <MainButton onClick={updateCard}>Изменить карту</MainButton>
                 <MainButton onClick={deleteCard}>Удалить карту</MainButton>
-
             </div>
             <TableForCards/>
 

@@ -93,3 +93,32 @@ export const getPacks = (): AppThunkType =>
         }
     }
 
+export const createPackTC = (): AppThunkType =>
+    async (dispatch) => {
+        try {
+            const res = await packsAPI.createPack('My PACKI')
+            dispatch(getPacks())
+        } catch (error: any) {
+            console.log(error)
+        }
+    }
+
+export const deletePackTC = (packID: string): AppThunkType =>
+    async (dispatch) => {
+        try {
+            const res = await packsAPI.deletePack(packID)
+            dispatch(getPacks())
+        } catch (error: any) {
+            console.log(error)
+        }
+    }
+
+export const updatePackTC = (packID: string): AppThunkType =>
+    async (dispatch) => {
+        try {
+            const res = await packsAPI.updatePack('UpdatedPACK', packID)
+            dispatch(getPacks())
+        } catch (error: any) {
+            console.log(error)
+        }
+    }
