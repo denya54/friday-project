@@ -3,6 +3,7 @@ import React from "react"
 import {useDispatch, useSelector} from "react-redux";
 import {getPacks, setSearchField} from "../../../bll/packReducer";
 import {AppRootStateType} from "../../../bll/store";
+import InputSearch from "../../../componens/inputSearch/InputSearch";
 import InputText from "../../../componens/inputText/InputText";
 import MainButton from "../../../componens/mainButton/MainButton";
 import {PacksGetParams} from "../../../dal/packsAPI";
@@ -25,8 +26,7 @@ export const Search = ({getSearchData}: SearchPropsType) => {
 
     return (
         <div>
-            <InputText
-                type="text"
+            <InputSearch
                 value={searchField}
                 onChangeText={onChange}
             />

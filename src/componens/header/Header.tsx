@@ -1,16 +1,24 @@
 import {NavLink} from "react-router-dom";
+import LogoTitle from "../logoTitle/LogoTitle";
+import s from "./Header.module.css";
+
 
 export const Header = () => {
     return (
-        <div>
-            <NavLink to={'/'}>Главная </NavLink>
-            <NavLink to={'/profile'}>Профиль </NavLink>
-            <NavLink to={'/packs'}>Колоды </NavLink>
-            <NavLink to={'/cards'}>Карты </NavLink>
-            <NavLink to={'/login'}>Логинизация </NavLink>
-            <NavLink to={'/registration'}>Регистрация </NavLink>
-            <NavLink to={'/password_recovery'}>ВосстановлениеПароля </NavLink>
-            <NavLink to={'/test'}>Тест </NavLink>
+        <div className={s.header}>
+            <div className={s.logo}>
+                <LogoTitle></LogoTitle>
+            </div>
+            <div className={s.menu}>
+                <NavLink to={'/'} style={({ isActive }) =>({color: isActive ? 'blue' : '#2D2E46'})}>Главная </NavLink>
+                <NavLink to={'/profile'} style={({ isActive }) =>({color: isActive ? 'blue' : '#2D2E46'})}>Профиль </NavLink>
+                <NavLink to={'/packs'} style={({ isActive }) =>({color: isActive ? 'blue' : '#2D2E46'})}>Колоды </NavLink>
+                <NavLink to={'/cards'} style={({ isActive }) =>({color: isActive ? 'blue' : '#2D2E46'})}>Карты </NavLink>
+                <NavLink to={'/login'} style={({ isActive }) =>({color: isActive ? 'blue' : '#2D2E46'})}>Логинизация </NavLink>
+                <NavLink to={'/registration'} style={({ isActive }) =>({color: isActive ? 'blue' : '#2D2E46'})}>Регистрация </NavLink>
+                <NavLink to={'/password_recovery'} style={({ isActive }) =>({color: isActive ? 'blue' : '#2D2E46'})}>Восстановление пароля </NavLink>
+                <NavLink to={'/test'} style={({ isActive }) =>({color: isActive ? 'blue' : '#2D2E46'})}>Тест </NavLink>
+            </div>
         </div>
 
     )
