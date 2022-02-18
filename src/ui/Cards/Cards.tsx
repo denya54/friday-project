@@ -14,7 +14,7 @@ export const Cards = () => {
     const userName = useSelector<AppRootStateType, string>(state => state.login.name)
 
     const dispatch = useDispatch()
-
+// удалить запрос
     useEffect(() => {
         dispatch(getUserDataTC())
     }, [])
