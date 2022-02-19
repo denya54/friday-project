@@ -6,12 +6,14 @@ import { createPackTC, getPacks, setMyPacks} from "../../bll/packReducer";
 import {TableForPacks} from "./TableForPacks";
 import MainButton from "../../componens/mainButton/MainButton";
 import s from "../Login/Login.module.css";
+import {getUserDataTC} from "../../bll/authReducer";
 
 export const Packs = () => {
 
     const [onlyMy, setOnlyMy] = useState(false)
 
     const isLogged = useSelector<AppRootStateType, boolean>(state => state.login.isLoggedIn)
+    const userID = useSelector<AppRootStateType, string>(state => state.login.userID)
 
     const dispatch = useDispatch()
 
@@ -24,11 +26,15 @@ export const Packs = () => {
         dispatch(createPackTC())
     }
 
+    useEffect(() => {
+        dispatch(getUserDataTC())
+    }, [])
+
     const changeMyPacksSee = (e: ChangeEvent<HTMLInputElement>) => {
 
         if(e.currentTarget.checked === true) {
             setOnlyMy(e.currentTarget.checked)
-            dispatch(setMyPacks('61fea4102c68440004f52267'))
+            dispatch(setMyPacks(userID))
             dispatch(getPacks())
         } else {
             setOnlyMy(e.currentTarget.checked)

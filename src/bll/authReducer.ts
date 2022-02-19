@@ -4,6 +4,7 @@ import avaStandart from '../assets/images/avatar.png'
 
 const initialState = {
     name: '',
+    userID: '',
     avatar: '',
     data: {},
     isLoggedIn: false,
@@ -21,6 +22,7 @@ type LoginActionTypes =
     | ReturnType<typeof getUserDataAC>
     | ReturnType<typeof setButtonDisableAC>
     | ReturnType<typeof setErrorAC>
+    | ReturnType<typeof setUserIDAC>
 
 export const authReducer = (state: loginInitialStateType = initialState, action: LoginActionTypes): loginInitialStateType => {
     switch (action.type) {
@@ -38,6 +40,8 @@ export const authReducer = (state: loginInitialStateType = initialState, action:
             return {...state, disabledButton: action.isDisabled}
         case "SET-ERROR":
             return {...state, isError: action.isError}
+        case "SET-USER-ID":
+            return {...state, userID: action.id}
         default:
             return state
     }
@@ -64,6 +68,10 @@ export const setButtonDisableAC = (isDisabled: boolean) => {
 export const setErrorAC = (isError: boolean) => {
     return {type: "SET-ERROR", isError} as const
 }
+export const setUserIDAC = (id: string) => {
+    return {type: "SET-USER-ID", id} as const
+}
+
 
 export const loginTC = (email: string, password: string, rememberMe: boolean) => (dispatch: Dispatch) => {
     dispatch(setButtonDisableAC(true))
@@ -117,6 +125,7 @@ export const getUserDataTC = () => (dispatch: Dispatch) => {
         .then(res => {
             let userName = res.data.email
             dispatch(getUserDataAC(userName))
+            dispatch(setUserIDAC(res.data._id))
         })
         .catch(e => {
             if (e.response) {
