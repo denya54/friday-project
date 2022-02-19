@@ -11,7 +11,7 @@ export const initialState = {
     cardsValuesFromRange: [0, 1000],
     sortPacks: '',
     searchField: '',
-    myId: null as string | null,
+    myId: '',
 }
 
 export type PackActionType =
