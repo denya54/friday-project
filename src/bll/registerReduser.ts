@@ -1,6 +1,6 @@
 import {ThunkAction} from "redux-thunk";
 import {AppRootStateType, AppThunkType} from "./store";
-import {RegisterAPI} from "../dal/register-api";
+import {RegisterApi} from "../dal/registerApi";
 
 export const initialState = {
         error: null as null | string,
@@ -55,7 +55,7 @@ export const signUpTC = (email: string, password: string, password2: string): Ap
     } else {
         try {
             dispatch(setISLoadingAC(true))
-            await RegisterAPI.signUp(email, password)
+            await RegisterApi.signUp(email, password)
             dispatch(setSuccessAC(true))
         } catch (error: any) {
             const err = error.response ? error.response.data.error : error.message

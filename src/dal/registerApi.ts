@@ -5,7 +5,7 @@ type RegisterResponseType = {
     error?: string
 }
 
-export const RegisterAPI = {
+export const RegisterApi = {
     signUp (email: string, password: string) {
          return instance.post<RegisterResponseType>("/auth/register", {email, password});
     },

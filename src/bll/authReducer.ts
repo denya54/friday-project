@@ -80,6 +80,7 @@ export const loginTC = (email: string, password: string, rememberMe: boolean) =>
             if (res.data) {
                 dispatch(loginAC(res.data))
                 dispatch(setIsLoggedInAC(true))
+                dispatch(setUserIDAC(res.data._id))
             }
         })
         .catch(e => {
@@ -104,6 +105,7 @@ export const logoutTC = () => (dispatch: Dispatch) => {
             if (res.data) {
                 dispatch(logoutAC())
                 dispatch(setIsLoggedInAC(false))
+                dispatch(setUserIDAC(""))
             }
         })
         .catch(e => {

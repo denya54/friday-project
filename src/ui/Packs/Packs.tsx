@@ -52,10 +52,6 @@ export const Packs = React.memo(() => {
         dispatch(createPackTC())
     }
 
-    useEffect(() => {
-        dispatch(getUserDataTC())
-    }, [])
-
     const changeMyPacksSee = (e: ChangeEvent<HTMLInputElement>) => {
 
         if(e.currentTarget.checked === true) {
