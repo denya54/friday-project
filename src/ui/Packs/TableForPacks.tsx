@@ -17,15 +17,26 @@ export const TableForPacks = (props: {onSortPacks?: (value: string) => void}) =>
         packs
             ? <div className={s.table}>
                 <div className={s.table__row}>
-                    <TableCell item={'Name'}/>
-                    <TableCell item={'Cards'}/>
-                    <TableCell item={'Last Updated'} onSortPacks={props.onSortPacks}/>
-                    <TableCell item={'Created By'}/>
-                    <TableCell item={'Actions'}/>
+                    <TableHead item={'Name'} onSortPacks={props.onSortPacks} value={"name"}/>
+                    <TableHead item={'Cards'} onSortPacks={props.onSortPacks} value={"cardsCount"}/>
+                    <TableHead item={'Last Updated'} onSortPacks={props.onSortPacks} value={"updated"}/>
+                    <TableHead item={'Created By'} onSortPacks={props.onSortPacks} value={"user_name"}/>
+                    <TableHead item={'Actions'}/>
                 </div>
                 {packs.map((pack, idx) => <TableRow key={idx} pack={pack}/>)}
             </div>
             : <div>loading...</div>
+    )
+}
+//table-head
+const TableHead = (props: { item: string | number,  onSortPacks?: (value: string) => void , value?: string}) => {
+    return (
+        <div className={s.table__cell}>
+           <span>{props.item}
+               {props.onSortPacks && props.value ? <SortButton  value={props.value}
+                                                sortItems={props.onSortPacks}/> : ''}
+           </span>
+        </div>
     )
 }
 // table-row
@@ -56,12 +67,10 @@ const TableCell = (props: { item: string | number, packID?: any, onSortPacks?: (
     }
     return (
        <div className={s.table__cell}>
-           <span onClick={()=> seeCards(props.packID)}>{props.item}</span>
-                {/*<input*/}
-                {/*    value={props.item}*/}
-                {/*    type="text"/>*/}
-                {/*{props.onSortPacks ? <SortButton value={"updated"}*/}
-                {/*                                 sortItems={props.onSortPacks}/> : ''}*/}
+           <span onClick={()=> seeCards(props.packID)}>{props.item}
+               {props.onSortPacks ? <SortButton value={"updated"}
+                                                sortItems={props.onSortPacks}/> : ''}
+           </span>
             </div>
     )
 }

@@ -13,7 +13,7 @@ const initialState = {
     disabledButton: false
 }
 
-type loginInitialStateType = typeof initialState
+export type loginStateType = typeof initialState
 type LoginActionTypes =
     | ReturnType<typeof loginAC>
     | ReturnType<typeof setIsLoggedInAC>
@@ -24,7 +24,7 @@ type LoginActionTypes =
     | ReturnType<typeof setErrorAC>
     | ReturnType<typeof setUserIDAC>
 
-export const authReducer = (state: loginInitialStateType = initialState, action: LoginActionTypes): loginInitialStateType => {
+export const authReducer = (state: loginStateType = initialState, action: LoginActionTypes): loginStateType => {
     switch (action.type) {
         case "LOGIN":
             return {...state, data: action.data}
