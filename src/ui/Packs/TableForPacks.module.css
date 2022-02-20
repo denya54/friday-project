@@ -21,3 +21,13 @@ input {
     width: 90%;
     height: 26px;
 }
+
+.learnBTN {
+    background-color: orange;
+}
+.btnContainer {
+    display: flex;
+}
+.btn {
+    margin: 5px 5px
+}

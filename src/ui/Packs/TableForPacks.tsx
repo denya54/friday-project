@@ -49,7 +49,7 @@ const TableRow = (props: {pack: CardPacksType}) => {
             <TableCell item={props.pack.cardsCount} packID={props.pack._id}/>
             <TableCell item={props.pack.updated} packID={props.pack._id}/>
             <TableCell item={props.pack.user_name} packID={props.pack._id}/>
-            <TableCell1 packID={props.pack._id}/>
+            <TableCell1 packID={props.pack._id} cardCount={props.pack.cardsCount}/>
         </div>
     )
 };
@@ -75,9 +75,10 @@ const TableCell = (props: { item: string | number, packID?: any, onSortPacks?: (
     )
 }
 
-const TableCell1 = (props: { packID: string}) => {
+const TableCell1 = (props: { packID: string, cardCount: number}) => {
 
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const updatePack = (packID: string) => {
         dispatch(updatePackTC(packID))
@@ -86,12 +87,23 @@ const TableCell1 = (props: { packID: string}) => {
     const deletePack = (packID: string)  => {
         dispatch(deletePackTC(packID))
     }
-
+    const learnPack = () => {
+        navigate('/learn', {replace: true})
+    }
 
     return (
         <div className={s.table__cell}>
-            <button onClick={()=> updatePack(props.packID)}>update</button>
-            <button onClick={()=> deletePack(props.packID)}>delete</button>
+            <div className={s.btnContainer}>
+                <div className={s.btn}>
+                    <button onClick={() => updatePack(props.packID)}>update</button>
+                </div>
+                <div className={s.btn}>
+                    <button onClick={() => deletePack(props.packID)}>delete</button>
+                </div>
+                {props.cardCount> 0 &&  <div className={s.btn}>
+                    <button className={s.learnBTN} onClick={learnPack}>LEARN</button>
+                </div>}
+            </div>
         </div>
     )
 }

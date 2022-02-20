@@ -18,6 +18,7 @@ import { Test } from './ui/Test/Test';
 import {Header} from "./componens/header/Header";
 import {Packs} from "./ui/Packs/Packs";
 import {Cards} from "./ui/Cards/Cards";
+import {Learn} from './ui/Learn/Learn';
 
 const App = () => {
     const dispatch = useDispatch()
@@ -51,6 +52,7 @@ const App = () => {
                 <Route path={'/test'} element={<Test />} />
                 <Route path={'/packs'} element={<Packs />} />
                 <Route path={'/cards'} element={<Cards />} />
+                <Route path={'/learn'} element={<Learn />} />
             </Routes>
             </div>
         </div>
