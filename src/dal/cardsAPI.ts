@@ -1,3 +1,4 @@
+import { AxiosResponse } from "axios";
 import {instance} from "./instance";
 
 
@@ -16,7 +17,10 @@ export const cardsAPI = {
     },
     updateCard (newQuestion: string, cardID: string) {
         return instance.put('/cards/card', {card: {question: newQuestion, _id: cardID}})
-    }
+    },
+    grade(payload: GradeData) {
+        return instance.put<GradeResponse, AxiosResponse<GradeResponse>, GradeData>('/cards/grade', payload)
+    },
 };
 
 // Types
@@ -53,7 +57,16 @@ export type CardType = {
     _id: string
 }
 
-// type CreatePackType = {
-//     name: string
-//     private?: boolean
-// }
+export type GradeData = {
+    card_id: string
+    grade: number
+}
+
+export type GradeResponse = {
+    _id: string
+    cardsPack_id: string
+    card_id: string
+    user_id: string
+    grade: number
+    shots: number
+}

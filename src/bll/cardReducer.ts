@@ -1,5 +1,5 @@
 import {AppThunkType} from "./store";
-import {cardsAPI, CardsResponseType, CardType} from "../dal/cardsAPI";
+import {cardsAPI, CardsResponseType, CardType, GradeData} from "../dal/cardsAPI";
 
 
 export const initialStateCard = {
@@ -45,8 +45,8 @@ export const getCards = (): AppThunkType =>
                 //  cardQuestion:
                 // min: 1,
                 // max: 10,
-                // page: cards.page,
-                // pageCount: cards.pageCount,
+                //page: cards.page,
+                //pageCount: cards.pageCount,
                 //  sortCards:
             })
             dispatch(setCards(res1.data))
@@ -85,3 +85,11 @@ export const updateCardTC = (cardID: string): AppThunkType =>
             console.log(error)
         }
     }
+
+export const gradeAnswer = (payload: GradeData): AppThunkType => async dispatch => {
+    try {
+        await cardsAPI.grade(payload)
+    } catch (error) {
+       console.log(error)
+    } 
+}

@@ -87,7 +87,8 @@ const TableCell1 = (props: { packID: string, cardCount: number}) => {
     const deletePack = (packID: string)  => {
         dispatch(deletePackTC(packID))
     }
-    const learnPack = () => {
+    const learnPack = (packID: string) => {
+       dispatch(changePackIDAC(packID))
         navigate('/learn', {replace: true})
     }
 
@@ -101,7 +102,7 @@ const TableCell1 = (props: { packID: string, cardCount: number}) => {
                     <button onClick={() => deletePack(props.packID)}>delete</button>
                 </div>
                 {props.cardCount> 0 &&  <div className={s.btn}>
-                    <button className={s.learnBTN} onClick={learnPack}>LEARN</button>
+                    <button className={s.learnBTN} onClick={()=>learnPack(props.packID)}>LEARN</button>
                 </div>}
             </div>
         </div>
