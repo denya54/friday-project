@@ -1,5 +1,7 @@
 import {AppThunkType} from "./store";
 import {cardsAPI, CardsResponseType, CardType, GradeData} from "../dal/cardsAPI";
+import { setAppStatusAC } from "./appReducer";
+import { Dispatch } from "redux";
 
 
 export const initialStateCard = {
@@ -13,16 +15,16 @@ export const initialStateCard = {
     packID: '620ea6cfb185f020a81a9f61'
 }
 
-export type CardActionType = ReturnType<typeof setCards> | ReturnType<typeof changePackIDAC>
+export type CardActionType = ReturnType<typeof setCards> | ReturnType<typeof changePackIDAC> | ReturnType<typeof changePageCount>
 
 export type CardReducerStateType = typeof initialStateCard
 
 export const cardReducer = (state: CardReducerStateType = initialStateCard, action: CardActionType): CardReducerStateType => {
     switch (action.type) {
         case "cards/SET-CARDS":
-            return {...state, ...action.payload}
         case "cards/CHANGE-PACK-ID":
-            return {...state, packID: action.packID}
+        case "cards/CHANGE-PAGE-COUNT":
+            return {...state, ...action.payload}
         default:
             return state
     }
@@ -32,9 +34,11 @@ export const setCards = (payload: CardsResponseType) => {
     return {type: "cards/SET-CARDS", payload} as const
 }
 export const changePackIDAC = (packID: string) => {
-    return {type: "cards/CHANGE-PACK-ID", packID} as const
+    return {type: "cards/CHANGE-PACK-ID", payload: {packID}} as const
 }
-
+export const changePageCount = (pageCount: number) => {
+    return {type: "cards/CHANGE-PAGE-COUNT", payload: {pageCount}} as const
+}
 export const getCards = (): AppThunkType =>
     async (dispatch, getState) => {
         const cards = getState().cards
@@ -46,7 +50,7 @@ export const getCards = (): AppThunkType =>
                 // min: 1,
                 // max: 10,
                 //page: cards.page,
-                //pageCount: cards.pageCount,
+                pageCount: cards.pageCount,
                 //  sortCards:
             })
             dispatch(setCards(res1.data))
@@ -86,10 +90,13 @@ export const updateCardTC = (cardID: string): AppThunkType =>
         }
     }
 
-export const gradeAnswer = (payload: GradeData): AppThunkType => async dispatch => {
+export const gradeAnswer = (payload: GradeData): AppThunkType => async (dispatch: Dispatch) => {
     try {
+        dispatch(setAppStatusAC('loading'))
         await cardsAPI.grade(payload)
     } catch (error) {
        console.log(error)
-    } 
+    } finally {
+        dispatch(setAppStatusAC('idle'))
+    }
 }

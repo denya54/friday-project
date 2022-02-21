@@ -1,7 +1,8 @@
 import React, {ChangeEvent, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Navigate, useNavigate } from "react-router-dom"
-import { getCards, gradeAnswer } from "../../bll/cardReducer"
+import { RequestStatusType } from "../../bll/appReducer"
+import { changePageCount, getCards, gradeAnswer } from "../../bll/cardReducer"
 import { AppRootStateType } from "../../bll/store"
 import CancelButton from "../../componens/canсelButton/CancelButton"
 import MainButton from "../../componens/mainButton/MainButton"
@@ -26,7 +27,8 @@ const getCard = (cards: CardType[]) => {
 export const Learn = () => {
     const isLogged = useSelector<AppRootStateType, boolean>(state => state.login.isLoggedIn)
     const cards = useSelector<AppRootStateType, Array<CardType>>(state => state.cards.cards)
-
+    const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
+   
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [first, setFirst] = useState<boolean>(true);
@@ -62,6 +64,7 @@ export const Learn = () => {
 
     useEffect(() => {
         if (first) {
+            dispatch(changePageCount(150))
             dispatch(getCards())
             setFirst(false)
         }
@@ -100,8 +103,9 @@ export const Learn = () => {
                 </label>
             ))
         }
+
         <div>
-            <MainButton onClick={onNext}> Next </MainButton>
+            <MainButton onClick={onNext} disabled={status === "loading"}> Next </MainButton>
             <CancelButton onClick={()=>{navigate('/packs', {replace: true})}}> Cansel </CancelButton>
         </div>
     </div>
