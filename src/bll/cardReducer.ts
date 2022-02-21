@@ -76,10 +76,10 @@ export const deleteCardTC = (cardID: string): AppThunkType =>
         }
     }
 
-export const updateCardTC = (cardID: string): AppThunkType =>
+export const updateCardTC = (cardID: string, newQuestion: string, newAnswer: string): AppThunkType =>
     async (dispatch) => {
         try {
-            const res1 = await cardsAPI.updateCard('Ну как ты там?', cardID)
+            const res1 = await cardsAPI.updateCard(newQuestion, newAnswer, cardID)
             dispatch(getCards())
         } catch (error: any) {
             console.log(error)

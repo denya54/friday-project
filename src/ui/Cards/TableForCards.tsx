@@ -1,9 +1,10 @@
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../bll/store";
 import s from "./TableForCards.module.css";
-import React from "react";
+import React, {ChangeEvent, useState} from "react";
 import { CardType} from "../../dal/cardsAPI";
 import {deleteCardTC, updateCardTC} from "../../bll/cardReducer";
+import {ModalWindow} from "../Modal/Modal";
 
 
 export const TableForCards = () => {
@@ -36,7 +37,7 @@ const TableRow = (props: {card: CardType}) => {
             <TableCell item={props.card.answer}/>
             <TableCell item={props.card.updated}/>
             <TableCell item={props.card.grade}/>
-            <TableCell1 cardID={props.card._id}/>
+            <TableCell1 cardID={props.card._id} cardQuestion={props.card.question} cardAnswer={props.card.answer}/>
         </div>
     )
 };
@@ -56,12 +57,23 @@ const TableCell = (props: { item: string | number, onSortPacks?: (value: string)
     )
 }
 
-const TableCell1 = (props:{ cardID: string}) => {
+const TableCell1 = (props:{ cardID: string, cardQuestion: string, cardAnswer: string}) => {
+
+    const [modalActive, setModalActive] = useState(false)
+    const changeModalActive = (isSee: boolean) => setModalActive(isSee)
+    const [newQuestion, setNewQuestion] = useState(props.cardQuestion)
+    const changeQuestion = (e: ChangeEvent<HTMLTextAreaElement>) => setNewQuestion(e.currentTarget.value)
+    const [newAnswer, setNewAnswer] = useState(props.cardQuestion)
+    const changeAnswer = (e: ChangeEvent<HTMLTextAreaElement>) => setNewAnswer(e.currentTarget.value)
+
+    const seeWindowForUpdateCard = () => setModalActive(true)
+
 
     const dispatch = useDispatch()
 
     const updateCard = (cardID: string) => {
-        dispatch(updateCardTC(cardID))
+        dispatch(updateCardTC(cardID, newQuestion, newAnswer))
+        setModalActive(false)
     }
     const deleteCard = (cardID: string)  => {
         dispatch(deleteCardTC(cardID))
@@ -69,7 +81,18 @@ const TableCell1 = (props:{ cardID: string}) => {
 
     return (
         <div className={s.table__cell}>
-            <button onClick={()=> updateCard(props.cardID)}>update</button>
+            {modalActive && <ModalWindow active={modalActive} setActive={changeModalActive}>
+                Введите данные для изменения карточки
+                <p>Вопрос</p>
+                <textarea value={newQuestion} onChange={changeQuestion}/>
+                <p>Ответ</p>
+                <textarea value={newAnswer} onChange={changeAnswer}/>
+                <div>
+                    <button onClick={() => updateCard(props.cardID)}>Изменить карточку</button>
+                </div>
+            </ModalWindow>}
+
+            <button onClick={seeWindowForUpdateCard}>update</button>
             <button onClick={()=> deleteCard(props.cardID)}>delete</button>
         </div>
     )
