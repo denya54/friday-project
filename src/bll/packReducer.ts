@@ -1,4 +1,6 @@
+import { Dispatch } from "redux";
 import {CardPacksType, packsAPI, PacksResponseType} from "../dal/packsAPI";
+import { setAppStatusAC } from "./appReducer";
 import {AppThunkType} from "./store";
 
 export const initialState = {
@@ -72,9 +74,10 @@ export const createPackAC = (namePack: string) => {
 }
 
 export const getPacks = (): AppThunkType =>
-    async (dispatch, getState) => {
+    async (dispatch: Dispatch, getState) => {
         const packs = getState().packs
         try {
+            dispatch(setAppStatusAC('loading'))
             const res = await packsAPI.getPacks({
                 page: packs.page,
                 pageCount: packs.pageCount,
@@ -87,6 +90,8 @@ export const getPacks = (): AppThunkType =>
             dispatch(setPacks(res.data))
         } catch (error: any) {
             console.log(error)
+        } finally {
+            dispatch(setAppStatusAC('idle'))
         }
     }
 

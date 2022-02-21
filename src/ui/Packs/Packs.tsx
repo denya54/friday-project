@@ -13,12 +13,15 @@ import { Paginator } from "../features/paginator/Paginator";
 import { SelectPageSize } from "../features/selectPageSize/SelectPageSize";
 import { debounce } from "lodash";
 import { PacksRange } from "../features/packsRange/PacksRange";
+import { RequestStatusType } from "../../bll/appReducer";
+import loader from "../../assets/loader.svg"
 
 export const Packs = React.memo(() => {
 
     const [onlyMy, setOnlyMy] = useState(false)
 
     const {isLoggedIn, userID} = useSelector<AppRootStateType, loginStateType>(state => state.login)
+    const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
     const {
         cardPacks, page, pageCount,
         cardPacksTotalCount, minCardsCount,
@@ -86,6 +89,7 @@ export const Packs = React.memo(() => {
             <div>
                 <MainButton onClick={createNewPack}>Создать колоду</MainButton>
             </div>
+            {status === "loading" &&  <img src={loader} alt="loader"/>}
             <TableForPacks onSortPacks={onSortPacks}/>
             <Paginator totalCount={cardPacksTotalCount}
                        pageCount={pageCount}
