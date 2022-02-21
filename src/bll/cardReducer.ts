@@ -44,7 +44,7 @@ export const getCards = (): AppThunkType =>
                 //  cardAnswer:
                 //  cardQuestion:
                 // min: 1,
-                // max: 10,
+               //  max: 10,
                 // page: cards.page,
                 // pageCount: cards.pageCount,
                 //  sortCards:
@@ -55,11 +55,11 @@ export const getCards = (): AppThunkType =>
         }
     }
 
-export const createCardTC = (): AppThunkType =>
+export const createCardTC = (question: string, answer: string): AppThunkType =>
     async (dispatch, getState) => {
         const cards = getState().cards
         try {
-            const res1 = await cardsAPI.createCard(cards.packID)
+            const res1 = await cardsAPI.createCard(cards.packID, question, answer)
             dispatch(getCards())
         } catch (error: any) {
             console.log(error)

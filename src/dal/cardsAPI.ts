@@ -8,8 +8,8 @@ export const cardsAPI = {
     getCards(payload: CardsGetParams) {
         return instance.get<CardsResponseType>(`/cards/card`, {params: payload})
     },
-    createCard (packID: string) {
-        return instance.post('/cards/card', {card: {cardsPack_id: packID, question: 'почём в Одессе рубероид?'}})
+    createCard (packID: string, question: string, answer: string) {
+        return instance.post('/cards/card', {card: {cardsPack_id: packID, question: question, answer: answer}})
     },
     deleteCard (cardID: string) {
         return instance.delete(`/cards/card?id=${cardID}`)
@@ -52,8 +52,3 @@ export type CardType = {
     updated: string
     _id: string
 }
-
-// type CreatePackType = {
-//     name: string
-//     private?: boolean
-// }
