@@ -67,10 +67,6 @@ export const setMyPacks = (myId: string) => {
     return {type: "packs/SET-MY-PACKS", payload: {myId}}
 }
 
-export const createPackAC = (namePack: string) => {
-    return {type: "packs/CREATE-PACK", payload: {namePack}} as const
-}
-
 export const getPacks = (): AppThunkType =>
     async (dispatch, getState) => {
         const packs = getState().packs
@@ -110,10 +106,10 @@ export const deletePackTC = (packID: string): AppThunkType =>
         }
     }
 
-export const updatePackTC = (packID: string): AppThunkType =>
+export const updatePackTC = (packID: string, newNamePack: string): AppThunkType =>
     async (dispatch) => {
         try {
-            const res = await packsAPI.updatePack('UpdatedPACK', packID)
+            const res = await packsAPI.updatePack(newNamePack, packID)
             dispatch(getPacks())
         } catch (error: any) {
             console.log(error)

@@ -19,16 +19,9 @@ export const Packs = React.memo(() => {
 
     //для модалок
     const [modalActive, setModalActive] = useState(false)
-
-    const changeModalActive = (isSee: boolean) => {
-        setModalActive(isSee)
-    }
-
+    const changeModalActive = (isSee: boolean) => setModalActive(isSee)
     const [nameNewPack, setNameNewPack] = useState('')
-
-    const changeNewNamePack = (e: ChangeEvent<HTMLInputElement>) => {
-        setNameNewPack(e.currentTarget.value)
-    }
+    const changeNewNamePack = (e: ChangeEvent<HTMLInputElement>) => setNameNewPack(e.currentTarget.value)
 //
 
     const [onlyMy, setOnlyMy] = useState(false)
