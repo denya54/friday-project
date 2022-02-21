@@ -90,10 +90,10 @@ export const getPacks = (): AppThunkType =>
         }
     }
 
-export const createPackTC = (): AppThunkType =>
+export const createPackTC = (nameNewPack: string): AppThunkType =>
     async (dispatch) => {
         try {
-            const res = await packsAPI.createPack('My PACKI')
+            const res = await packsAPI.createPack(nameNewPack)
             dispatch(getPacks())
         } catch (error: any) {
             console.log(error)

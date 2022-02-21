@@ -7,14 +7,29 @@ import { createPackTC, getPacks, PackReducerStateType, setMyPacks, setPacksFromR
 import {TableForPacks} from "./TableForPacks";
 import MainButton from "../../componens/mainButton/MainButton";
 import s from "../Login/Login.module.css";
-import {getUserDataTC, loginStateType} from "../../bll/authReducer";
+import { loginStateType} from "../../bll/authReducer";
 import { Search } from "../features/search/Search";
 import { Paginator } from "../features/paginator/Paginator";
 import { SelectPageSize } from "../features/selectPageSize/SelectPageSize";
 import { debounce } from "lodash";
 import { PacksRange } from "../features/packsRange/PacksRange";
+import {ModalWindow} from "../Modal/Modal";
 
 export const Packs = React.memo(() => {
+
+    //для модалок
+    const [modalActive, setModalActive] = useState(false)
+
+    const changeModalActive = (isSee: boolean) => {
+        setModalActive(isSee)
+    }
+
+    const [nameNewPack, setNameNewPack] = useState('')
+
+    const changeNewNamePack = (e: ChangeEvent<HTMLInputElement>) => {
+        setNameNewPack(e.currentTarget.value)
+    }
+//
 
     const [onlyMy, setOnlyMy] = useState(false)
 
@@ -48,8 +63,13 @@ export const Packs = React.memo(() => {
         dispatch(getPacks())
     }, [dispatch, page, pageCount, sortPacks, maxCardsCount, maxCardsCount, cardsValuesFromRange])
 
+    const seeWindowForCreateNewPack = () => {
+        setModalActive(true)
+    }
+
     const createNewPack = () => {
-        dispatch(createPackTC())
+        dispatch(createPackTC(nameNewPack))
+        setModalActive(false)
     }
 
     const changeMyPacksSee = (e: ChangeEvent<HTMLInputElement>) => {
@@ -72,6 +92,11 @@ export const Packs = React.memo(() => {
     return (
         <div>
             Колоды
+            {modalActive && <ModalWindow active={modalActive} setActive={changeModalActive}>
+                Введите название новой колоды
+                 <input value={nameNewPack} onChange={changeNewNamePack}/>
+                <button onClick={createNewPack}>Создать новую колоду</button>
+            </ModalWindow>}
             <div>
                 Только мои Колоды
                 <input className={s.rememberCheckbox} type="checkbox" checked={onlyMy} onChange={changeMyPacksSee}
@@ -84,7 +109,7 @@ export const Packs = React.memo(() => {
             />
             <Search getSearchData={getPacks}/>
             <div>
-                <MainButton onClick={createNewPack}>Создать колоду</MainButton>
+                <MainButton onClick={seeWindowForCreateNewPack}>Создать колоду</MainButton>
             </div>
             <TableForPacks onSortPacks={onSortPacks}/>
             <Paginator totalCount={cardPacksTotalCount}

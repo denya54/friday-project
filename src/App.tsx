@@ -20,6 +20,7 @@ import {Packs} from "./ui/Packs/Packs";
 import {Cards} from "./ui/Cards/Cards";
 
 const App = () => {
+
     const dispatch = useDispatch()
     const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
 
