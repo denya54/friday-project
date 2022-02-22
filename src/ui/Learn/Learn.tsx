@@ -1,6 +1,8 @@
+import { FormControl, FormControlLabel, FormLabel, RadioGroup } from "@mui/material"
+import Radio from "@mui/material/Radio"
 import React, {ChangeEvent, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { Navigate, useNavigate } from "react-router-dom"
+import { Navigate, useNavigate, useParams } from "react-router-dom"
 import { RequestStatusType } from "../../bll/appReducer"
 import { changePageCount, getCards, gradeAnswer } from "../../bll/cardReducer"
 import { AppRootStateType } from "../../bll/store"
@@ -31,6 +33,11 @@ export const Learn = () => {
    
     const dispatch = useDispatch()
     const navigate = useNavigate()
+
+    const {name} = useParams()
+
+
+
     const [first, setFirst] = useState<boolean>(true);
     const [isChecked, setIsChecked] = useState<boolean>(false);
 
@@ -80,29 +87,32 @@ export const Learn = () => {
         return <Navigate to="/login"/>
     }
     return <div>
-        <h2>Learn </h2>
-        <p className={s.title}>Question:
+        <h2> Изучать "{name}" </h2>
+        <p className={s.title}> Вопрос:
             <span>"{card.question}"</span>
         </p>
-        <p className={s.title}>Answer:
+        <p className={s.title}> Ответ:
             <span>
           "{card.answer}"
         </span>
         </p>
-        <div className={s.subTitle}>Оцени себя:</div>
-        {
-            grades.map((grade, i) => (
-                <label key={'grade-' + i} style={{display: 'block'}}>
-                    <input
-                        type={'radio'}
-                        checked={grade === answer}
-                        value={grade}
-                        onChange={(e) => onChangeRadioHandle(e, i)}
-                    />
-                    {grade}
-                </label>
-            ))
-        }
+
+            <FormControl>
+            <FormLabel>Оцени себя</FormLabel>
+            <RadioGroup name="grade-buttons">
+                {grades.map((grade, i) => (<FormControlLabel key={i}
+                                                             value={grade}
+                                                             control={
+                                                                 <Radio checked={grade === answer}
+                                                                        onChange={(e) => onChangeRadioHandle(e, i)}
+                                                                 />}
+                                                             label={grade}/>))
+
+                }
+
+            </RadioGroup>
+            </FormControl>
+
 
         <div>
             <MainButton onClick={onNext} disabled={status === "loading"}> Next </MainButton>

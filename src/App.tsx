@@ -43,7 +43,7 @@ const App = () => {
                 <Route path={'/login'} element={<Login/>}/>
                 <Route path={'/registration'} element={<Registration/>}/>
                 <Route path={'/404'} element={<Error404/>}/>
-                <Route path='*' element={<Navigate to={'/404'}/>}/>
+                <Route path={'*'} element={<Navigate to={'/404'}/>}/>
                 <Route path={'/profile'} element={<Profile/>}/>
                 <Route path={'/password_recovery'} element={<PasswordRecovery/>}/>
                 <Route path={'/set_new_password/:token'} element={<SetNewPassword/>}/>
@@ -51,8 +51,8 @@ const App = () => {
                 <Route path={'/password_recovery_success'} element={<SuccessRecoveryPassword/>}/>
                 <Route path={'/test'} element={<Test />} />
                 <Route path={'/packs'} element={<Packs />} />
-                <Route path={'/cards'} element={<Cards />} />
-                <Route path={'/learn'} element={<Learn />} />
+                <Route path={'/cards/:cardsPack_id'} element={<Cards />} />
+                <Route path={'/learn/:cardsPack_id/:name'} element={<Learn />} />
             </Routes>
             </div>
         </div>
