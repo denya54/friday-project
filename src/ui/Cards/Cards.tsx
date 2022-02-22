@@ -8,6 +8,7 @@ import {TableForCards} from "./TableForCards";
 import {CardReducerStateType, changePageCount, createCardTC, getCards, setCardsPage, setSortCards} from "../../bll/cardReducer";
 import { Paginator } from "../features/paginator/Paginator";
 import { SelectPageSize } from "../features/selectPageSize/SelectPageSize";
+import { Search } from "../features/search/Search";
 
 export const Cards = React.memo(() => {
 

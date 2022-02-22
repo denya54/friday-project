@@ -13,7 +13,8 @@ export const initialStateCard = {
     pageCount: 5,
     packUserId: '',
     packID: '620ea6cfb185f020a81a9f61',
-    sortCards: ''
+    sortCards: '',
+    searchField: '',
 }
 
 export type CardActionType = ReturnType<typeof setCards>
@@ -21,6 +22,7 @@ export type CardActionType = ReturnType<typeof setCards>
     | ReturnType<typeof changePageCount>
     | ReturnType<typeof setSortCards>
     | ReturnType<typeof setCardsPage>
+    | ReturnType<typeof setSearchQuestion>
 
 export type CardReducerStateType = typeof initialStateCard
 
@@ -31,6 +33,7 @@ export const cardReducer = (state: CardReducerStateType = initialStateCard, acti
         case "cards/CHANGE-PAGE-COUNT":
         case "cards/SET-SORT-CARDS":
         case "cards/SET-CARDS-PAGE":
+        case "cards/SET-SEARCH-CARDS":
             return {...state, ...action.payload}
         default:
             return state
@@ -52,6 +55,9 @@ export const setCardsPage = (page: number) => {
 export const setSortCards = (sortCards: string) => {
     return {type: "cards/SET-SORT-CARDS", payload: {sortCards}} as const
 }
+export const setSearchQuestion = (cardQuestion: string) => {
+    return {type: "cards/SET-SEARCH-CARDS", payload: {cardQuestion}} as const
+}
 export const getCards = (): AppThunkType =>
     async (dispatch: Dispatch, getState) => {
         const cards = getState().cards
@@ -60,9 +66,7 @@ export const getCards = (): AppThunkType =>
             const res1 = await cardsAPI.getCards({
                 cardsPack_id: cards.packID,
                 //  cardAnswer:
-                //  cardQuestion:
-                // min: 1,
-                // max: 10,
+                cardQuestion: cards.searchField,
                 page: cards.page,
                 pageCount: cards.pageCount,
                 sortCards: cards.sortCards

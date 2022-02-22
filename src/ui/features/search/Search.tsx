@@ -10,6 +10,7 @@ import {PacksGetParams} from "../../../dal/packsAPI";
 
 type SearchPropsType = {
     getSearchData: (payload?: PacksGetParams) => any
+    
 }
 export const Search = ({getSearchData}: SearchPropsType) => {
     const searchField = useSelector((state: AppRootStateType) => state.packs.searchField);

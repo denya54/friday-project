@@ -1,4 +1,4 @@
-import { FormControl, FormControlLabel, FormLabel, RadioGroup } from "@mui/material"
+import {Box, FormControl, FormControlLabel, FormLabel, Popper, RadioGroup } from "@mui/material"
 import Radio from "@mui/material/Radio"
 import React, {ChangeEvent, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
@@ -21,13 +21,10 @@ const getCard = (cards: CardType[]) => {
             return {sum: newSum, id: newSum < rand ? i : acc.id}
         }
         , {sum: 0, id: -1});
-    console.log('test: ', sum, rand, res)
-
     return cards[res.id + 1];
 }
 
 export const Learn = () => {
-    const isLogged = useSelector<AppRootStateType, boolean>(state => state.login.isLoggedIn)
     const {cards, cardsTotalCount} = useSelector<AppRootStateType, CardReducerStateType>(state => state.cards)
     const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
    
@@ -35,8 +32,6 @@ export const Learn = () => {
     const navigate = useNavigate()
 
     const {name} = useParams()
-
-
 
     const [first, setFirst] = useState<boolean>(true);
     const [isChecked, setIsChecked] = useState<boolean>(false);
@@ -85,9 +80,6 @@ export const Learn = () => {
             gradeHandle(card._id, gradeNumber ? gradeNumber + 1 : 1)
         }
 
-    if (!isLogged) {
-        return <Navigate to="/login"/>
-    }
     return <div>
         <h2> Изучать {name} </h2>
         <p className={s.title}> Вопрос:
