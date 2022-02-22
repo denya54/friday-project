@@ -17,11 +17,11 @@ export const TableForPacks = (props: {onSortPacks?: (value: string) => void}) =>
         packs
             ? <div className={s.table}>
                 <div className={s.table__row}>
-                    <TableHead item={'Name'} onSortPacks={props.onSortPacks} value={"name"}/>
-                    <TableHead item={'Cards'} onSortPacks={props.onSortPacks} value={"cardsCount"}/>
-                    <TableHead item={'Last Updated'} onSortPacks={props.onSortPacks} value={"updated"}/>
-                    <TableHead item={'Created By'} onSortPacks={props.onSortPacks} value={"user_name"}/>
-                    <TableHead item={'Actions'}/>
+                    <TableHead item={'Название колоды'} onSortPacks={props.onSortPacks} value={"name"}/>
+                    <TableHead item={'Количество карточек'} onSortPacks={props.onSortPacks} value={"cardsCount"}/>
+                    <TableHead item={'Последнее изменение'} onSortPacks={props.onSortPacks} value={"updated"}/>
+                    <TableHead item={'Создано пользователем'} onSortPacks={props.onSortPacks} value={"user_name"}/>
+                    <TableHead item={'Действия'}/>
                 </div>
                 {packs.map((pack, idx) => <TableRow key={idx} pack={pack}/>)}
             </div>
@@ -96,13 +96,13 @@ const TableCell1 = (props: { name: string, packID: string, cardCount: number}) =
         <div className={s.table__cell}>
             <div className={s.btnContainer}>
                 <div className={s.btn}>
-                    <button onClick={() => updatePack(props.packID)}>update</button>
+                    <button onClick={() => updatePack(props.packID)}>Изменить</button>
                 </div>
                 <div className={s.btn}>
-                    <button onClick={() => deletePack(props.packID)}>delete</button>
+                    <button onClick={() => deletePack(props.packID)}>Удалить</button>
                 </div>
                 {props.cardCount> 0 &&  <div className={s.btn}>
-                    <button className={s.learnBTN} onClick={()=>learnPack(props.packID, props.name)}>LEARN</button>
+                    <button className={s.learnBTN} onClick={()=>learnPack(props.packID, props.name)}>Изучать</button>
                 </div>}
             </div>
         </div>

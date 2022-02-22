@@ -4,7 +4,7 @@ import React, {ChangeEvent, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Navigate, useNavigate, useParams } from "react-router-dom"
 import { RequestStatusType } from "../../bll/appReducer"
-import { changePageCount, getCards, gradeAnswer } from "../../bll/cardReducer"
+import {CardReducerStateType, changePageCount, getCards, gradeAnswer } from "../../bll/cardReducer"
 import { AppRootStateType } from "../../bll/store"
 import CancelButton from "../../componens/canсelButton/CancelButton"
 import MainButton from "../../componens/mainButton/MainButton"
@@ -28,7 +28,7 @@ const getCard = (cards: CardType[]) => {
 
 export const Learn = () => {
     const isLogged = useSelector<AppRootStateType, boolean>(state => state.login.isLoggedIn)
-    const cards = useSelector<AppRootStateType, Array<CardType>>(state => state.cards.cards)
+    const {cards, cardsTotalCount} = useSelector<AppRootStateType, CardReducerStateType>(state => state.cards)
     const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
    
     const dispatch = useDispatch()
@@ -71,12 +71,14 @@ export const Learn = () => {
 
     useEffect(() => {
         if (first) {
-            dispatch(changePageCount(150))
+            dispatch(changePageCount(cardsTotalCount))
             dispatch(getCards())
             setFirst(false)
         }
         if (cards.length > 0) setCard(getCard(cards))
-        return () => {}
+        return () => {
+            dispatch(changePageCount(5))
+        }
     }, [dispatch, cards, first])
 
         const onNext = () => {
@@ -87,7 +89,7 @@ export const Learn = () => {
         return <Navigate to="/login"/>
     }
     return <div>
-        <h2> Изучать "{name}" </h2>
+        <h2> Изучать {name} </h2>
         <p className={s.title}> Вопрос:
             <span>"{card.question}"</span>
         </p>

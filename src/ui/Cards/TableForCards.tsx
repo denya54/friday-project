@@ -4,9 +4,10 @@ import s from "./TableForCards.module.css";
 import React from "react";
 import { CardType} from "../../dal/cardsAPI";
 import {deleteCardTC, updateCardTC} from "../../bll/cardReducer";
+import { SortButton } from "../features/sort/SortButton";
 
 
-export const TableForCards = () => {
+export const TableForCards = (props: {onSortCards?: (value: string) => void}) => {
 
     const cards = useSelector<AppRootStateType, Array<CardType>>(state => state.cards.cards)
     return (
@@ -14,16 +15,28 @@ export const TableForCards = () => {
         cards
             ? <div className={s.table}>
                 <div className={s.table__row}>
-                    <TableCell item={'Вопрос'}/>
-                    <TableCell item={'Ответ'}/>
-                    <TableCell item={'Last Updated'}/>
-                    <TableCell item={'Оценка'}/>
-                    <TableCell item={'Действия'}/>
+                    <TableHead item={'Вопрос'}/>
+                    <TableHead item={'Ответ'}/>
+                    <TableHead item={'Последнее изменение'} onSortCards={props.onSortCards} value={"updated"}/>
+                    <TableHead item={'Оценка'} onSortCards={props.onSortCards} value={"grade"}/>
+                    <TableHead item={'Действия'}/>
 
                 </div>
                 {cards.map((card, idx) => <TableRow key={idx} card={card}/>)}
             </div>
             : <div>loading...</div>
+    )
+}
+
+//table-head
+const TableHead = (props: { item: string | number,  onSortCards?: (value: string) => void , value?: string}) => {
+    return (
+        <div className={s.table__cell}>
+           <span>{props.item}
+               {props.onSortCards && props.value ? <SortButton  value={props.value}
+                                                                sortItems={props.onSortCards}/> : ''}
+           </span>
+        </div>
     )
 }
 // table-row
@@ -47,11 +60,6 @@ const TableCell = (props: { item: string | number, onSortPacks?: (value: string)
     return (
         <div className={s.table__cell}>
             <span>{props.item}</span>
-            {/*<input*/}
-            {/*    value={props.item}*/}
-            {/*    type="text"/>*/}
-            {/*{props.onSortPacks ? <SortButton value={"updated"}*/}
-            {/*                                 sortItems={props.onSortPacks}/> : ''}*/}
         </div>
     )
 }

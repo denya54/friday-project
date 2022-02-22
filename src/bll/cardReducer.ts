@@ -10,12 +10,17 @@ export const initialStateCard = {
     maxGrade: 0,
     minGrade: 0,
     page: 1,
-    pageCount: 10,
+    pageCount: 5,
     packUserId: '',
-    packID: '620ea6cfb185f020a81a9f61'
+    packID: '620ea6cfb185f020a81a9f61',
+    sortCards: ''
 }
 
-export type CardActionType = ReturnType<typeof setCards> | ReturnType<typeof changePackIDAC> | ReturnType<typeof changePageCount>
+export type CardActionType = ReturnType<typeof setCards>
+    | ReturnType<typeof changePackIDAC>
+    | ReturnType<typeof changePageCount>
+    | ReturnType<typeof setSortCards>
+    | ReturnType<typeof setCardsPage>
 
 export type CardReducerStateType = typeof initialStateCard
 
@@ -24,6 +29,8 @@ export const cardReducer = (state: CardReducerStateType = initialStateCard, acti
         case "cards/SET-CARDS":
         case "cards/CHANGE-PACK-ID":
         case "cards/CHANGE-PAGE-COUNT":
+        case "cards/SET-SORT-CARDS":
+        case "cards/SET-CARDS-PAGE":
             return {...state, ...action.payload}
         default:
             return state
@@ -39,23 +46,32 @@ export const changePackIDAC = (packID: string) => {
 export const changePageCount = (pageCount: number) => {
     return {type: "cards/CHANGE-PAGE-COUNT", payload: {pageCount}} as const
 }
+export const setCardsPage = (page: number) => {
+    return {type: "cards/SET-CARDS-PAGE", payload: {page}} as const
+}
+export const setSortCards = (sortCards: string) => {
+    return {type: "cards/SET-SORT-CARDS", payload: {sortCards}} as const
+}
 export const getCards = (): AppThunkType =>
-    async (dispatch, getState) => {
+    async (dispatch: Dispatch, getState) => {
         const cards = getState().cards
         try {
+            dispatch(setAppStatusAC('loading'))
             const res1 = await cardsAPI.getCards({
                 cardsPack_id: cards.packID,
                 //  cardAnswer:
                 //  cardQuestion:
                 // min: 1,
                 // max: 10,
-                //page: cards.page,
+                page: cards.page,
                 pageCount: cards.pageCount,
-                //  sortCards:
+                sortCards: cards.sortCards
             })
             dispatch(setCards(res1.data))
         } catch (error: any) {
             console.log(error)
+        } finally {
+            dispatch(setAppStatusAC('idle'))
         }
     }
 
