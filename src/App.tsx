@@ -38,6 +38,7 @@ const App = () => {
         <div className="App">
             <div className="container">
                 <Header/>
+
             <Routes>
                 <Route path={'/'} element={<MainPage/>}/>
                 <Route path={'/login'} element={<Login/>}/>
@@ -53,6 +54,7 @@ const App = () => {
                 <Route path={'/packs'} element={<Packs />} />
                 <Route path={'/cards'} element={<Cards />} />
             </Routes>
+
             </div>
         </div>
     )

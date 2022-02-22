@@ -5,7 +5,7 @@ import {AppRootStateType} from "../../bll/store";
 import MainButton from "../../componens/mainButton/MainButton";
 import {TableForCards} from "./TableForCards";
 import {createCardTC, getCards} from "../../bll/cardReducer";
-import {ModalWindow} from "../Modal/Modal";
+import {ModalWindow} from "../Modal/ModalWindow";
 
 export const Cards = () => {
 //модалки

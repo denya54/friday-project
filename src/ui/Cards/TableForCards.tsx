@@ -4,7 +4,7 @@ import s from "./TableForCards.module.css";
 import React, {ChangeEvent, useState} from "react";
 import { CardType} from "../../dal/cardsAPI";
 import {deleteCardTC, updateCardTC} from "../../bll/cardReducer";
-import {ModalWindow} from "../Modal/Modal";
+import {ModalWindow} from "../Modal/ModalWindow";
 
 
 export const TableForCards = () => {

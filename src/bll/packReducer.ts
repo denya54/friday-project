@@ -12,6 +12,7 @@ export const initialState = {
     sortPacks: '',
     searchField: '',
     myId: '',
+    requestStatus: null as null | string
 }
 
 export type PackActionType =
@@ -23,6 +24,7 @@ export type PackActionType =
     | ReturnType<typeof setPageCount>
     | ReturnType<typeof setPacksFromRange>
     | ReturnType<typeof setMyPacks>
+    | ReturnType<typeof setRequestStateAC>
 
 export type PackReducerStateType = typeof initialState
 
@@ -35,8 +37,9 @@ export const packReducer = (state: PackReducerStateType = initialState, action: 
         case "packs/SET-SORT":
         case "packs/SET-PACKS-FROM-RANGE":
         case "packs/SET-MY-PACKS":
-        case "packs/CREATE-PACK":
             return {...state, ...action.payload}
+        case "packs/SET-REQUEST-STATE":
+            return {...state, requestStatus: action.payload.requestStatus}
         default:
             return state
     }
@@ -61,10 +64,14 @@ export const setSortPacks = (sortPacks: string) => {
     return {type: 'packs/SET-SORT', payload: {sortPacks}} as const
 }
 export const setPacksFromRange = (cardsValuesFromRange: number[]) => {
-    return {type: "packs/SET-PACKS-FROM-RANGE", payload: {cardsValuesFromRange}}
+    return {type: "packs/SET-PACKS-FROM-RANGE", payload: {cardsValuesFromRange}} as const
 }
 export const setMyPacks = (myId: string) => {
-    return {type: "packs/SET-MY-PACKS", payload: {myId}}
+    return {type: "packs/SET-MY-PACKS", payload: {myId}} as const
+}
+
+export const setRequestStateAC = (requestStatus: string) => {
+    return {type: "packs/SET-REQUEST-STATE", payload: {requestStatus}} as const
 }
 
 export const getPacks = (): AppThunkType =>
@@ -91,8 +98,10 @@ export const createPackTC = (nameNewPack: string): AppThunkType =>
         try {
             const res = await packsAPI.createPack(nameNewPack)
             dispatch(getPacks())
+            dispatch(setRequestStateAC('success'))
         } catch (error: any) {
             console.log(error)
+            dispatch(setRequestStateAC('error'))
         }
     }
 

@@ -7,7 +7,7 @@ import React, {ChangeEvent, useState} from "react";
 import {deletePackTC, updatePackTC} from "../../bll/packReducer";
 import {changePackIDAC} from "../../bll/cardReducer";
 import {useNavigate} from "react-router-dom";
-import {ModalWindow} from "../Modal/Modal";
+import {ModalWindow} from "../Modal/ModalWindow";
 
 
 export const TableForPacks = (props: {onSortPacks?: (value: string) => void}) => {

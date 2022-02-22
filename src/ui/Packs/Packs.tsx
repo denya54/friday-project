@@ -2,8 +2,10 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../bll/store";
 import {Navigate} from "react-router-dom";
 import React, {ChangeEvent, useCallback, useEffect, useState} from "react";
-import { createPackTC, getPacks, PackReducerStateType, setMyPacks, setPacksFromRange,
-    setPage, setPageCount, setSortPacks} from "../../bll/packReducer";
+import {
+    createPackTC, getPacks, PackReducerStateType, setMyPacks, setPacksFromRange,
+    setPage, setPageCount, setRequestStateAC, setSortPacks
+} from "../../bll/packReducer";
 import {TableForPacks} from "./TableForPacks";
 import MainButton from "../../componens/mainButton/MainButton";
 import s from "../Login/Login.module.css";
@@ -13,7 +15,7 @@ import { Paginator } from "../features/paginator/Paginator";
 import { SelectPageSize } from "../features/selectPageSize/SelectPageSize";
 import { debounce } from "lodash";
 import { PacksRange } from "../features/packsRange/PacksRange";
-import {ModalWindow} from "../Modal/Modal";
+import {ModalWindow} from "../Modal/ModalWindow";
 
 export const Packs = React.memo(() => {
 
@@ -30,7 +32,7 @@ export const Packs = React.memo(() => {
     const {
         cardPacks, page, pageCount,
         cardPacksTotalCount, minCardsCount,
-        maxCardsCount, cardsValuesFromRange, sortPacks, searchField
+        maxCardsCount, cardsValuesFromRange, sortPacks, searchField, requestStatus
     } = useSelector<AppRootStateType, PackReducerStateType>(state => state.packs)
 
     const dispatch = useDispatch()
@@ -51,19 +53,24 @@ export const Packs = React.memo(() => {
         debouncedRangeData(values)
     }, [dispatch])
 
+    const createNewPack = () => {
+        dispatch(createPackTC(nameNewPack))
+        setModalActive(false)
+    }
 
     useEffect(() => {
         dispatch(getPacks())
-    }, [dispatch, page, pageCount, sortPacks, maxCardsCount, maxCardsCount, cardsValuesFromRange])
+        if (requestStatus !== null) {
+            alert(requestStatus)
+        }
+    }, [dispatch, page, pageCount, sortPacks, maxCardsCount, cardsValuesFromRange])
+
+
 
     const seeWindowForCreateNewPack = () => {
         setModalActive(true)
     }
 
-    const createNewPack = () => {
-        dispatch(createPackTC(nameNewPack))
-        setModalActive(false)
-    }
 
     const changeMyPacksSee = (e: ChangeEvent<HTMLInputElement>) => {
 
@@ -85,11 +92,13 @@ export const Packs = React.memo(() => {
     return (
         <div>
             Колоды
+
             {modalActive && <ModalWindow active={modalActive} setActive={changeModalActive}>
                 Введите название новой колоды
                  <input value={nameNewPack} onChange={changeNewNamePack}/>
                 <button onClick={createNewPack}>Создать новую колоду</button>
             </ModalWindow>}
+
             <div>
                 Только мои Колоды
                 <input className={s.rememberCheckbox} type="checkbox" checked={onlyMy} onChange={changeMyPacksSee}
