@@ -19,15 +19,18 @@ import {Header} from "./componens/header/Header";
 import {Packs} from "./ui/Packs/Packs";
 import {Cards} from "./ui/Cards/Cards";
 import {Learn} from './ui/Learn/Learn';
+import { setUserIDAC } from './bll/authReducer';
+import { setMyPacks } from './bll/packReducer';
 
 const App = () => {
     const dispatch = useDispatch()
     const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
+    const myId = useSelector<AppRootStateType, string>(state=> state.login.userID)
 
     useEffect(() => {
         dispatch(initializeTC())
     }, [])
-
+    
     if (!isInitialized) {
         return <div style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
             <img src={loader} alt="loader"/>

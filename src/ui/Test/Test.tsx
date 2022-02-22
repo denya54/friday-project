@@ -2,7 +2,7 @@ import React, {useCallback, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Navigate} from 'react-router-dom';
 import {logoutTC} from '../../bll/authReducer';
-import {getPacks, PackReducerStateType, setPacksFromRange, setPage, setPageCount, setSortPacks} from '../../bll/packReducer';
+import {getPacks, PackReducerStateType, setPacksFromRange, setPage, setPageCount, setSearchField, setSortPacks} from '../../bll/packReducer';
 import {AppRootStateType} from '../../bll/store';
 import {Paginator} from '../features/paginator/Paginator';
 import {Search} from '../features/search/Search';
@@ -60,7 +60,10 @@ export const Test = React.memo(() => {
                         maxCardsCount={maxCardsCount}
                         handleRangeChange={onRangeChanged}
             />
-            <Search getSearchData={getPacks}/>
+            <Search getSearchData={getPacks}
+                    searchField={searchField}
+                    setSearchField={setSearchField}/>
+            
             <PackList onSortPacks={onSortPacks}/>
             <Paginator totalCount={cardPacksTotalCount}
                        pageCount={pageCount}

@@ -3,11 +3,12 @@ import {AppRootStateType} from "../../bll/store";
 import {Navigate} from "react-router-dom";
 import React, {ChangeEvent, useCallback, useEffect, useState} from "react";
 import { createPackTC, getPacks, PackReducerStateType, setMyPacks, setPacksFromRange,
-    setPage, setPageCount, setSortPacks} from "../../bll/packReducer";
+    setPage, setPageCount, setSearchField, setSortPacks} from "../../bll/packReducer";
 import {TableForPacks} from "./TableForPacks";
 import MainButton from "../../componens/mainButton/MainButton";
 import s from "../Login/Login.module.css";
-import {getUserDataTC, loginStateType} from "../../bll/authReducer";
+import style from "./Packs.module.css"
+import {getUserDataTC, loginStateType, setUserIDAC} from "../../bll/authReducer";
 import { Search } from "../features/search/Search";
 import { Paginator } from "../features/paginator/Paginator";
 import { SelectPageSize } from "../features/selectPageSize/SelectPageSize";
@@ -46,6 +47,12 @@ export const Packs = React.memo(() => {
         debouncedRangeData(values)
     }, [dispatch])
 
+    useEffect(()=> {
+        let myId = localStorage.getItem("myId")
+        if (myId) {
+            dispatch(setUserIDAC(myId))
+        }
+    }, [])
 
     useEffect(() => {
         dispatch(getPacks())
@@ -75,7 +82,7 @@ export const Packs = React.memo(() => {
     return (
         <div>
             Колоды
-            <div>
+            <div className={style.rememberCheckboxContainer}>
                 Только мои Колоды
                 <input className={s.rememberCheckbox} type="checkbox" checked={onlyMy} onChange={changeMyPacksSee}
                 />
@@ -85,7 +92,7 @@ export const Packs = React.memo(() => {
                         maxCardsCount={maxCardsCount}
                         handleRangeChange={onRangeChanged}
             />
-            <Search getSearchData={getPacks}/>
+            <Search getSearchData={getPacks} searchField={searchField} setSearchField={setSearchField}/>
             <div>
                 <MainButton onClick={createNewPack}>Создать колоду</MainButton>
             </div>

@@ -10,6 +10,7 @@ export const Profile = () => {
     const userName = useSelector<AppRootStateType, string>(state => state.login.name)
     const userPhoto = useSelector<AppRootStateType, string>(state => state.login.avatar)
     const isLogged = useSelector<AppRootStateType, boolean>(state => state.login.isLoggedIn)
+    const userID = useSelector<AppRootStateType, string>(state=> state.login.userID)
     const disabledButton = useSelector<AppRootStateType, boolean>(state => state.login.disabledButton)
     const authError = useSelector<AppRootStateType, string>(state => state.login.authError)
 
@@ -22,6 +23,10 @@ export const Profile = () => {
     useEffect(() => {
         dispatch(getUserDataTC())
     }, [])
+
+    useEffect(()=>{
+        localStorage.setItem("myId", userID);
+    },[userID])
 
     if (!isLogged) {
         return <Navigate to="/login"/>

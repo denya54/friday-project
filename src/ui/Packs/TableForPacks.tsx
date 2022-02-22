@@ -12,6 +12,7 @@ import {useNavigate} from "react-router-dom";
 export const TableForPacks = (props: {onSortPacks?: (value: string) => void}) => {
 
     const packs = useSelector<AppRootStateType, Array<CardPacksType>>(state => state.packs.cardPacks)
+
     return (
 
         packs
@@ -49,7 +50,11 @@ const TableRow = (props: {pack: CardPacksType}) => {
             <TableCell item={props.pack.cardsCount} packID={props.pack._id}/>
             <TableCell item={props.pack.updated} packID={props.pack._id}/>
             <TableCell item={props.pack.user_name} packID={props.pack._id}/>
-            <TableCell1 name={props.pack.name} packID={props.pack._id} cardCount={props.pack.cardsCount}/>
+            <TableCell1 name={props.pack.name}
+                        packID={props.pack._id}
+                        cardCount={props.pack.cardsCount}
+                        userID={props.pack.user_id}
+            />
         </div>
     )
 };
@@ -75,7 +80,9 @@ const TableCell = (props: { item: string | number, packID?: any, onSortPacks?: (
     )
 }
 
-const TableCell1 = (props: { name: string, packID: string, cardCount: number}) => {
+const TableCell1 = (props: { name: string, packID: string, cardCount: number, userID: string}) => {
+
+    const myID = useSelector<AppRootStateType, string>(state=> state.login.userID)
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -95,12 +102,15 @@ const TableCell1 = (props: { name: string, packID: string, cardCount: number}) =
     return (
         <div className={s.table__cell}>
             <div className={s.btnContainer}>
-                <div className={s.btn}>
-                    <button onClick={() => updatePack(props.packID)}>Изменить</button>
-                </div>
-                <div className={s.btn}>
-                    <button onClick={() => deletePack(props.packID)}>Удалить</button>
-                </div>
+                {props.userID === myID && <>
+                    <div className={s.btn}>
+                        <button onClick={() => updatePack(props.packID)}>Изменить</button>
+                    </div>
+                    <div className={s.btn}>
+                        <button onClick={() => deletePack(props.packID)}>Удалить</button>
+                    </div>
+                    </>
+                }
                 {props.cardCount> 0 &&  <div className={s.btn}>
                     <button className={s.learnBTN} onClick={()=>learnPack(props.packID, props.name)}>Изучать</button>
                 </div>}
