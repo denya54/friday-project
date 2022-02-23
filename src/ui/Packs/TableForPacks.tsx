@@ -126,11 +126,12 @@ const TableCell1 = (props: {packID: string, namePack: string, cardCount: number,
                 <button onClick={()=> updatePack(props.packID)}>Изменить название колоды</button>
             </ModalWindow>
 
-            <button onClick={seeWindowForUpdatePack}>update</button>
-            <button onClick={()=> deletePack(props.packID)}>delete</button>
-            {props.cardCount> 0 &&  <div className={s.btn}>
-                <button className={s.learnBTN} onClick={()=>learnPack(props.packID, props.namePack)}>Изучать</button>
-            </div>}
+            <button onClick={seeWindowForUpdatePack}>Изменить</button>
+            <button onClick={()=> deletePack(props.packID)}>Удалить</button>
+
+            {props.cardCount> 0 &&  <button className={s.learnBTN} onClick={()=>learnPack(props.packID, props.namePack)}>Изучать</button>}
+
+
             <ModalWindow active={modalRequestActive} setActive={changeModalRequestActive}>
                 {requestStatus}
             </ModalWindow>
