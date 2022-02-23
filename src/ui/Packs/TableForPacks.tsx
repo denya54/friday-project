@@ -57,7 +57,7 @@ const TableRow = (props: {pack: CardPacksType}) => {
 
 // table-cell
 
-const TableCell = (props: { item: string | number, packID?: any, onSortPacks?: (value: string) => void }) => {
+const TableCell = (props: { item: string | number, packID: string, onSortPacks?: (value: string) => void }) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -77,6 +77,7 @@ const TableCell = (props: { item: string | number, packID?: any, onSortPacks?: (
 }
 
 const TableCell1 = (props: {packID: string, namePack: string}) => {
+
     const requestStatus = useSelector<AppRootStateType, null | string>(state => state.packs.requestStatus)
 
     // for modal window
@@ -108,6 +109,7 @@ const TableCell1 = (props: {packID: string, namePack: string}) => {
 
     return (
         <div className={s.table__cell}>
+
             <ModalWindow active={modalActive} setActive={changeModalActive}>
                 Введите новое название для колоды
                 <input value={newNamePack} onChange={changeNewNamePack}/>
