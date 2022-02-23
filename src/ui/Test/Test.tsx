@@ -52,25 +52,36 @@ export const Test = React.memo(() => {
     }
 
     return (
-        <div>
-            Profile page
-            <button onClick={onLogout}>log out</button>
-            <PacksRange cardsValuesFromRange={cardsValuesFromRange}
+    <div className={s.test}>
+        <div className={s.container}>
+            <div className={s.aside}>
+                <h3 className={s.subTitle}>Какие показывать карточки</h3>
+                <div className={s.innerBtn}>
+                    <button className={s.btnMy}>My</button>
+                    <button className={s.btnAll}>All</button>
+                </div>
+                <h3 className={s.subTitle}>Количество карт</h3>
+                <PacksRange cardsValuesFromRange={cardsValuesFromRange}
                         minCardsCount={minCardsCount}
                         maxCardsCount={maxCardsCount}
                         handleRangeChange={onRangeChanged}
-            />
-            <Search getSearchData={getPacks}/>
-            <PackList onSortPacks={onSortPacks}/>
-            <Paginator totalCount={cardPacksTotalCount}
+                />
+            </div>
+            {/* <button onClick={onLogout}>log out</button> */}
+            <div className={s.content}>
+                <Search getSearchData={getPacks}/>
+                <PackList onSortPacks={onSortPacks}/>
+                <Paginator totalCount={cardPacksTotalCount}
                        pageCount={pageCount}
                        onPageChanged={onPageChanged}
                        currentPage={page}
-            />
-            <SelectPageSize  selectedPageSize={pageCount}
+                />
+                <SelectPageSize  selectedPageSize={pageCount}
                              pageSizes={[5, 10, 15, 20]}
                              changePageSize={setPageSize}
-            />
+                />
+            </div> 
+            </div>         
         </div>
     )
 })
