@@ -1,12 +1,13 @@
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../bll/store";
-import {CardPacksType, packsAPI} from "../../dal/packsAPI";
+import {CardPacksType} from "../../dal/packsAPI";
 import s from "./TableForPacks.module.css";
 import {SortButton} from "../features/sort/SortButton";
-import React from "react";
-import {deletePackTC, getPacks, updatePackTC} from "../../bll/packReducer";
+import React, {ChangeEvent, useState} from "react";
+import {deletePackTC, updatePackTC} from "../../bll/packReducer";
 import {changePackIDAC} from "../../bll/cardReducer";
 import {useNavigate} from "react-router-dom";
+import {ModalWindow} from "../Modal/ModalWindow";
 
 
 export const TableForPacks = (props: {onSortPacks?: (value: string) => void}) => {
@@ -50,8 +51,8 @@ const TableRow = (props: {pack: CardPacksType}) => {
             <TableCell item={props.pack.cardsCount} packID={props.pack._id}/>
             <TableCell item={props.pack.updated} packID={props.pack._id}/>
             <TableCell item={props.pack.user_name} packID={props.pack._id}/>
-            <TableCell1 name={props.pack.name}
-                        packID={props.pack._id}
+            <TableCell1 packID={props.pack._id}
+                        namePack={props.pack.name}
                         cardCount={props.pack.cardsCount}
                         userID={props.pack.user_id}
             />
@@ -61,7 +62,7 @@ const TableRow = (props: {pack: CardPacksType}) => {
 
 // table-cell
 
-const TableCell = (props: { item: string | number, packID?: any, onSortPacks?: (value: string) => void }) => {
+const TableCell = (props: { item: string | number, packID: string, onSortPacks?: (value: string) => void }) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -80,19 +81,36 @@ const TableCell = (props: { item: string | number, packID?: any, onSortPacks?: (
     )
 }
 
-const TableCell1 = (props: { name: string, packID: string, cardCount: number, userID: string}) => {
+const TableCell1 = (props: {packID: string, namePack: string, cardCount: number, userID: string}) => {
 
-    const myID = useSelector<AppRootStateType, string>(state=> state.login.userID)
+    const requestStatus = useSelector<AppRootStateType, null | string>(state => state.packs.requestStatus)
+
+    // for modal window
+    const [modalActive, setModalActive] = useState(false)
+    const changeModalActive = (isSee: boolean) => setModalActive(isSee)
+    const [newNamePack, setNewNamePack] = useState(props.namePack)
+    const changeNewNamePack = (e: ChangeEvent<HTMLInputElement>) => setNewNamePack(e.currentTarget.value)
+
+    const [modalRequestActive, setModalRequestActive] = useState(false)
+    const changeModalRequestActive = (isSee: boolean) => setModalRequestActive(isSee)
+    //
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
+    const seeWindowForUpdatePack = () => setModalActive(true)
+
     const updatePack = (packID: string) => {
-        dispatch(updatePackTC(packID))
+        dispatch(updatePackTC(packID, newNamePack))
+        setModalActive(false)
+        setTimeout(()=>setModalRequestActive(true), 500)
+        setTimeout(()=>setModalRequestActive(false), 3000)
     }
 
     const deletePack = (packID: string)  => {
         dispatch(deletePackTC(packID))
+        setTimeout(()=>setModalRequestActive(true), 500)
+        setTimeout(()=>setModalRequestActive(false), 3000)
     }
     const learnPack = (packID: string, name: string) => {
        dispatch(changePackIDAC(packID))
@@ -101,20 +119,21 @@ const TableCell1 = (props: { name: string, packID: string, cardCount: number, us
 
     return (
         <div className={s.table__cell}>
-            <div className={s.btnContainer}>
-                {props.userID === myID && <>
-                    <div className={s.btn}>
-                        <button onClick={() => updatePack(props.packID)}>Изменить</button>
-                    </div>
-                    <div className={s.btn}>
-                        <button onClick={() => deletePack(props.packID)}>Удалить</button>
-                    </div>
-                    </>
-                }
-                {props.cardCount> 0 &&  <div className={s.btn}>
-                    <button className={s.learnBTN} onClick={()=>learnPack(props.packID, props.name)}>Изучать</button>
-                </div>}
-            </div>
+
+            <ModalWindow active={modalActive} setActive={changeModalActive}>
+                Введите новое название для колоды
+                <input value={newNamePack} onChange={changeNewNamePack}/>
+                <button onClick={()=> updatePack(props.packID)}>Изменить название колоды</button>
+            </ModalWindow>
+
+            <button onClick={seeWindowForUpdatePack}>update</button>
+            <button onClick={()=> deletePack(props.packID)}>delete</button>
+            {props.cardCount> 0 &&  <div className={s.btn}>
+                <button className={s.learnBTN} onClick={()=>learnPack(props.packID, props.namePack)}>Изучать</button>
+            </div>}
+            <ModalWindow active={modalRequestActive} setActive={changeModalRequestActive}>
+                {requestStatus}
+            </ModalWindow>
         </div>
     )
 }

@@ -13,12 +13,14 @@ export const initialStateCard = {
     pageCount: 5,
     packUserId: '',
     packID: '620ea6cfb185f020a81a9f61',
+    requestStatus: null as null | string,
     sortCards: '',
     searchField: '',
 }
 
 export type CardActionType = ReturnType<typeof setCards>
     | ReturnType<typeof changePackIDAC>
+    | ReturnType<typeof setRequestStatusCardAC>
     | ReturnType<typeof changePageCount>
     | ReturnType<typeof setSortCards>
     | ReturnType<typeof setCardsPage>
@@ -33,6 +35,9 @@ export const cardReducer = (state: CardReducerStateType = initialStateCard, acti
         case "cards/SET-SORT-CARDS":
         case "cards/SET-CARDS-PAGE":
             return {...state, ...action.payload}
+        case "cards/SET-REQUEST-STATUS":
+            return {...state, requestStatus: action.payload.requestStatus}
+
         default:
             return state
     }
@@ -54,6 +59,10 @@ export const setSortCards = (sortCards: string) => {
     return {type: "cards/SET-SORT-CARDS", payload: {sortCards}} as const
 }
 
+export const setRequestStatusCardAC = (requestStatus: string) => {
+    return {type: "cards/SET-REQUEST-STATUS", payload: {requestStatus}} as const
+}
+
 export const getCards = (): AppThunkType =>
     async (dispatch: Dispatch, getState) => {
         const cards = getState().cards
@@ -61,6 +70,10 @@ export const getCards = (): AppThunkType =>
             dispatch(setAppStatusAC('loading'))
             const res1 = await cardsAPI.getCards({
                 cardsPack_id: cards.packID,
+                //  cardAnswer:
+                //  cardQuestion:
+                // min: 1,
+                //  max: 10,
                 page: cards.page,
                 pageCount: cards.pageCount,
                 sortCards: cards.sortCards
@@ -73,14 +86,19 @@ export const getCards = (): AppThunkType =>
         }
     }
 
-export const createCardTC = (): AppThunkType =>
+export const createCardTC = (question: string, answer: string): AppThunkType =>
     async (dispatch, getState) => {
         const cards = getState().cards
         try {
-            const res1 = await cardsAPI.createCard(cards.packID)
+            const res1 = await cardsAPI.createCard(cards.packID, question, answer)
             dispatch(getCards())
-        } catch (error: any) {
-            console.log(error)
+            dispatch(setRequestStatusCardAC('успешно'))
+        } catch (e: any) {
+            if (e.response) {
+                dispatch(setRequestStatusCardAC('Ошибка: Колода не ВАША'))
+            } else {
+                dispatch(setRequestStatusCardAC('Проблема с интернет-соединением'))
+            }
         }
     }
 
@@ -89,18 +107,28 @@ export const deleteCardTC = (cardID: string): AppThunkType =>
         try {
             const res1 = await cardsAPI.deleteCard(cardID)
             dispatch(getCards())
-        } catch (error: any) {
-            console.log(error)
+            dispatch(setRequestStatusCardAC('успешный успех'))
+        } catch (e: any) {
+            if (e.response) {
+                dispatch(setRequestStatusCardAC('Ошибка: Карта не ВАША'))
+            } else {
+                dispatch(setRequestStatusCardAC('Проблема с интернет-соединением'))
+            }
         }
     }
 
-export const updateCardTC = (cardID: string): AppThunkType =>
+export const updateCardTC = (cardID: string, newQuestion: string, newAnswer: string): AppThunkType =>
     async (dispatch) => {
         try {
-            const res1 = await cardsAPI.updateCard('Ну как ты там?', cardID)
+            const res1 = await cardsAPI.updateCard(newQuestion, newAnswer, cardID)
             dispatch(getCards())
-        } catch (error: any) {
-            console.log(error)
+            dispatch(setRequestStatusCardAC('успешный успех'))
+        } catch (e: any) {
+            if (e.response) {
+                dispatch(setRequestStatusCardAC('Ошибка: Карта не ВАША'))
+            } else {
+                dispatch(setRequestStatusCardAC('Проблема с интернет-соединением'))
+            }
         }
     }
 

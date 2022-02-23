@@ -1,5 +1,5 @@
 import {Dispatch} from "redux";
-import {setIsLoggedInAC} from "./authReducer";
+import {setIsLoggedInAC, setUserIDAC} from "./authReducer";
 import {loginAPI} from "../dal/loginAPI";
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
@@ -8,7 +8,7 @@ const initialState = {
     isInitialized: false
 }
 
-export type AppActionTypes = ReturnType<typeof setInitializedAC> | ReturnType<typeof setIsLoggedInAC> | ReturnType<typeof setAppStatusAC>
+export type AppActionTypes = ReturnType<typeof setInitializedAC> | ReturnType<typeof setIsLoggedInAC> | ReturnType<typeof setUserIDAC> | ReturnType<typeof setAppStatusAC>
 export type AppReducerStateType = typeof initialState
 
 export const appReducer = (state: AppReducerStateType = initialState, action: AppActionTypes): AppReducerStateType => {
@@ -31,8 +31,9 @@ export const setAppStatusAC = (status: RequestStatusType ) => {
 
 export const initializeTC = () => (dispatch: Dispatch<AppActionTypes>) => {
     loginAPI.me()
-        .then(() => {
-                dispatch(setIsLoggedInAC(true))
+        .then((res) => {
+            dispatch(setIsLoggedInAC(true))
+            dispatch(setUserIDAC(res.data._id))
         })
         .finally(() => {
             dispatch(setInitializedAC(true))

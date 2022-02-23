@@ -23,6 +23,7 @@ import { setUserIDAC } from './bll/authReducer';
 import { setMyPacks } from './bll/packReducer';
 
 const App = () => {
+
     const dispatch = useDispatch()
     const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
     const myId = useSelector<AppRootStateType, string>(state=> state.login.userID)
@@ -41,6 +42,7 @@ const App = () => {
         <div className="App">
             <div className="container">
                 <Header/>
+
             <Routes>
                 <Route path={'/'} element={<MainPage/>}/>
                 <Route path={'/login'} element={<Login/>}/>
@@ -57,6 +59,7 @@ const App = () => {
                 <Route path={'/cards/:cardsPack_id'} element={<Cards />} />
                 <Route path={'/learn/:cardsPack_id/:name'} element={<Learn />} />
             </Routes>
+
             </div>
         </div>
     )
