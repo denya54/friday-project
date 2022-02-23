@@ -24,6 +24,9 @@ export const Packs = React.memo(() => {
     const changeModalActive = (isSee: boolean) => setModalActive(isSee)
     const [nameNewPack, setNameNewPack] = useState('')
     const changeNewNamePack = (e: ChangeEvent<HTMLInputElement>) => setNameNewPack(e.currentTarget.value)
+
+    const [modalRequestActive, setModalRequestActive] = useState(false)
+    const changeModalRequestActive = (isSee: boolean) => setModalActive(isSee)
 //
 
     const [onlyMy, setOnlyMy] = useState(false)
@@ -57,6 +60,8 @@ export const Packs = React.memo(() => {
     const createNewPack = () => {
         dispatch(createPackTC(nameNewPack))
         setModalActive(false)
+        setModalRequestActive(true)
+        setTimeout(setModalRequestActive, 3000)
     }
 
     useEffect(() => {
@@ -68,8 +73,6 @@ export const Packs = React.memo(() => {
 
 
     const seeWindowForCreateNewPack = () => setModalActive(true)
-
-
 
     const changeMyPacksSee = (e: ChangeEvent<HTMLInputElement>) => {
 
@@ -120,7 +123,9 @@ export const Packs = React.memo(() => {
                             pageSizes={[5, 10, 15, 20]}
                             changePageSize={setPageSize}
             />
-
+            <ModalWindow active={modalRequestActive} setActive={changeModalRequestActive}>
+                {requestStatus}
+            </ModalWindow>
 
         </div>
     )
