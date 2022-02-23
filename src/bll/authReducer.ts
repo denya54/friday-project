@@ -123,11 +123,13 @@ export const logoutTC = () => (dispatch: Dispatch) => {
 }
 
 export const getUserDataTC = () => (dispatch: Dispatch) => {
+    debugger
     loginAPI.me()
         .then(res => {
             let userName = res.data.email
             dispatch(getUserDataAC(userName))
             dispatch(setUserIDAC(res.data._id))
+            // dispatch(changeMyIDAC(res.data._id))
         })
         .catch(e => {
             if (e.response) {

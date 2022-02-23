@@ -81,7 +81,7 @@ const TableCell1 = (props:{ cardID: string, cardQuestion: string, cardAnswer: st
 
     return (
         <div className={s.table__cell}>
-            {modalActive && <ModalWindow active={modalActive} setActive={changeModalActive}>
+            <ModalWindow active={modalActive} setActive={changeModalActive}>
                 Введите данные для изменения карточки
                 <p>Вопрос</p>
                 <textarea value={newQuestion} onChange={changeQuestion}/>
@@ -90,7 +90,7 @@ const TableCell1 = (props:{ cardID: string, cardQuestion: string, cardAnswer: st
                 <div>
                     <button onClick={() => updateCard(props.cardID)}>Изменить карточку</button>
                 </div>
-            </ModalWindow>}
+            </ModalWindow>
 
             <button onClick={seeWindowForUpdateCard}>update</button>
             <button onClick={()=> deleteCard(props.cardID)}>delete</button>

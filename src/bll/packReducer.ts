@@ -26,6 +26,7 @@ export type PackActionType =
     | ReturnType<typeof setMyPacks>
     | ReturnType<typeof setRequestStateAC>
 
+
 export type PackReducerStateType = typeof initialState
 
 export const packReducer = (state: PackReducerStateType = initialState, action: PackActionType): PackReducerStateType => {

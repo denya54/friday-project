@@ -42,7 +42,7 @@ export const Cards = () => {
     return (
         <div>
             Карты
-            {modalActive && <ModalWindow active={modalActive} setActive={changeModalActive}>
+            <ModalWindow active={modalActive} setActive={changeModalActive}>
                 Введите данные для новой карточки
                 <p>Вопрос</p>
                 <textarea value={questionField} onChange={changeQuestionField}/>
@@ -51,7 +51,7 @@ export const Cards = () => {
                 <div>
                     <button onClick={createNewCard}>Создать новую карточку</button>
                 </div>
-            </ModalWindow>}
+            </ModalWindow>
 
             <div>
                 <MainButton onClick={seeWindowForCreateNewCard}>Создать карту</MainButton>

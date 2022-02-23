@@ -84,7 +84,6 @@ const TableCell1 = (props: {packID: string, namePack: string}) => {
     const changeNewNamePack = (e: ChangeEvent<HTMLInputElement>) => setNewNamePack(e.currentTarget.value)
     //
 
-
     const dispatch = useDispatch()
 
     const seeWindowForUpdatePack = () => setModalActive(true)
@@ -94,18 +93,16 @@ const TableCell1 = (props: {packID: string, namePack: string}) => {
         setModalActive(false)
     }
 
-    const deletePack = (packID: string)  => {
-        dispatch(deletePackTC(packID))
-    }
+    const deletePack = (packID: string)  => dispatch(deletePackTC(packID))
 
 
     return (
         <div className={s.table__cell}>
-            {modalActive && <ModalWindow active={modalActive} setActive={changeModalActive}>
+            <ModalWindow active={modalActive} setActive={changeModalActive}>
                 Введите новое название для колоды
                 <input value={newNamePack} onChange={changeNewNamePack}/>
                 <button onClick={()=> updatePack(props.packID)}>Изменить название колоды</button>
-            </ModalWindow>}
+            </ModalWindow>
 
             <button onClick={seeWindowForUpdatePack}>update</button>
             <button onClick={()=> deletePack(props.packID)}>delete</button>

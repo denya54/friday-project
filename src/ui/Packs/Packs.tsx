@@ -4,17 +4,17 @@ import {Navigate} from "react-router-dom";
 import React, {ChangeEvent, useCallback, useEffect, useState} from "react";
 import {
     createPackTC, getPacks, PackReducerStateType, setMyPacks, setPacksFromRange,
-    setPage, setPageCount, setRequestStateAC, setSortPacks
+    setPage, setPageCount, setSortPacks
 } from "../../bll/packReducer";
 import {TableForPacks} from "./TableForPacks";
 import MainButton from "../../componens/mainButton/MainButton";
 import s from "../Login/Login.module.css";
-import { loginStateType} from "../../bll/authReducer";
-import { Search } from "../features/search/Search";
-import { Paginator } from "../features/paginator/Paginator";
-import { SelectPageSize } from "../features/selectPageSize/SelectPageSize";
-import { debounce } from "lodash";
-import { PacksRange } from "../features/packsRange/PacksRange";
+import {loginStateType} from "../../bll/authReducer";
+import {Search} from "../features/search/Search";
+import {Paginator} from "../features/paginator/Paginator";
+import {SelectPageSize} from "../features/selectPageSize/SelectPageSize";
+import {debounce} from "lodash";
+import {PacksRange} from "../features/packsRange/PacksRange";
 import {ModalWindow} from "../Modal/ModalWindow";
 
 export const Packs = React.memo(() => {
@@ -29,6 +29,7 @@ export const Packs = React.memo(() => {
     const [onlyMy, setOnlyMy] = useState(false)
 
     const {isLoggedIn, userID} = useSelector<AppRootStateType, loginStateType>(state => state.login)
+
     const {
         cardPacks, page, pageCount,
         cardPacksTotalCount, minCardsCount,
@@ -60,21 +61,19 @@ export const Packs = React.memo(() => {
 
     useEffect(() => {
         dispatch(getPacks())
-        if (requestStatus !== null) {
-            alert(requestStatus)
-        }
+        // if (requestStatus !== null) {
+        //     alert(requestStatus)
+        // }
     }, [dispatch, page, pageCount, sortPacks, maxCardsCount, cardsValuesFromRange])
 
 
+    const seeWindowForCreateNewPack = () => setModalActive(true)
 
-    const seeWindowForCreateNewPack = () => {
-        setModalActive(true)
-    }
 
 
     const changeMyPacksSee = (e: ChangeEvent<HTMLInputElement>) => {
 
-        if(e.currentTarget.checked === true) {
+        if (e.currentTarget.checked === true) {
             setOnlyMy(e.currentTarget.checked)
             dispatch(setMyPacks(userID))
             dispatch(getPacks())
@@ -92,13 +91,11 @@ export const Packs = React.memo(() => {
     return (
         <div>
             Колоды
-
-            {modalActive && <ModalWindow active={modalActive} setActive={changeModalActive}>
+            <ModalWindow active={modalActive} setActive={changeModalActive}>
                 Введите название новой колоды
-                 <input value={nameNewPack} onChange={changeNewNamePack}/>
+                <input value={nameNewPack} onChange={changeNewNamePack}/>
                 <button onClick={createNewPack}>Создать новую колоду</button>
-            </ModalWindow>}
-
+            </ModalWindow>
             <div>
                 Только мои Колоды
                 <input className={s.rememberCheckbox} type="checkbox" checked={onlyMy} onChange={changeMyPacksSee}
@@ -119,10 +116,12 @@ export const Packs = React.memo(() => {
                        onPageChanged={onPageChanged}
                        currentPage={page}
             />
-            <SelectPageSize  selectedPageSize={pageCount}
-                             pageSizes={[5, 10, 15, 20]}
-                             changePageSize={setPageSize}
+            <SelectPageSize selectedPageSize={pageCount}
+                            pageSizes={[5, 10, 15, 20]}
+                            changePageSize={setPageSize}
             />
+
+
         </div>
     )
 })
