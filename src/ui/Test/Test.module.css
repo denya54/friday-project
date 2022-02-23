@@ -1,3 +1,12 @@
+.container{
+    background: #FEFEFF;
+    border-radius: 8px;
+    max-width:1080px;
+    margin: 24px 10%;
+    display: flex;
+}
+
+
 .table {
     display: flex;
     flex-direction: column;
@@ -16,8 +25,45 @@
     width: 200px;
 }
 
-input {
+/* input {
     border: none;
     width: 90%;
     height: 26px;
+} */
+.aside{
+    width: 263px;
+    padding: 33px 24px;
+    background: #ECECF9;
+    text-align: start;
+    border-radius: 8px;
+}
+.content{
+    text-align: start;
+    padding: 24px 48px;
+    flex-grow: 2;
+}
+.subTitle{
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    color: #2D2E46;
+    padding-bottom: 40px;
+}
+.btnMy,
+.btnAll{
+    width: 98px;
+    height: 36px;
+    text-align: center;
+    border-radius: 0px 2px 2px 0px;
+    margin-bottom: 45px;
+}
+.btnMy:hover,
+.btnAll:hover{
+  opacity: 0.5;
+}
+.btnMy{
+    background: #9A91C8;
+}
+.btnAll{
+    background: #FFFFFF;
 }

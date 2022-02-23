@@ -1,13 +1,21 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
+import s from "./Profile.module.css";
 import {getUserDataTC, logoutTC} from "../../bll/authReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../bll/store";
 import {Navigate} from "react-router-dom";
 import CancelButton from "../../componens/canсelButton/CancelButton";
+import {Header} from "./../../componens/header/Header";
+import { PacksRange } from '../features/packsRange/PacksRange';
+import TitlePage from '../../componens/titlePage/TitlePage';
+import {Search} from '../features/search/Search';
+import InputSearch from '../../componens/inputSearch/InputSearch';
+import {getPacks, PackReducerStateType, setPacksFromRange, setPage, setPageCount, setSortPacks} from '../../bll/packReducer';
 
-export const Profile = () => {
 
 
+
+export const Profile = () => {  
     const userName = useSelector<AppRootStateType, string>(state => state.login.name)
     const userPhoto = useSelector<AppRootStateType, string>(state => state.login.avatar)
     const isLogged = useSelector<AppRootStateType, boolean>(state => state.login.isLoggedIn)
@@ -33,12 +41,30 @@ export const Profile = () => {
         return <Navigate to="/login"/>
     }
     return (
-        <div>
-            Этот профиль принадлежит
-            <div>{userName}</div>
-            <img src={userPhoto}/>
-            <p>{authError}</p>
-            <div><CancelButton onClick={onLogout} disabled={disabledButton}>log out</CancelButton></div>
+        <div className={s.profile}>
+            <div className={s.container}>
+                <aside className={s.aside}>
+                    <div className={s.asideProf}>
+                        <img className={s.avatar} src={userPhoto}/>
+                        <h3 className={s.name}>{userName}</h3>
+                        <span className={s.profession}>Front-end-developer</span>
+                    </div>
+                    <div className={s.ranch}>
+                        <h3 className={s.subTitle}>Количество карт</h3>
+                        
+                    </div>
+                    
+                </aside>
+                
+                <div className={s.content}>
+                    <TitlePage title={'Список пакетов'}>{userName}</TitlePage>
+                    <Search getSearchData={getPacks} searchField={''} setSearchField={()=>{}}/>
+                    {/* <InputSearch style={{width: '100%'}} ></InputSearch> */}
+                    <div className={s.table}></div>
+                    <p>{authError}</p>
+                    <CancelButton onClick={onLogout} disabled={disabledButton}>Выйти</CancelButton>
+                </div>
+            </div>           
         </div>
     )
 }
