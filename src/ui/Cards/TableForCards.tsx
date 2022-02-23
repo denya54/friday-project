@@ -93,8 +93,6 @@ const TableCell1 = (props:{ cardID: string, cardQuestion: string, cardAnswer: st
     }
     const deleteCard = (cardID: string)  => {
         dispatch(deleteCardTC(cardID))
-        setTimeout(()=>setModalRequestActive(true), 500)
-        setTimeout(()=>setModalRequestActive(false), 3000)
     }
 
     return (
@@ -109,9 +107,8 @@ const TableCell1 = (props:{ cardID: string, cardQuestion: string, cardAnswer: st
                     <button onClick={() => updateCard(props.cardID)}>Изменить карточку</button>
                 </div>
             </ModalWindow>
-
-            <button onClick={seeWindowForUpdateCard}>update</button>
-            <button onClick={()=> deleteCard(props.cardID)}>delete</button>
+            <button onClick={seeWindowForUpdateCard}>Изменить</button>
+            <button onClick={()=> deleteCard(props.cardID)}>Удалить</button>
 
             <ModalWindow active={modalRequestActive} setActive={changeModalRequestActive}>
                 {requestStatus}
