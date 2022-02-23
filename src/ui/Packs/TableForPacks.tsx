@@ -82,7 +82,7 @@ const TableCell = (props: { item: string | number, packID: string, onSortPacks?:
 }
 
 const TableCell1 = (props: {packID: string, namePack: string, cardCount: number, userID: string}) => {
-
+    const myId = useSelector<AppRootStateType, string>(state=> state.login.userID)
     const requestStatus = useSelector<AppRootStateType, null | string>(state => state.packs.requestStatus)
 
     // for modal window
@@ -126,10 +126,20 @@ const TableCell1 = (props: {packID: string, namePack: string, cardCount: number,
                 <button onClick={()=> updatePack(props.packID)}>Изменить название колоды</button>
             </ModalWindow>
 
-            <button onClick={seeWindowForUpdatePack}>Изменить</button>
-            <button onClick={()=> deletePack(props.packID)}>Удалить</button>
+            <div className={s.btnContainer}>
+                {props.userID === myId &&
+                <div className={s.btn}>
+                    <button onClick={seeWindowForUpdatePack}>Изменить</button>
+                </div>
+                }
+                {props.userID === myId && <div className={s.btn}>
+                    <button onClick={()=> deletePack(props.packID)}>Удалить</button>
+                </div>}
 
-            {props.cardCount> 0 &&  <button className={s.learnBTN} onClick={()=>learnPack(props.packID, props.namePack)}>Изучать</button>}
+                {props.cardCount> 0 &&  <div className={s.btn}>
+                    <button className={s.learnBTN} onClick={()=>learnPack(props.packID, props.namePack)}>Изучать</button>
+                </div>}
+            </div>
 
 
             <ModalWindow active={modalRequestActive} setActive={changeModalRequestActive}>
