@@ -3,3 +3,11 @@
     font-size: 18px;
     font-weight: bold;
 }
+
+.show {
+
+}
+
+.hide {
+    filter: blur(10px);
+}
