@@ -24,7 +24,7 @@ export type PackActionType =
     | ReturnType<typeof setPageCount>
     | ReturnType<typeof setPacksFromRange>
     | ReturnType<typeof setMyPacks>
-    | ReturnType<typeof setRequestStateAC>
+    | ReturnType<typeof setRequestStatusAC>
 
 
 export type PackReducerStateType = typeof initialState
@@ -39,7 +39,7 @@ export const packReducer = (state: PackReducerStateType = initialState, action: 
         case "packs/SET-PACKS-FROM-RANGE":
         case "packs/SET-MY-PACKS":
             return {...state, ...action.payload}
-        case "packs/SET-REQUEST-STATE":
+        case "packs/SET-REQUEST-STATUS":
             return {...state, requestStatus: action.payload.requestStatus}
         default:
             return state
@@ -71,8 +71,8 @@ export const setMyPacks = (myId: string) => {
     return {type: "packs/SET-MY-PACKS", payload: {myId}} as const
 }
 
-export const setRequestStateAC = (requestStatus: string) => {
-    return {type: "packs/SET-REQUEST-STATE", payload: {requestStatus}} as const
+export const setRequestStatusAC = (requestStatus: string) => {
+    return {type: "packs/SET-REQUEST-STATUS", payload: {requestStatus}} as const
 }
 
 export const getPacks = (): AppThunkType =>
@@ -99,10 +99,9 @@ export const createPackTC = (nameNewPack: string): AppThunkType =>
         try {
             const res = await packsAPI.createPack(nameNewPack)
             dispatch(getPacks())
-            dispatch(setRequestStateAC('success'))
+            dispatch(setRequestStatusAC('успешный успех'))
         } catch (error: any) {
-            console.log(error)
-            dispatch(setRequestStateAC('error'))
+            dispatch(setRequestStatusAC('ошибка'))
         }
     }
 
@@ -111,17 +110,28 @@ export const deletePackTC = (packID: string): AppThunkType =>
         try {
             const res = await packsAPI.deletePack(packID)
             dispatch(getPacks())
-        } catch (error: any) {
-            console.log(error)
+            dispatch(setRequestStatusAC('успешный успех'))
+        } catch (e: any) {
+            if(e.response) {
+                dispatch(setRequestStatusAC('Ошибка: Это колода не принадлежит Вам'))
+            } else {
+                dispatch(setRequestStatusAC('Проблемы с интернет соединением'))
+            }
         }
     }
+
 
 export const updatePackTC = (packID: string, newNamePack: string): AppThunkType =>
     async (dispatch) => {
         try {
             const res = await packsAPI.updatePack(newNamePack, packID)
             dispatch(getPacks())
-        } catch (error: any) {
-            console.log(error)
+            dispatch(setRequestStatusAC('успешный успех'))
+        } catch (e: any) {
+            if(e.response) {
+                dispatch(setRequestStatusAC('Ошибка: Это колода не принадлежит Вам'))
+            } else {
+                dispatch(setRequestStatusAC('Проблемы с интернет соединением'))
+            }
         }
     }

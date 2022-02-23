@@ -15,9 +15,13 @@ export const Cards = () => {
     const changeQuestionField = (e: ChangeEvent<HTMLTextAreaElement>) => setQuestionField(e.currentTarget.value)
     const [answerField, setAnswerField] = useState('')
     const changeAnswerField = (e: ChangeEvent<HTMLTextAreaElement>) => setAnswerField(e.currentTarget.value)
+
+    const [modalRequestActive, setModalRequestActive] = useState(false)
+    const changeModalRequestActive = (isSee: boolean) => setModalRequestActive(isSee)
   //
 
     const isLogged = useSelector<AppRootStateType, boolean>(state => state.login.isLoggedIn)
+    const requestStatus = useSelector<AppRootStateType, null | string>(state => state.cards.requestStatus)
 
     const dispatch = useDispatch()
 
@@ -28,6 +32,8 @@ export const Cards = () => {
     const createNewCard = () => {
         dispatch(createCardTC(questionField, answerField))
         setModalActive(false)
+        setTimeout(()=>setModalRequestActive(true), 500)
+        setTimeout(()=>setModalRequestActive(false), 3000)
     }
 
     useEffect(() => {
@@ -57,6 +63,9 @@ export const Cards = () => {
                 <MainButton onClick={seeWindowForCreateNewCard}>Создать карту</MainButton>
             </div>
             <TableForCards/>
+            <ModalWindow active={modalRequestActive} setActive={changeModalRequestActive}>
+                {requestStatus}
+            </ModalWindow>
 
         </div>
 

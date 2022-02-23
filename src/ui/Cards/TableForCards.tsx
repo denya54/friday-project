@@ -58,13 +58,19 @@ const TableCell = (props: { item: string | number, onSortPacks?: (value: string)
 }
 
 const TableCell1 = (props:{ cardID: string, cardQuestion: string, cardAnswer: string}) => {
-
+    // модалки
     const [modalActive, setModalActive] = useState(false)
     const changeModalActive = (isSee: boolean) => setModalActive(isSee)
     const [newQuestion, setNewQuestion] = useState(props.cardQuestion)
     const changeQuestion = (e: ChangeEvent<HTMLTextAreaElement>) => setNewQuestion(e.currentTarget.value)
     const [newAnswer, setNewAnswer] = useState(props.cardQuestion)
     const changeAnswer = (e: ChangeEvent<HTMLTextAreaElement>) => setNewAnswer(e.currentTarget.value)
+
+    const [modalRequestActive, setModalRequestActive] = useState(false)
+    const changeModalRequestActive = (isSee: boolean) => setModalRequestActive(isSee)
+    //
+
+    const requestStatus = useSelector<AppRootStateType, null | string>(state => state.cards.requestStatus)
 
     const seeWindowForUpdateCard = () => setModalActive(true)
 
@@ -74,9 +80,13 @@ const TableCell1 = (props:{ cardID: string, cardQuestion: string, cardAnswer: st
     const updateCard = (cardID: string) => {
         dispatch(updateCardTC(cardID, newQuestion, newAnswer))
         setModalActive(false)
+        setTimeout(()=>setModalRequestActive(true), 500)
+        setTimeout(()=>setModalRequestActive(false), 3000)
     }
     const deleteCard = (cardID: string)  => {
         dispatch(deleteCardTC(cardID))
+        setTimeout(()=>setModalRequestActive(true), 500)
+        setTimeout(()=>setModalRequestActive(false), 3000)
     }
 
     return (
@@ -94,6 +104,10 @@ const TableCell1 = (props:{ cardID: string, cardQuestion: string, cardAnswer: st
 
             <button onClick={seeWindowForUpdateCard}>update</button>
             <button onClick={()=> deleteCard(props.cardID)}>delete</button>
+
+            <ModalWindow active={modalRequestActive} setActive={changeModalRequestActive}>
+                {requestStatus}
+            </ModalWindow>
         </div>
     )
 }

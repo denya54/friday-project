@@ -77,11 +77,16 @@ const TableCell = (props: { item: string | number, packID?: any, onSortPacks?: (
 }
 
 const TableCell1 = (props: {packID: string, namePack: string}) => {
-// for modal window
+    const requestStatus = useSelector<AppRootStateType, null | string>(state => state.packs.requestStatus)
+
+    // for modal window
     const [modalActive, setModalActive] = useState(false)
     const changeModalActive = (isSee: boolean) => setModalActive(isSee)
     const [newNamePack, setNewNamePack] = useState(props.namePack)
     const changeNewNamePack = (e: ChangeEvent<HTMLInputElement>) => setNewNamePack(e.currentTarget.value)
+
+    const [modalRequestActive, setModalRequestActive] = useState(false)
+    const changeModalRequestActive = (isSee: boolean) => setModalRequestActive(isSee)
     //
 
     const dispatch = useDispatch()
@@ -91,10 +96,15 @@ const TableCell1 = (props: {packID: string, namePack: string}) => {
     const updatePack = (packID: string) => {
         dispatch(updatePackTC(packID, newNamePack))
         setModalActive(false)
+        setTimeout(()=>setModalRequestActive(true), 500)
+        setTimeout(()=>setModalRequestActive(false), 3000)
     }
 
-    const deletePack = (packID: string)  => dispatch(deletePackTC(packID))
-
+    const deletePack = (packID: string)  => {
+        dispatch(deletePackTC(packID))
+        setTimeout(()=>setModalRequestActive(true), 500)
+        setTimeout(()=>setModalRequestActive(false), 3000)
+    }
 
     return (
         <div className={s.table__cell}>
@@ -106,6 +116,10 @@ const TableCell1 = (props: {packID: string, namePack: string}) => {
 
             <button onClick={seeWindowForUpdatePack}>update</button>
             <button onClick={()=> deletePack(props.packID)}>delete</button>
+
+            <ModalWindow active={modalRequestActive} setActive={changeModalRequestActive}>
+                {requestStatus}
+            </ModalWindow>
         </div>
     )
 }

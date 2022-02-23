@@ -26,8 +26,8 @@ export const Packs = React.memo(() => {
     const changeNewNamePack = (e: ChangeEvent<HTMLInputElement>) => setNameNewPack(e.currentTarget.value)
 
     const [modalRequestActive, setModalRequestActive] = useState(false)
-    const changeModalRequestActive = (isSee: boolean) => setModalActive(isSee)
-//
+    const changeModalRequestActive = (isSee: boolean) => setModalRequestActive(isSee)
+    //
 
     const [onlyMy, setOnlyMy] = useState(false)
 
@@ -60,15 +60,12 @@ export const Packs = React.memo(() => {
     const createNewPack = () => {
         dispatch(createPackTC(nameNewPack))
         setModalActive(false)
-        setModalRequestActive(true)
-        setTimeout(setModalRequestActive, 3000)
+        setTimeout(()=>setModalRequestActive(true), 500)
+        setTimeout(()=>setModalRequestActive(false), 3000)
     }
 
     useEffect(() => {
         dispatch(getPacks())
-        // if (requestStatus !== null) {
-        //     alert(requestStatus)
-        // }
     }, [dispatch, page, pageCount, sortPacks, maxCardsCount, cardsValuesFromRange])
 
 
