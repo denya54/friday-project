@@ -80,7 +80,10 @@ export const Packs = React.memo(() => {
     }, [dispatch, page, pageCount, sortPacks, maxCardsCount, cardsValuesFromRange])
 
 
-    const seeWindowForCreateNewPack = () => setModalActive(true)
+    const seeWindowForCreateNewPack = () => {
+        setNameNewPack('')
+        setModalActive(true)
+    }
 
     const changeMyPacksSee = (e: ChangeEvent<HTMLInputElement>) => {
 

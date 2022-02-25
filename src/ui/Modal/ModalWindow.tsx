@@ -1,9 +1,10 @@
 import s from './Modal.module.css'
+import {ReactNode} from "react";
 
 type ModalPropsType = {
     active: boolean
     setActive: (isSee: boolean) => void
-    children: any
+    children: ReactNode
 }
 
 export const ModalWindow = (props: ModalPropsType) => {

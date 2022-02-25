@@ -27,7 +27,7 @@ export const TableForCards = (props: {onSortCards?: (value: string) => void}) =>
                     <TableHead item={'Действия'}/>
 
                 </div>
-                {cards.map((card, idx) => <TableRow key={idx} card={card}/>)}
+                {cards.map((card) => <TableRow key={card._id} card={card}/>)}
             </div>
             : <div>loading...</div>
     )
@@ -91,6 +91,7 @@ const TableCell1 = (props:{ cardID: string, cardQuestion: string, cardAnswer: st
     const dispatch = useDispatch()
 
     const updateCard = (cardID: string) => {
+
         dispatch(updateCardTC(cardID, newQuestion, newAnswer))
         setModalActive(false)
         setTimeout(()=>setModalRequestActive(true), 500)
@@ -98,6 +99,9 @@ const TableCell1 = (props:{ cardID: string, cardQuestion: string, cardAnswer: st
     }
     const deleteCard = (cardID: string)  => {
         dispatch(deleteCardTC(cardID))
+        setModalActive(false)
+        setTimeout(()=>setModalRequestActive(true), 500)
+        setTimeout(()=>setModalRequestActive(false), 3000)
     }
 
     return (

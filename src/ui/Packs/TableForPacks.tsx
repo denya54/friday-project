@@ -30,7 +30,7 @@ export const TableForPacks = (props: {onSortPacks?: (value: string) => void}) =>
                     <TableHead item={'Создано пользователем'} onSortPacks={props.onSortPacks} value={"user_name"}/>
                     <TableHead item={'Действия'}/>
                 </div>
-                {packs.map((pack, idx) => <TableRow key={idx} pack={pack}/>)}
+                {packs.map((pack) => <TableRow key={pack._id} pack={pack}/>)}
             </div>
             : <div>loading...</div>
     )

@@ -34,6 +34,8 @@ export const Cards = React.memo(() => {
     const dispatch = useDispatch()
 
     const seeWindowForCreateNewCard = () => {
+        setAnswerField('')
+        setQuestionField('')
         setModalActive(true)
     }
 
