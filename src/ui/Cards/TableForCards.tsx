@@ -6,7 +6,11 @@ import { CardType} from "../../dal/cardsAPI";
 import {deleteCardTC, updateCardTC} from "../../bll/cardReducer";
 import {ModalWindow} from "../Modal/ModalWindow";
 import { SortButton } from "../features/sort/SortButton";
-
+import DeleteButton from "../../componens/deleteButton/DeleteButton";
+import CanselButton from "./../../componens/canсelButton/CancelButton";
+import TitlePage from "../../componens/titlePage/TitlePage";
+import InputText from "../../componens/inputText/InputText";
+import MainButton from "../../componens/mainButton/MainButton";
 
 export const TableForCards = (props: {onSortCards?: (value: string) => void}) => {
 
@@ -98,17 +102,15 @@ const TableCell1 = (props:{ cardID: string, cardQuestion: string, cardAnswer: st
     return (
         <div className={s.table__cell}>
             <ModalWindow active={modalActive} setActive={changeModalActive}>
-                Введите данные для изменения карточки
-                <p>Вопрос</p>
-                <textarea value={newQuestion} onChange={changeQuestion}/>
-                <p>Ответ</p>
-                <textarea value={newAnswer} onChange={changeAnswer}/>
+                <TitlePage title="Введите данные для изменения карточки"></TitlePage> 
+                <InputText value={newQuestion} onChange={changeQuestion}></InputText>
+                <InputText value={newAnswer} onChange={changeAnswer}></InputText>
                 <div>
-                    <button onClick={() => updateCard(props.cardID)}>Изменить карточку</button>
+                    <MainButton onClick={() => updateCard(props.cardID)}>Изменить карточку</MainButton>
                 </div>
             </ModalWindow>
-            <button onClick={seeWindowForUpdateCard}>Изменить</button>
-            <button onClick={()=> deleteCard(props.cardID)}>Удалить</button>
+            <CanselButton className={s.editBtn} onClick={seeWindowForUpdateCard}>Изменить</CanselButton>
+            <DeleteButton onClick={()=> deleteCard(props.cardID)}>Удалить</DeleteButton>
 
             <ModalWindow active={modalRequestActive} setActive={changeModalRequestActive}>
                 {requestStatus}

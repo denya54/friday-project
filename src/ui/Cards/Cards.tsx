@@ -9,6 +9,9 @@ import {CardReducerStateType, changePageCount, createCardTC, getCards, setCardsP
 import { Paginator } from "../features/paginator/Paginator";
 import { SelectPageSize } from "../features/selectPageSize/SelectPageSize";
 import { Search } from "../features/search/Search";
+import s from "./Card.module.css";
+import TitlePage from "../../componens/titlePage/TitlePage";
+import InputText from "../../componens/inputText/InputText";
 
 export const Cards = React.memo(() => {
 //модалки
@@ -56,39 +59,42 @@ export const Cards = React.memo(() => {
     if (!isLogged) {
         return <Navigate to="/login"/>
     }
+    
 
 
     return (
-        <div>
-            Карты
-            <ModalWindow active={modalActive} setActive={changeModalActive}>
-                Введите данные для новой карточки
-                <p>Вопрос</p>
-                <textarea value={questionField} onChange={changeQuestionField}/>
-                <p>Ответ</p>
-                <textarea value={answerField} onChange={changeAnswerField}/>
-                <div>
-                    <button onClick={createNewCard}>Создать новую карточку</button>
+        <div className={s.cards}>
+            <div className={s.container}>
+                <TitlePage title="Карты"></TitlePage>
+                <ModalWindow active={modalActive} setActive={changeModalActive}>
+                    <TitlePage title="Введите данные для новой карточки"></TitlePage>   
+                    <InputText value={questionField} onChange={changeQuestionField}></InputText>
+                    <InputText value={answerField} onChange={changeAnswerField}></InputText>
+                {/* <p>Ответ</p>
+                <textarea  /> */}
+                <div className={s.wrapper}>
+                    <MainButton onClick={createNewCard}>Создать новую карточку</MainButton>
                 </div>
-            </ModalWindow>
+                </ModalWindow>
 
-            <div>
                 <MainButton onClick={seeWindowForCreateNewCard}>Создать карту</MainButton>
+                <TableForCards onSortCards={onSortCards}/>
+                <ModalWindow active={modalRequestActive} setActive={changeModalRequestActive}>
+                    {requestStatus}
+                </ModalWindow>
+                <div className={s.wrapper}>
+                    <Paginator totalCount={cardsTotalCount}
+                        pageCount={pageCount}
+                        onPageChanged={onPageChanged}
+                        currentPage={page}
+                    />
+                    <SelectPageSize  selectedPageSize={pageCount}
+                        pageSizes={[5, 10, 15]}
+                        changePageSize={setPageSize}
+                    />
+                </div>
+                
             </div>
-
-            <TableForCards onSortCards={onSortCards}/>
-            <ModalWindow active={modalRequestActive} setActive={changeModalRequestActive}>
-                {requestStatus}
-            </ModalWindow>
-            <Paginator totalCount={cardsTotalCount}
-                       pageCount={pageCount}
-                       onPageChanged={onPageChanged}
-                       currentPage={page}
-            />
-            <SelectPageSize  selectedPageSize={pageCount}
-                             pageSizes={[5, 10, 15]}
-                             changePageSize={setPageSize}
-            />
         </div>
 
     )
