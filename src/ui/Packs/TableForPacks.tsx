@@ -8,6 +8,11 @@ import {deletePackTC, updatePackTC} from "../../bll/packReducer";
 import {changePackIDAC} from "../../bll/cardReducer";
 import {useNavigate} from "react-router-dom";
 import {ModalWindow} from "../Modal/ModalWindow";
+import CanselButton from "./../../componens/canсelButton/CancelButton";
+import DeleteButton from "../../componens/deleteButton/DeleteButton";
+import TitlePage from "../../componens/titlePage/TitlePage";
+import InputText from "../../componens/inputText/InputText";
+import MainButton from "../../componens/mainButton/MainButton";
 
 
 export const TableForPacks = (props: {onSortPacks?: (value: string) => void}) => {
@@ -121,23 +126,23 @@ const TableCell1 = (props: {packID: string, namePack: string, cardCount: number,
         <div className={s.table__cell}>
 
             <ModalWindow active={modalActive} setActive={changeModalActive}>
-                Введите новое название для колоды
-                <input value={newNamePack} onChange={changeNewNamePack}/>
-                <button onClick={()=> updatePack(props.packID)}>Изменить название колоды</button>
+                <TitlePage title="Введите новое название для колоды"></TitlePage> 
+                <InputText value={newNamePack} onChange={changeNewNamePack}/>
+                <MainButton onClick={()=> updatePack(props.packID)}>Изменить название колоды</MainButton>
             </ModalWindow>
 
             <div className={s.btnContainer}>
                 {props.userID === myId &&
                 <div className={s.btn}>
-                    <button onClick={seeWindowForUpdatePack}>Изменить</button>
+                    <CanselButton className={s.editBTN} onClick={seeWindowForUpdatePack}>Изменить</CanselButton>
                 </div>
                 }
                 {props.userID === myId && <div className={s.btn}>
-                    <button onClick={()=> deletePack(props.packID)}>Удалить</button>
+                    <DeleteButton onClick={()=> deletePack(props.packID)}>Удалить</DeleteButton>
                 </div>}
 
                 {props.cardCount> 0 &&  <div className={s.btn}>
-                    <button className={s.learnBTN} onClick={()=>learnPack(props.packID, props.namePack)}>Изучать</button>
+                    <CanselButton className={s.learnBTN} onClick={()=>learnPack(props.packID, props.namePack)}>Изучать</CanselButton>
                 </div>}
             </div>
 

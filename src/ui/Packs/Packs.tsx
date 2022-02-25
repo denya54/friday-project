@@ -18,6 +18,8 @@ import {PacksRange} from "../features/packsRange/PacksRange";
 import {ModalWindow} from "../Modal/ModalWindow";
 import { RequestStatusType } from "../../bll/appReducer";
 import loader from "../../assets/loader.svg"
+import TitlePage from "../../componens/titlePage/TitlePage";
+import InputText from "./../../componens/inputText/InputText";
 
 export const Packs = React.memo(() => {
 
@@ -98,42 +100,49 @@ export const Packs = React.memo(() => {
     }
 
     return (
-        <div>
-            Колоды
-            <ModalWindow active={modalActive} setActive={changeModalActive}>
-                Введите название новой колоды
-                <input value={nameNewPack} onChange={changeNewNamePack}/>
-                <button onClick={createNewPack}>Создать новую колоду</button>
-            </ModalWindow>
-            <div className={style.rememberCheckboxContainer}>
-                Только мои Колоды
-                <input className={s.rememberCheckbox} type="checkbox" checked={onlyMy} onChange={changeMyPacksSee}
-                />
-            </div>
-            <PacksRange cardsValuesFromRange={cardsValuesFromRange}
+        <div className={style.packs}>           
+            <div className={style.container}>
+                <ModalWindow active={modalActive} setActive={changeModalActive}>
+                    <TitlePage title="Введите название новой колоды"></TitlePage>
+                    <InputText value={nameNewPack} onChange={changeNewNamePack}/>
+                    <MainButton onClick={createNewPack}>Создать новую колоду</MainButton>
+                </ModalWindow> 
+                <div className={style.aside}>
+                    <div className={style.wrapper}>
+                        <h4 className={style.subTitle}>Только мои колоды</h4>
+                        <input className={s.rememberCheckbox} type="checkbox" checked={onlyMy} onChange={changeMyPacksSee}/>
+                    </div>
+                    <h4 className={style.subTitle}>Сколько показывать карт</h4>
+                    <PacksRange cardsValuesFromRange={cardsValuesFromRange}
                         minCardsCount={minCardsCount}
                         maxCardsCount={maxCardsCount}
-                        handleRangeChange={onRangeChanged}
-            />
-            <Search getSearchData={getPacks} searchField={searchField} setSearchField={setSearchField}/>
-            <div>
-                <MainButton onClick={seeWindowForCreateNewPack}>Создать колоду</MainButton>
-            </div>
-            {status === "loading" &&  <img src={loader} alt="loader"/>}
-            <TableForPacks onSortPacks={onSortPacks}/>
-            <Paginator totalCount={cardPacksTotalCount}
-                       pageCount={pageCount}
-                       onPageChanged={onPageChanged}
-                       currentPage={page}
-            />
-            <SelectPageSize selectedPageSize={pageCount}
+                        handleRangeChange={onRangeChanged}/>
+                </div>
+                <div className={style.content}>
+                    <TitlePage title="Колоды"></TitlePage>
+                    {status === "loading" &&  <img src={loader} alt="loader"/>}
+                    <div className={style.search}>
+                        <div className={style.input}>
+                            <Search  getSearchData={getPacks} searchField={searchField} setSearchField={setSearchField}/>
+                        </div>
+                        <MainButton onClick={seeWindowForCreateNewPack}>Создать колоду</MainButton>                       
+                    </div>
+                    <TableForPacks onSortPacks={onSortPacks}/>
+                    <div className={style.pagination}>
+                        <Paginator totalCount={cardPacksTotalCount}
+                            pageCount={pageCount}
+                            onPageChanged={onPageChanged}
+                            currentPage={page}/>
+                       <SelectPageSize selectedPageSize={pageCount}
                             pageSizes={[5, 10, 15, 20]}
-                            changePageSize={setPageSize}
-            />
+                            changePageSize={setPageSize}/>
+                    </div>
+                    
+                </div>           
             <ModalWindow active={modalRequestActive} setActive={changeModalRequestActive}>
                 {requestStatus}
             </ModalWindow>
-
+            </div>
         </div>
     )
 })
