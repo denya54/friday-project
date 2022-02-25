@@ -8,13 +8,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 2;
 }
 
-
 .modalContent {
-    padding: 20px;
+    padding: 25px;
     border-radius: 12px;
-    background-color: pink;
-    height: 200px;
+    background: #F9F9FE;
+    border-radius: 2px;
     width: 50vw;
 }
