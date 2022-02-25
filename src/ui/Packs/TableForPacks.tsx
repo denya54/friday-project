@@ -126,7 +126,7 @@ const TableCell1 = (props: {packID: string, namePack: string, cardCount: number,
         <div className={s.table__cell}>
 
             <ModalWindow active={modalActive} setActive={changeModalActive}>
-                <TitlePage title="Введите новое название для колоды"></TitlePage> 
+                <TitlePage title="Введите новое название для колоды"/>
                 <InputText value={newNamePack} onChange={changeNewNamePack} fieldName={'Новое название колоды'}/>
                 <MainButton onClick={()=> updatePack(props.packID)}>Изменить название колоды</MainButton>
             </ModalWindow>
@@ -145,7 +145,6 @@ const TableCell1 = (props: {packID: string, namePack: string, cardCount: number,
                     <CanselButton className={s.learnBTN} onClick={()=>learnPack(props.packID, props.namePack)}>Изучать</CanselButton>
                 </div>}
             </div>
-
 
             <ModalWindow active={modalRequestActive} setActive={changeModalRequestActive}>
                 {requestStatus}

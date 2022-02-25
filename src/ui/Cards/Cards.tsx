@@ -17,10 +17,8 @@ export const Cards = React.memo(() => {
     const [modalActive, setModalActive] = useState(false)
     const changeModalActive = (isSee: boolean) => setModalActive(isSee)
     const [questionField, setQuestionField] = useState('')
-   // const changeQuestionField = (e: ChangeEvent<HTMLTextAreaElement>) => setQuestionField(e.currentTarget.value)
     const changeQuestionField = (e: ChangeEvent<HTMLInputElement>) => setQuestionField(e.currentTarget.value)
     const [answerField, setAnswerField] = useState('')
-   // const changeAnswerField = (e: ChangeEvent<HTMLTextAreaElement>) => setAnswerField(e.currentTarget.value)
     const changeAnswerField = (e: ChangeEvent<HTMLInputElement>) => setAnswerField(e.currentTarget.value)
 
     const [modalRequestActive, setModalRequestActive] = useState(false)
@@ -71,8 +69,6 @@ export const Cards = React.memo(() => {
                     <TitlePage title="Введите данные для новой карточки"/>
                     <InputText value={questionField} onChange={changeQuestionField} fieldName={'Введите вопрос'}/>
                     <InputText value={answerField} onChange={changeAnswerField} fieldName={'Введите ответ на Ваш вопрос'}/>
-                {/* <p>Ответ</p>
-                <textarea  /> */}
                 <div className={s.wrapper}>
                     <MainButton onClick={createNewCard}>Создать новую карточку</MainButton>
                 </div>
@@ -94,9 +90,7 @@ export const Cards = React.memo(() => {
                         changePageSize={setPageSize}
                     />
                 </div>
-                
             </div>
         </div>
-
     )
 })
