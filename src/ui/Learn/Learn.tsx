@@ -1,4 +1,4 @@
-import {Box, FormControl, FormControlLabel, FormLabel, Popper, RadioGroup} from "@mui/material"
+import {Box, FormControl, FormControlLabel, FormLabel, Popper, RadioGroup, styled} from "@mui/material"
 import Radio from "@mui/material/Radio"
 import React, {ChangeEvent, useEffect, useState} from "react"
 import {useDispatch, useSelector} from "react-redux"
@@ -8,6 +8,7 @@ import {CardReducerStateType, changePageCount, getCards, gradeAnswer} from "../.
 import {AppRootStateType} from "../../bll/store"
 import CancelButton from "../../componens/canсelButton/CancelButton"
 import MainButton from "../../componens/mainButton/MainButton"
+import TitlePage from "../../componens/titlePage/TitlePage"
 import {CardType} from "../../dal/cardsAPI"
 import s from "./Learn.module.css"
 
@@ -85,19 +86,21 @@ export const Learn = () => {
         gradeHandle(card._id, gradeNumber ? gradeNumber + 1 : 1)
         setshowAnswer(false)
     }
+    const FormControlCost=styled(FormControl)(({theme}) =>({
+        alignItems: 'center'
+    }))
 
     return <div>
-        <h2> Изучать {name} </h2>
-        <p className={s.title}> Вопрос:
+        <div className={s.container}>
+        <h2 className={s.title}>Изучать  {name} </h2>
+        <p className={s.subTitle}> Вопрос:
             <span>"{card.question}"</span>
         </p>
-        <p className={s.title}> Ответ:
+        <p className={s.subTitle}> Ответ:
             <span onClick={handleToggle} className={`${showAnswer ? s.show : s.hide}`}>
-          "{card.answer}"
-        </span>
+            "{card.answer}"</span>
         </p>
-
-        <FormControl>
+        <FormControlCost>
             <FormLabel>Оцени себя</FormLabel>
             <RadioGroup name="grade-buttons">
                 {grades.map((grade, i) => (<FormControlLabel key={i}
@@ -111,14 +114,13 @@ export const Learn = () => {
                 }
 
             </RadioGroup>
-        </FormControl>
-
-
-        <div>
-            <MainButton onClick={onNext} disabled={status === "loading"}> Next </MainButton>
+        </FormControlCost>
+        <div className={s.wrapperBtn}>
+            <MainButton className={s.nextBtn} onClick={onNext} disabled={status === "loading"}> Next </MainButton>
             <CancelButton onClick={() => {
                 navigate('/packs', {replace: true})
             }}> Cansel </CancelButton>
         </div>
+        </div>     
     </div>
 }
