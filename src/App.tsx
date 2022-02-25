@@ -59,7 +59,6 @@ const App = () => {
                 <Route path={'/cards/:cardsPack_id'} element={<Cards />} />
                 <Route path={'/learn/:cardsPack_id/:name'} element={<Learn />} />
             </Routes>
-
             </div>
         </div>
     )
