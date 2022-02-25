@@ -9,7 +9,7 @@ import {TableForPacks} from "./TableForPacks";
 import MainButton from "../../componens/mainButton/MainButton";
 import style from "./Packs.module.css"
 import s from "../Login/Login.module.css";
-import {getUserDataTC, loginStateType, setUserIDAC} from "../../bll/authReducer";
+import { loginStateType, setUserIDAC} from "../../bll/authReducer";
 import {Search} from "../features/search/Search";
 import {Paginator} from "../features/paginator/Paginator";
 import {SelectPageSize} from "../features/selectPageSize/SelectPageSize";
@@ -103,8 +103,8 @@ export const Packs = React.memo(() => {
         <div className={style.packs}>           
             <div className={style.container}>
                 <ModalWindow active={modalActive} setActive={changeModalActive}>
-                    <TitlePage title="Введите название новой колоды"></TitlePage>
-                    <InputText value={nameNewPack} onChange={changeNewNamePack}/>
+                    <TitlePage title="Введите название новой колоды"/>
+                    <InputText value={nameNewPack} onChange={changeNewNamePack} fieldName={'Название колоды'}/>
                     <MainButton onClick={createNewPack}>Создать новую колоду</MainButton>
                 </ModalWindow> 
                 <div className={style.aside}>
@@ -119,7 +119,7 @@ export const Packs = React.memo(() => {
                         handleRangeChange={onRangeChanged}/>
                 </div>
                 <div className={style.content}>
-                    <TitlePage title="Колоды"></TitlePage>
+                    <TitlePage title="Колоды"/>
                     {status === "loading" &&  <img src={loader} alt="loader"/>}
                     <div className={style.search}>
                         <div className={style.input}>

@@ -127,7 +127,7 @@ const TableCell1 = (props: {packID: string, namePack: string, cardCount: number,
 
             <ModalWindow active={modalActive} setActive={changeModalActive}>
                 <TitlePage title="Введите новое название для колоды"></TitlePage> 
-                <InputText value={newNamePack} onChange={changeNewNamePack}/>
+                <InputText value={newNamePack} onChange={changeNewNamePack} fieldName={'Новое название колоды'}/>
                 <MainButton onClick={()=> updatePack(props.packID)}>Изменить название колоды</MainButton>
             </ModalWindow>
 

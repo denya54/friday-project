@@ -7,7 +7,7 @@ export const Header = () => {
     return (
         <div className={s.header}>
             <div className={s.logo}>
-                <LogoTitle></LogoTitle>
+                <LogoTitle/>
             </div>
             <div className={s.menu}>
                 <NavLink to={'/'} style={({ isActive }) =>({color: isActive ? 'blue' : '#2D2E46'})}>Главная </NavLink>
@@ -17,7 +17,6 @@ export const Header = () => {
                 <NavLink to={'/login'} style={({ isActive }) =>({color: isActive ? 'blue' : '#2D2E46'})}>Логинизация </NavLink>
                 <NavLink to={'/registration'} style={({ isActive }) =>({color: isActive ? 'blue' : '#2D2E46'})}>Регистрация </NavLink>
                 <NavLink to={'/password_recovery'} style={({ isActive }) =>({color: isActive ? 'blue' : '#2D2E46'})}>Восстановление пароля </NavLink>
-                <NavLink to={'/test'} style={({ isActive }) =>({color: isActive ? 'blue' : '#2D2E46'})}>Тест </NavLink>
             </div>
         </div>
 

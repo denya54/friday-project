@@ -74,9 +74,11 @@ const TableCell1 = (props:{ cardID: string, cardQuestion: string, cardAnswer: st
     const [modalActive, setModalActive] = useState(false)
     const changeModalActive = (isSee: boolean) => setModalActive(isSee)
     const [newQuestion, setNewQuestion] = useState(props.cardQuestion)
-    const changeQuestion = (e: ChangeEvent<HTMLTextAreaElement>) => setNewQuestion(e.currentTarget.value)
-    const [newAnswer, setNewAnswer] = useState(props.cardQuestion)
-    const changeAnswer = (e: ChangeEvent<HTMLTextAreaElement>) => setNewAnswer(e.currentTarget.value)
+    //const changeQuestion = (e: ChangeEvent<HTMLTextAreaElement>) => setNewQuestion(e.currentTarget.value)
+    const changeQuestion = (e: ChangeEvent<HTMLInputElement>) => setNewQuestion(e.currentTarget.value)
+    const [newAnswer, setNewAnswer] = useState(props.cardAnswer)
+    //const changeAnswer = (e: ChangeEvent<HTMLTextAreaElement>) => setNewAnswer(e.currentTarget.value)
+    const changeAnswer = (e: ChangeEvent<HTMLInputElement>) => setNewAnswer(e.currentTarget.value)
 
     const [modalRequestActive, setModalRequestActive] = useState(false)
     const changeModalRequestActive = (isSee: boolean) => setModalRequestActive(isSee)
@@ -85,7 +87,6 @@ const TableCell1 = (props:{ cardID: string, cardQuestion: string, cardAnswer: st
     const requestStatus = useSelector<AppRootStateType, null | string>(state => state.cards.requestStatus)
 
     const seeWindowForUpdateCard = () => setModalActive(true)
-
 
     const dispatch = useDispatch()
 
@@ -102,9 +103,9 @@ const TableCell1 = (props:{ cardID: string, cardQuestion: string, cardAnswer: st
     return (
         <div className={s.table__cell}>
             <ModalWindow active={modalActive} setActive={changeModalActive}>
-                <TitlePage title="Введите данные для изменения карточки"></TitlePage> 
-                <InputText value={newQuestion} onChange={changeQuestion}></InputText>
-                <InputText value={newAnswer} onChange={changeAnswer}></InputText>
+                <TitlePage title="Введите данные для изменения карточки"/>
+                <InputText value={newQuestion} onChange={changeQuestion} fieldName={'Измените вопрос'}/>
+                <InputText value={newAnswer} onChange={changeAnswer} fieldName={'Измените ответ'}/>
                 <div>
                     <MainButton onClick={() => updateCard(props.cardID)}>Изменить карточку</MainButton>
                 </div>

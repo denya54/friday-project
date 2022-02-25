@@ -5,14 +5,9 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../bll/store";
 import {Navigate} from "react-router-dom";
 import CancelButton from "../../componens/canсelButton/CancelButton";
-import {Header} from "./../../componens/header/Header";
-import { PacksRange } from '../features/packsRange/PacksRange';
 import TitlePage from '../../componens/titlePage/TitlePage';
 import {Search} from '../features/search/Search';
-import InputSearch from '../../componens/inputSearch/InputSearch';
-import {getPacks, PackReducerStateType, setPacksFromRange, setPage, setPageCount, setSortPacks} from '../../bll/packReducer';
-
-
+import {getPacks} from '../../bll/packReducer';
 
 
 export const Profile = () => {  
@@ -57,7 +52,7 @@ export const Profile = () => {
                 </aside>
                 
                 <div className={s.content}>
-                    <TitlePage title={'Список пакетов'}>{userName}</TitlePage>
+                    <TitlePage title={'Эта страница еще в разработке...'}/>
                     <Search getSearchData={getPacks} searchField={''} setSearchField={()=>{}}/>
                     {/* <InputSearch style={{width: '100%'}} ></InputSearch> */}
                     <div className={s.table}></div>
